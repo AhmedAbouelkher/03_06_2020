@@ -1,0 +1,17 @@
+import 'package:flutter/widgets.dart';
+import 'package:haftaa/bloc/product-bloc.dart';
+
+class ProductBlocProvider extends InheritedWidget {
+  final productBloc = ProductBloc();
+
+  ProductBlocProvider({Key key, Widget child}) : super(key: key, child: child);
+
+  bool updateShouldNotify(_) => true;
+
+  static ProductBloc of(BuildContext context) {
+    return (context.inheritFromWidgetOfExactType(ProductBlocProvider) as ProductBlocProvider).productBloc;
+  }
+
+    
+
+}
