@@ -1,3 +1,4 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -144,7 +145,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
   }
 
   String errorMessage = '';
-
+  String countryCode = '';
   _showSnackBar(String text) {
     final snackBar = SnackBar(
       content: Text('$text'),
@@ -184,39 +185,56 @@ class _PhoneAuthState extends State<PhoneAuth> {
 
     var phoneTextbox = Padding(
       padding: EdgeInsets.symmetric(horizontal: 30.0),
-      child: Container(
-        height: 60.0,
-        alignment: AlignmentDirectional.center,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14.0),
-            color: Colors.white,
-            boxShadow: [BoxShadow(blurRadius: 10.0, color: Colors.black12)]),
-        padding:
-            EdgeInsets.only(left: 20.0, right: 30.0, top: 0.0, bottom: 0.0),
-        child: Theme(
-          data: ThemeData(
-            hintColor: Colors.transparent,
+      child: Column(
+        children: <Widget>[
+          CountryCodePicker(
+            onChanged: (val){
+              countryCode = val.toString();
+            },
+            // optional. Shows only country name and flag
+            showCountryOnly: false,
+            // optional. Shows only country name and flag when popup is closed.
+            showOnlyCountryWhenClosed: false,
+            // optional. aligns the flag and the Text left
+            alignLeft: false,
+            textStyle: TextStyle(color: Colors.white),
           ),
-          child: TextFormField(
-            validator: Validators.notEmptyText,
-            controller: textPhoneController,
-            //obscureText: password,
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                labelText: 'رقم الجوال',
-                icon: Icon(
-                  Icons.phone_iphone,
-                  color: Colors.black38,
-                ),
-                labelStyle: TextStyle(
-                    fontSize: 15.0,
-                    fontFamily: 'Sans',
-                    letterSpacing: 0.3,
-                    color: Colors.black38,
-                    fontWeight: FontWeight.w600)),
-            keyboardType: TextInputType.phone,
+
+          Container(
+            height: 60.0,
+            alignment: AlignmentDirectional.center,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14.0),
+                color: Colors.white,
+                boxShadow: [BoxShadow(blurRadius: 10.0, color: Colors.black12)]),
+            padding:
+                EdgeInsets.only(left: 20.0, right: 30.0, top: 0.0, bottom: 0.0),
+            child: Theme(
+              data: ThemeData(
+                hintColor: Colors.transparent,
+              ),
+              child: TextFormField(
+                validator: Validators.notEmptyText,
+                controller: textPhoneController,
+                //obscureText: password,
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    labelText: 'رقم الجوال',
+                    icon: Icon(
+                      Icons.phone_iphone,
+                      color: Colors.black38,
+                    ),
+                    labelStyle: TextStyle(
+                        fontSize: 15.0,
+                        fontFamily: 'Sans',
+                        letterSpacing: 0.3,
+                        color: Colors.black38,
+                        fontWeight: FontWeight.w600)),
+                keyboardType: TextInputType.phone,
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
     var codeTextbox = Padding(
