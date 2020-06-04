@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:haftaa/chat/lets_text.dart';
 import 'package:haftaa/providers/phone_auth.dart';
+import 'package:haftaa/ui/BottomNavigationBar.dart';
 import 'package:haftaa/utils/constants.dart';
 import 'package:haftaa/utils/widgets.dart';
 import 'package:provider/provider.dart';
@@ -172,7 +173,7 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'VERIFY',
+                'تأكيد الكود',
                 style: TextStyle(
                     color: widget.cardBackgroundColor, fontSize: 18.0),
               ),
@@ -209,32 +210,33 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
           key: Key(key),
           expands: false,
 //          autofocus: key.contains("1") ? true : false,
-          autofocus: false,
-          focusNode: focusNode,
+         // autofocus: false,
+          //focusNode: focusNode,
           onChanged: (String value) {
-            if (value.length == 1) {
-              code += value;
-              switch (code.length) {
-                case 1:
-                  FocusScope.of(context).requestFocus(focusNode2);
-                  break;
-                case 2:
-                  FocusScope.of(context).requestFocus(focusNode3);
-                  break;
-                case 3:
-                  FocusScope.of(context).requestFocus(focusNode4);
-                  break;
-                case 4:
-                  FocusScope.of(context).requestFocus(focusNode5);
-                  break;
-                case 5:
-                  FocusScope.of(context).requestFocus(focusNode6);
-                  break;
-                default:
-                  FocusScope.of(context).requestFocus(FocusNode());
-                  break;
-              }
-            }
+            code  = value;
+//            if (value.length == 1) {
+//              code += value;
+//              switch (code.length) {
+//                case 1:
+//                  FocusScope.of(context).requestFocus(focusNode2);
+//                  break;
+//                case 2:
+//                  FocusScope.of(context).requestFocus(focusNode3);
+//                  break;
+//                case 3:
+//                  FocusScope.of(context).requestFocus(focusNode4);
+//                  break;
+//                case 4:
+//                  FocusScope.of(context).requestFocus(focusNode5);
+//                  break;
+//                case 5:
+//                  FocusScope.of(context).requestFocus(focusNode6);
+//                  break;
+//                default:
+//                  FocusScope.of(context).requestFocus(FocusNode());
+//                  break;
+//              }
+//            }
           },
           maxLengthEnforced: false,
           textAlign: TextAlign.center,
@@ -276,8 +278,12 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
             .of<PhoneAuthDataProvider>(context, listen: false)
             .message}");
     await Future.delayed(Duration(seconds: 1));
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) => LetsChat()));
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+          builder: (BuildContext context) => bottomNavigationBar()),
+      ModalRoute.withName('/'),
+    );
   }
 
   onFailed() {

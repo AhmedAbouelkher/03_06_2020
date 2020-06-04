@@ -176,16 +176,16 @@ class PhoneAuthDataProvider with ChangeNotifier {
   Future<void> refreshUserData({String userid}) async {
     Completer completer = Completer();
     String uid = user.uid;
-   var  _currentUser = await UserController.getUser(uid);
+    var _currentUser = await UserController.getUser(uid);
 
     completer.complete();
     return completer.future;
   }
 
-
   signOut() async {
-    await  FireBase.auth.signOut();
+    await FireBase.auth.signOut();
   }
+
   _addStatus(PhoneAuthState state) {
     status = state;
     if (state == PhoneAuthState.Error || state == PhoneAuthState.Failed) {
@@ -246,6 +246,8 @@ class PhoneAuthDataProvider with ChangeNotifier {
   FirebaseUser _user;
 
   FirebaseUser get user => _user;
+
+  bool get isLoggedIn => user != null;
 
   set user(FirebaseUser value) {
     _user = value;

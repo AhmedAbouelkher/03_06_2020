@@ -78,9 +78,7 @@ class _ProfileState extends State<Profile> {
                   (user.email == null || user.email == ''
                           ? null
                           : user.email) ??
-                      (user.displayName == null || user.displayName == ''
-                          ? null
-                          : user.displayName) ??
+
                       user.phoneNumber,
                   style: _txtName,
                 ),
@@ -194,6 +192,13 @@ class _ProfileState extends State<Profile> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Provider.of<PhoneAuthDataProvider>(context, listen: false)
+                      .isLoggedIn
+                  ? getLogedInPart(
+                      Provider.of<PhoneAuthDataProvider>(context, listen: false)
+                          .user)
+                  : loginRawMaterial,
+              // getLogedInPart(),
 //              StreamBuilder<FirebaseUser>(
 //                stream: ProviderCustom.of(context).auth.onAuthStateChanged,
 //                builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
@@ -432,9 +437,8 @@ class _ProfileState extends State<Profile> {
               height: 2.0,
             ),
           ),
-          Provider.of<PhoneAuthDataProvider>(context,
-              listen: false).status == PhoneAuthState.Verified
-
+          Provider.of<PhoneAuthDataProvider>(context, listen: false).status ==
+                  PhoneAuthState.Verified
               ? category(
                   padding: 38.0,
                   txt: "تسجيل خروج",
@@ -443,10 +447,10 @@ class _ProfileState extends State<Profile> {
                     if (widget.onMenuItemClick != null) {
                       widget.onMenuItemClick();
                     }
-                    await
-                    Provider.of<PhoneAuthDataProvider>(context,
-                        listen: false).
-                    signOut().then((onValue) {
+                    await Provider.of<PhoneAuthDataProvider>(context,
+                            listen: false)
+                        .signOut()
+                        .then((onValue) {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
