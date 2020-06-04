@@ -52,7 +52,7 @@ class myApp extends StatelessWidget {
           create: (context) => CountryProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => PhoneAuthDataProvider(),
+          create: (context) => PhoneAuthDataProvider()..currentuser(),
         ),
       ],
       child: MaterialApp(

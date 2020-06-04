@@ -18,6 +18,13 @@ enum PhoneAuthState {
 }
 
 class PhoneAuthDataProvider with ChangeNotifier {
+  PhoneAuthDataProvider(){
+    currentuser();
+  }
+  currentuser()async{
+   user =  await FireBase.auth.currentUser();
+   var ss;
+  }
   VoidCallback onStarted,
       onCodeSent,
       onCodeResent,
@@ -183,7 +190,9 @@ class PhoneAuthDataProvider with ChangeNotifier {
   }
 
   signOut() async {
+
     await FireBase.auth.signOut();
+    user = null;
   }
 
   _addStatus(PhoneAuthState state) {

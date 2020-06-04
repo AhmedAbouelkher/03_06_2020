@@ -437,8 +437,7 @@ class _ProfileState extends State<Profile> {
               height: 2.0,
             ),
           ),
-          Provider.of<PhoneAuthDataProvider>(context, listen: false).status ==
-                  PhoneAuthState.Verified
+          Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn
               ? category(
                   padding: 38.0,
                   txt: "تسجيل خروج",

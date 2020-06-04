@@ -154,10 +154,7 @@ class _AppbarGradientState extends State<AppbarGradient> {
                   onPressed: () {
 
 
-                    Navigator.of(context).push(PageRouteBuilder(
-                        pageBuilder: (_, __, ___) =>
-                        new AddProduct.newOne()));
-return;
+
 
                     if (Provider.of<PhoneAuthDataProvider>(context,
                                 listen: false)

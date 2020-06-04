@@ -11,7 +11,7 @@ class PhoneAuthVerify extends StatefulWidget {
    *  cardBackgroundColor & logo values will be passed to the constructor
    *  here we access these params in the _PhoneAuthState using "widget"
    */
-  final Color cardBackgroundColor = Color(0xFFFCA967);
+  final Color cardBackgroundColor = Colors.blue;
   final String logo = Assets.firebase;
   final String appName = "Awesome app";
 
@@ -104,7 +104,7 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
           ),
 
           // AppName:
-          Text(widget.appName,
+          Text('الهفتاء',
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Colors.white,
@@ -122,18 +122,18 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                          text: 'Please enter the ',
+                          text: 'من فضلك أدخل  ',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w400)),
                       TextSpan(
-                          text: 'One Time Password',
+                          text: 'الكود المرسل',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 16.0,
                               fontWeight: FontWeight.w700)),
                       TextSpan(
-                        text: ' sent to your mobile',
+                        text: ' إلى جوالك',
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.w400),
                       ),
@@ -207,7 +207,7 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
         height: 40.0,
         width: 35.0,
         child: TextField(
-          key: Key(key),
+          //key: Key(key),
           expands: false,
 //          autofocus: key.contains("1") ? true : false,
          // autofocus: false,
@@ -238,7 +238,7 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
 //              }
 //            }
           },
-          maxLengthEnforced: false,
+          //maxLengthEnforced: false,
           textAlign: TextAlign.center,
           cursorColor: Colors.white,
           keyboardType: TextInputType.number,
