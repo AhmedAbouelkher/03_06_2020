@@ -41,7 +41,12 @@ class myApp extends StatelessWidget {
       statusBarColor: Colors.transparent, //or set color with: Color(0xFF0000FF)
     ));
 
-    return MultiProvider(
+    return
+
+      ProviderCustom(
+        child:
+
+      MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (context) => CountryProvider(),
@@ -81,8 +86,8 @@ class myApp extends StatelessWidget {
 //        home: PhoneAuthGetPhone(),
 //        debugShowCheckedModeBanner: false,
 //      ),
+    ),
     );
-
 //    return Provider(
 //      auth: Auth(),
 //      child: MaterialApp(

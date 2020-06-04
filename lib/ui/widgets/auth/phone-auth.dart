@@ -9,6 +9,7 @@ import 'package:haftaa/providers/countries.dart';
 import 'package:haftaa/providers/phone_auth.dart';
 import 'package:haftaa/ui/BottomNavigationBar.dart';
 import 'package:haftaa/user/user.dart';
+import 'package:haftaa/utils/widgets.dart';
 import 'package:haftaa/validation/validators.dart';
 import 'package:provider/provider.dart';
 
@@ -153,14 +154,136 @@ class _PhoneAuthState extends State<PhoneAuth> {
 //    if (mounted) Scaffold.of(context).showSnackBar(snackBar);
     //scaffoldKey.currentState.showSnackBar(snackBar);
   }
+  double _height, _width, _fixedPadding;
 
+  Widget _getColumnBody() =>
+      Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          //  Logo: scaling to occupy 2 parts of 10 in the whole height of device
+          Padding(
+            padding: EdgeInsets.all(_fixedPadding),
+
+          ),
+
+          // AppName:
+
+
+          Padding(
+            padding: EdgeInsets.only(top: _fixedPadding, left: _fixedPadding),
+            child: SubTitle(text: 'اختر الدولة'),
+          ),
+          CountryCodePicker(
+            onChanged: (val){
+              countryCode = val.toString();
+            },
+            // optional. Shows only country name and flag
+            showCountryOnly: false,
+            // optional. Shows only country name and flag when popup is closed.
+            showOnlyCountryWhenClosed: false,
+            // optional. aligns the flag and the Text left
+            alignLeft: false,
+            textStyle: TextStyle(color: Colors.white),
+          ),
+          /*
+           *  Select your country, this will be a custom DropDown menu, rather than just as a dropDown
+           *  onTap of this, will show a Dialog asking the user to select country they reside,
+           *  according to their selection, prefix will change in the PhoneNumber TextFormField
+           */
+//          Padding(
+//              padding:
+//              EdgeInsets.only(left: _fixedPadding, right: _fixedPadding),
+//              child: ShowSelectedCountry(
+//                country: countriesProvider.selectedCountry,
+//                onPressed: () {
+//                  Navigator.of(context).push(
+//                    MaterialPageRoute(builder: (context) => SelectCountry()),
+//                  );
+//                },
+//              )),
+
+          //  Subtitle for Enter your phone
+          Padding(
+            padding: EdgeInsets.only(top: 10.0, left: _fixedPadding),
+            child: SubTitle(text: 'اكتب رقم الجوال'),
+          ),
+          //  PhoneNumber TextFormFields
+          Padding(
+            padding: EdgeInsets.only(
+                left: _fixedPadding,
+                right: _fixedPadding,
+                bottom: _fixedPadding),
+            child: PhoneNumberField(
+              controller:
+              Provider
+                  .of<PhoneAuthDataProvider>(context, listen: false)
+                  .phoneNumberController,
+              prefix: countryCode?? "+966",
+            ),
+          ),
+
+          /*
+           *  Some informative text
+           */
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SizedBox(width: _fixedPadding),
+              Icon(Icons.info, color: Colors.white, size: 20.0),
+              SizedBox(width: 10.0),
+              Expanded(
+                child: RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                          text: ' سيتم إرسال',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w400)),
+                      TextSpan(
+                          text: ' كلمة سر لمرة واحدة ',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w700)),
+                      TextSpan(
+                          text: ' لرقم الجوال هذا',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w400)),
+                    ])),
+              ),
+              SizedBox(width: _fixedPadding),
+            ],
+          ),
+
+          /*
+           *  Button: OnTap of this, it appends the dial code and the phone number entered by the user to send OTP,
+           *  knowing once the OTP has been sent to the user - the user will be navigated to a new Screen,
+           *  where is asked to enter the OTP he has received on his mobile (or) wait for the system to automatically detect the OTP
+           */
+          SizedBox(height: _fixedPadding * 1.5),
+          RaisedButton(
+            elevation: 16.0,
+            onPressed: startPhoneAuth,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'إرسال الكود',
+                style: TextStyle(
+                     fontSize: 18.0),
+              ),
+            ),
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0)),
+          ),
+        ],
+      );
   startPhoneAuth() async {
     final phoneAuthDataProvider =
         Provider.of<PhoneAuthDataProvider>(context, listen: false);
     phoneAuthDataProvider.loading = true;
     var countryProvider = Provider.of<CountryProvider>(context, listen: false);
     bool validPhone = await phoneAuthDataProvider.instantiate(
-        dialCode: countryProvider.selectedCountry.dialCode,
+        dialCode: countryCode,
         onCodeSent: () {
           Navigator.of(context).pushReplacement(CupertinoPageRoute(
               builder: (BuildContext context) => PhoneAuthVerify()));
@@ -180,6 +303,12 @@ class _PhoneAuthState extends State<PhoneAuth> {
 
   @override
   Widget build(BuildContext context) {
+
+    _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
+    _fixedPadding = _height * 0.025;
+
+
     final countriesProvider = Provider.of<CountryProvider>(context);
     final loader = Provider.of<PhoneAuthDataProvider>(context).loading;
 
@@ -187,18 +316,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
       padding: EdgeInsets.symmetric(horizontal: 30.0),
       child: Column(
         children: <Widget>[
-          CountryCodePicker(
-            onChanged: (val){
-              countryCode = val.toString();
-            },
-            // optional. Shows only country name and flag
-            showCountryOnly: false,
-            // optional. Shows only country name and flag when popup is closed.
-            showOnlyCountryWhenClosed: false,
-            // optional. aligns the flag and the Text left
-            alignLeft: false,
-            textStyle: TextStyle(color: Colors.white),
-          ),
+
 
           Container(
             height: 60.0,
@@ -277,6 +395,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
 
     return Column(
       children: <Widget>[
+        _getColumnBody(),
         (Provider.of<PhoneAuthDataProvider>(context, listen: false).status !=
                     PhoneAuthState.CodeSent ||
                 Provider.of<PhoneAuthDataProvider>(context, listen: false)

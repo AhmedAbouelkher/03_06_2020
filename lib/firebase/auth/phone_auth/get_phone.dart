@@ -179,7 +179,7 @@ class _PhoneAuthGetPhoneState extends State<PhoneAuthGetPhone> {
               Provider
                   .of<PhoneAuthDataProvider>(context, listen: false)
                   .phoneNumberController,
-              prefix: countriesProvider.selectedCountry.dialCode ?? "+91",
+              prefix: countriesProvider.selectedCountry.dialCode ?? "+966",
             ),
           ),
 
