@@ -501,7 +501,7 @@ class _AddProductState extends State<AddProduct> {
                           )
                         : new Container(),
 
-                  selected_category   != null && selected_category.defaultItems['used'] == true ?
+                  selected_category  != null && selected_category.defaultItems['used'] == true ?
                     CustomDropdownWidget.Custom(
                       items: productStatuses,
                       selectedValue: productIsUsed,
@@ -513,6 +513,7 @@ class _AddProductState extends State<AddProduct> {
                       onChange: (value) {
                         setState(() {
                           productIsUsed = value;
+
                         });
                       },
                     )
