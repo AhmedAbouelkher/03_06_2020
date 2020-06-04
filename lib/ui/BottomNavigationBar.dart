@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:haftaa/provider/provider.dart';
+import 'package:haftaa/providers/phone_auth.dart';
 import 'package:haftaa/ui/BrandUIComponent/BrandLayout.dart';
 import 'package:haftaa/ui/HomeUIComponent/Home.dart';
 import 'package:haftaa/ui/AcountUIComponent/Profile.dart';
 import 'package:haftaa/ui/pages/favourit-list.dart';
+import 'package:provider/provider.dart';
 
 class bottomNavigationBar extends StatefulWidget {
   @override
@@ -41,6 +43,8 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
   /// Build BottomNavigationBar Widget
   @override
   Widget build(BuildContext context) {
+    Provider.of<PhoneAuthDataProvider>(context, listen: true).currentuser();
+
     //Provider.of(context).productBloc = productBloc;
     return Scaffold(
       body: callPage(currentIndex, context),

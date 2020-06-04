@@ -192,7 +192,7 @@ class _ProfileState extends State<Profile> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Provider.of<PhoneAuthDataProvider>(context, listen: false)
+              Provider.of<PhoneAuthDataProvider>(context, listen: true)
                       .isLoggedIn
                   ? getLogedInPart(
                       Provider.of<PhoneAuthDataProvider>(context, listen: false)
@@ -437,7 +437,7 @@ class _ProfileState extends State<Profile> {
               height: 2.0,
             ),
           ),
-          Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn
+          Provider.of<PhoneAuthDataProvider>(context, listen: true).isLoggedIn
               ? category(
                   padding: 38.0,
                   txt: "تسجيل خروج",
