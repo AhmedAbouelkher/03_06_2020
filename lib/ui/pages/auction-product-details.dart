@@ -339,8 +339,7 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
                                     child: (Provider.of<PhoneAuthDataProvider>(
                                                         context,
                                                         listen: false)
-                                                    .status ==
-                                                PhoneAuthState.Verified &&
+                                                  .isLoggedIn &&
                                             Provider.of<PhoneAuthDataProvider>(
                                                         context,
                                                         listen: false)

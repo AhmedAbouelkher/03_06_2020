@@ -34,7 +34,11 @@ class _ProductFavoriteButtonState extends State<ProductFavoriteButton> {
   Widget build(BuildContext context) {
     if (Provider.of<PhoneAuthDataProvider>(context, listen: false).status !=
         PhoneAuthState.Verified) {
-      if ((widget.product.favUsers as Map).keys.contains(
+      if (
+      Provider.of<PhoneAuthDataProvider>(context, listen: false)
+          .isLoggedIn
+      &&
+      (widget.product.favUsers as Map).keys.contains(
           Provider.of<PhoneAuthDataProvider>(context, listen: false)
               .user
               .uid)) {
@@ -53,8 +57,7 @@ class _ProductFavoriteButtonState extends State<ProductFavoriteButton> {
             color: Colors.redAccent.shade200,
             onPressed: () {
               if (Provider.of<PhoneAuthDataProvider>(context, listen: false)
-                      .status ==
-                  PhoneAuthState.Verified) {
+                      .isLoggedIn) {
                 productInUserFav ? removeFromFav(context) : addToFav(context);
               } else {
                 Navigator.pushNamed(context, 'choose-login');

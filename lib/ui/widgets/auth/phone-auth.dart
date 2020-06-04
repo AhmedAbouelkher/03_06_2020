@@ -571,22 +571,22 @@ class _PhoneAuthState extends State<PhoneAuth> {
 //                    null)
 //            ? phoneTextbox
 //            : Container(),
-        Padding(
-          padding: EdgeInsets.only(top: 10),
-        ),
-        (Provider.of<PhoneAuthDataProvider>(context, listen: false).status ==
-                PhoneAuthState.CodeSent)
-            ? codeTextbox
-            : Container(),
-        Text(
-          errorMessage,
-          style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-              letterSpacing: 0.2,
-              fontFamily: 'Sans',
-              fontSize: 17.0),
-        ),
+//        Padding(
+//          padding: EdgeInsets.only(top: 10),
+//        ),
+//        (Provider.of<PhoneAuthDataProvider>(context, listen: false).status ==
+//                PhoneAuthState.CodeSent)
+//            ? codeTextbox
+//            : Container(),
+//        Text(
+//          errorMessage,
+//          style: TextStyle(
+//              fontWeight: FontWeight.w600,
+//              color: Colors.white,
+//              letterSpacing: 0.2,
+//              fontFamily: 'Sans',
+//              fontSize: 17.0),
+//        ),
 
       ],
     );

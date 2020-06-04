@@ -63,17 +63,16 @@ class _FavouritListState extends State<FavouritList> {
           ),
           elevation: 0.0,
         ),
-        body:
-            Provider.of<PhoneAuthDataProvider>(context, listen: false).status ==
-                    PhoneAuthState.Verified
-                ? LoginPlease()
-                : ProductListItemInRow.search(
-                    productSearchModel: ProductSearchModel.FromSearchParams(
-                        userIDWhoMakesFavorite:
-                            Provider.of<PhoneAuthDataProvider>(context,
-                                    listen: false)
-                                .user
-                                .uid),
-                  ));
+        body: Provider.of<PhoneAuthDataProvider>(context, listen: false)
+                .isLoggedIn
+            ? ProductListItemInRow.search(
+                productSearchModel: ProductSearchModel.FromSearchParams(
+                    userIDWhoMakesFavorite: Provider.of<PhoneAuthDataProvider>(
+                            context,
+                            listen: false)
+                        .user
+                        .uid),
+              )
+            : LoginPlease());
   }
 }
