@@ -80,8 +80,8 @@ class _ChoseLoginState extends State<ChoseLogin> with TickerProviderStateMixin {
               overlayShadow: false,
               images: [
                 // AssetImage('assets/img/girl.png'),
-                AssetImage('assets/img/SliderLogin3.png'),
-                AssetImage("assets/img/SliderLogin2.png"),
+                AssetImage('assets/solar_slash.png'),
+                //AssetImage("assets/img/SliderLogin2.png"),
 
                 // AssetImage("assets/img/SliderLogin4.png"),
               ],
