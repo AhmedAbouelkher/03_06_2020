@@ -24,7 +24,7 @@ class SmallProductListitem extends StatelessWidget {
           Navigator.of(context).push(PageRouteBuilder(
               pageBuilder: (_, __, ___) {
                 if (product is SaleProduct) {
-                  return new SaleProductDetails(product);
+                  return new SaleProductDetails(product,product.user);
                 } else if (product is RequestProduct) {
                   return new RequestProductDetails(product);
                 } else if (product is AuctionProduct) {

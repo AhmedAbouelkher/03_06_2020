@@ -19,6 +19,7 @@ import 'package:flutter_rating/flutter_rating.dart';
 import 'package:haftaa/search/search.dart';
 import 'package:haftaa/ui/widgets/product/product-grid-horezontal.dart';
 import 'package:haftaa/UI/pages/products-list.dart';
+import 'package:haftaa/user/user.dart';
 import 'package:provider/provider.dart';
 
 /// Custom Text Header
@@ -40,8 +41,8 @@ var _txtCustomSub = TextStyle(
 //import 'package:haftaa/product/base-product.dart';
 class SaleProductDetails extends StatefulWidget {
   final SaleProduct product;
-
-  SaleProductDetails(this.product);
+  Future<User> _user;
+  SaleProductDetails(this.product,this._user);
 
   @override
   _SaleProductDetailsState createState() => _SaleProductDetailsState();
@@ -53,12 +54,31 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
   double rating = 3.5;
   int starCount = 5;
 
+  User _user;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-  }
 
+    widget._user.then((user) {
+      setState(() {
+        _user = user;
+        print('bbbb : ${_user.id}');
+
+      });
+    });
+
+    if(Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true){
+
+      var x = Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid;
+      print('isLoggedIn:true : ${x}');
+
+
+
+    }
+
+  }
   /// Declaration List item HomeGridItemRe....dart Class
 
   _SaleProductDetailsState();
@@ -615,10 +635,19 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     /// Chat Icon
+                    Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true?
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).push(PageRouteBuilder(
-                            pageBuilder: (_, ___, ____) => new chatItem()));
+
+
+                        (widget.product.arabicTypeName == 'للبيع' || widget.product.arabicTypeName == 'للشراء')?
+
+                          Navigator.of(context).push(PageRouteBuilder(
+                              pageBuilder: (_, ___, ____) => new chatItem()))
+                           :
+                            null;
+
+
                       },
                       child: Container(
                         height: 40.0,
@@ -631,7 +660,9 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                               height: 20.0),
                         ),
                       ),
-                    ),
+                    )
+                    :
+                    Container(),
 
                     /// Button Pay
                     InkWell(

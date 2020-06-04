@@ -610,7 +610,7 @@ class _AddProductState extends State<AddProduct> {
     var page;
     switch (product.type) {
       case ItemType.sale:
-        page = new SaleProductDetails(product);
+        page = new SaleProductDetails(product,widget.product.user);
         break;
       case ItemType.request:
         page = new RequestProductDetails(product);
