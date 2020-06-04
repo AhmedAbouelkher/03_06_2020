@@ -155,7 +155,6 @@ class _AppbarGradientState extends State<AppbarGradient> {
 
 
 
-
                     if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true) {
 
                       Navigator.of(context).push(PageRouteBuilder(

@@ -19,7 +19,7 @@ class _ProductItemGridState extends State<SaleProductItemGrid> {
       onTap: () {
         Navigator.of(context).push(PageRouteBuilder(
             pageBuilder: (_, __, ___) =>
-            new SaleProductDetails(widget.productItem),
+            new SaleProductDetails(widget.productItem,widget.productItem.user),
             transitionDuration: Duration(milliseconds: 900),
 
             /// Set animation Opacity in route to detailProduk layout

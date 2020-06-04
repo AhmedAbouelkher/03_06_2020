@@ -239,7 +239,7 @@ class SaleProductItemRow extends StatelessWidget {
                         onTap: () {
                           Navigator.of(context).push(PageRouteBuilder(
                               pageBuilder: (_, __, ___) =>
-                                  new SaleProductDetails(product),
+                                  new SaleProductDetails(product,product.user),
                               transitionDuration: Duration(milliseconds: 900),
 
                               /// Set animation Opacity in route to detailProduk layout
