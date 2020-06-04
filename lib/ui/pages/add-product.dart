@@ -57,7 +57,7 @@ class _AddProductState extends State<AddProduct> {
     showSnackBar('لا تنسى تحديد الصورة الرئيسية', durationInSeconds: 1);
   }
 
-  BaseProduct product;
+  BaseProduct product ;
   final productStatusKey = GlobalKey();
   ProductController productController = new ProductController();
   Governorate selected_Governorate;
@@ -73,12 +73,15 @@ class _AddProductState extends State<AddProduct> {
   }
 
   BaseCategory selected_category;
+   void onCategorySelectChanged(BaseCategory cat) {
 
-  void onCategorySelectChanged(BaseCategory cat) {
-    product.categoryId = cat.id;
-    selected_category = cat;
+    setState(() {
+      product.categoryId = cat.id;
+      selected_category = cat;
+    });
 
   }
+
 
   bool productIsUsed;
   static Region selectedRegion;
@@ -275,6 +278,8 @@ class _AddProductState extends State<AddProduct> {
   bool isSaving = false;
   bool gettingProductdataForEditing = false;
 
+  List<Map> defaultItemsList = [];
+
   loadProductDataForEdit() async {
     gettingProductdataForEditing = true;
     selected_category = await product.category;
@@ -355,6 +360,7 @@ class _AddProductState extends State<AddProduct> {
         ),
       );
     }
+
 
     var formContent = SingleChildScrollView(
       child: gettingProductdataForEditing
@@ -473,7 +479,7 @@ class _AddProductState extends State<AddProduct> {
                             ),
                           )
                         : new Container(),
-                    product.type == ItemType.auction
+                    product.type  == ItemType.auction
                         ? Container(
                             child: Column(
                               children: <Widget>[
@@ -495,6 +501,7 @@ class _AddProductState extends State<AddProduct> {
                           )
                         : new Container(),
 
+                  selected_category   != null && selected_category.defaultItems['used'] == true ?
                     CustomDropdownWidget.Custom(
                       items: productStatuses,
                       selectedValue: productIsUsed,
@@ -508,7 +515,8 @@ class _AddProductState extends State<AddProduct> {
                           productIsUsed = value;
                         });
                       },
-                    ),
+                    )
+                      : new Container(),
 
                     Padding(padding: EdgeInsets.only(top: 80.0)),
                     InkWell(
