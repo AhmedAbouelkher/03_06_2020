@@ -228,8 +228,7 @@ class _ProfileState extends State<Profile> {
             image: "assets/icon/notification.png",
             tap: () {
               if (Provider.of<PhoneAuthDataProvider>(context, listen: false)
-                      .status ==
-                  PhoneAuthState.Verified) {
+                     .isLoggedIn) {
                 ProductSearchModel _searchModel =
                     ProductSearchModel.FromSearchParams(
                         userID: Provider.of<PhoneAuthDataProvider>(context,

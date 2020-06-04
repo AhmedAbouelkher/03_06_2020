@@ -330,8 +330,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                                     child: (Provider.of<PhoneAuthDataProvider>(
                                                         context,
                                                         listen: false)
-                                                    .status ==
-                                                PhoneAuthState.Verified &&
+                                                   .isLoggedIn&&
                                             Provider.of<PhoneAuthDataProvider>(
                                                         context,
                                                         listen: false)
