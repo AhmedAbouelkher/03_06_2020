@@ -35,7 +35,8 @@ class BaseCategory {
     this._icon = mapedData['icon'];
     this._itemsCount = mapedData['itemsCount'];
 
-    this.defaultItems = mapedData['defaultItems'];
+    this.defaultItems = mapedData['defaultItems'] as Map ;
+
   }
   BaseCategory.fromSnapshot(DataSnapshot snapshot) {
     this._id = snapshot.key;

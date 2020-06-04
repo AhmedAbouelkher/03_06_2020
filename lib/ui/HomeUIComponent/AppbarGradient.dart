@@ -152,6 +152,13 @@ class _AppbarGradientState extends State<AppbarGradient> {
                     color: Colors.white,
                   ),
                   onPressed: () {
+
+
+                    Navigator.of(context).push(PageRouteBuilder(
+                        pageBuilder: (_, __, ___) =>
+                        new AddProduct.newOne()));
+return;
+
                     if (Provider.of<PhoneAuthDataProvider>(context,
                                 listen: false)
                             .status !=
