@@ -196,7 +196,7 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
 
   signIn() {
     if (code.length != 6) {
-      _showSnackBar("Invalid OTP");
+      _showSnackBar("كود غير صالح");
     }
     Provider.of<PhoneAuthDataProvider>(context, listen: false)
         .verifyOTPAndLogin(smsCode: code);
@@ -258,17 +258,17 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
       );
 
   onStarted() {
-    _showSnackBar("PhoneAuth started");
+    _showSnackBar("بدء الصلاحية");
 //    _showSnackBar(phoneAuthDataProvider.message);
   }
 
   onCodeSent() {
-    _showSnackBar("OPT sent");
+    _showSnackBar("تم إرسال الكود");
 //    _showSnackBar(phoneAuthDataProvider.message);
   }
 
   onCodeResent() {
-    _showSnackBar("OPT resent");
+    _showSnackBar("تم إعادة إرسال الكود");
 //    _showSnackBar(phoneAuthDataProvider.message);
   }
 
@@ -288,19 +288,19 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
 
   onFailed() {
 //    _showSnackBar(phoneAuthDataProvider.message);
-    _showSnackBar("PhoneAuth failed");
+    _showSnackBar("فشلت عملية الدخول بالجوال");
   }
 
   onError() {
 //    _showSnackBar(phoneAuthDataProvider.message);
     _showSnackBar(
-        "PhoneAuth error ${Provider
+        "خطأ دخول ${Provider
             .of<PhoneAuthDataProvider>(context, listen: false)
             .message}");
   }
 
   onAutoRetrievalTimeOut() {
-    _showSnackBar("PhoneAuth autoretrieval timeout");
+    _showSnackBar("انتهت مهلة ارسال الكود");
 //    _showSnackBar(phoneAuthDataProvider.message);
   }
 }
