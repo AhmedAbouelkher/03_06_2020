@@ -192,7 +192,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   /// Setting duration in splash screen
   startTime() async {
-    return new Timer(Duration(milliseconds: 1000), NavigatorPage);
+    return new Timer(Duration(milliseconds: 2000), NavigatorPage);
   }
 
   /// To navigate layout change
@@ -224,7 +224,7 @@ class _SplashScreenState extends State<SplashScreen> {
         /// Set Background image in splash screen layout (Click to open code)
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/img/man.png'), fit: BoxFit.cover)),
+                image: AssetImage('assets/solar_slash.png'), fit: BoxFit.cover)),
         child: Container(
           /// Set gradient black in image splash screen (Click to open code)
           decoration: BoxDecoration(
@@ -246,30 +246,30 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
 
                     /// Text header "Welcome To" (Click to open code)
-                    Text(
-                      "هلا بيك في",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w200,
-                        fontFamily: "Sans",
-                        fontSize: 19.0,
-                      ),
-                    ),
-
-                    /// Animation text Treva Shop to choose Login with Hero Animation (Click to open code)
-                    Hero(
-                      tag: "Haftaa",
-                      child: Text(
-                        "سوق الهفتاء",
-                        style: TextStyle(
-                          fontFamily: 'Sans',
-                          fontWeight: FontWeight.w900,
-                          fontSize: 35.0,
-                          letterSpacing: 0.4,
-                          color: Colors.white,
-                        ),
-                      ),
-                    )
+//                    Text(
+//                      "هلا بيك في",
+//                      style: TextStyle(
+//                        color: Colors.white,
+//                        fontWeight: FontWeight.w200,
+//                        fontFamily: "Sans",
+//                        fontSize: 19.0,
+//                      ),
+//                    ),
+//
+//                    /// Animation text Treva Shop to choose Login with Hero Animation (Click to open code)
+//                    Hero(
+//                      tag: "Haftaa",
+//                      child: Text(
+//                        "سوق الهفتاء",
+//                        style: TextStyle(
+//                          fontFamily: 'Sans',
+//                          fontWeight: FontWeight.w900,
+//                          fontSize: 35.0,
+//                          letterSpacing: 0.4,
+//                          color: Colors.white,
+//                        ),
+//                      ),
+//                    )
                   ],
                 ),
               ),
