@@ -277,7 +277,7 @@ class _loginScreenState extends State<loginScreen>
                             /// padding logo
                             Padding(
                                 padding: EdgeInsets.only(
-                                    top: mediaQueryData.padding.top + 40.0)),
+                                    top: mediaQueryData.padding.top + 10.0)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
@@ -312,18 +312,18 @@ class _loginScreenState extends State<loginScreen>
                             ),
 
                             /// ButtonCustomFacebook
-                            Padding(
-                                padding: EdgeInsets.symmetric(vertical: 30.0)),
-                            //buttonCustomFacebook(),
-
-                            /// ButtonCustomGoogle
-                            Padding(
-                                padding: EdgeInsets.symmetric(vertical: 7.0)),
-                            //buttonCustomGoogle(),
-
-                            /// Set Text
-                            Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10.0)),
+//                            Padding(
+//                                padding: EdgeInsets.symmetric(vertical: 30.0)),
+//                            //buttonCustomFacebook(),
+//
+//                            /// ButtonCustomGoogle
+//                            Padding(
+//                                padding: EdgeInsets.symmetric(vertical: 7.0)),
+//                            //buttonCustomGoogle(),
+//
+//                            /// Set Text
+//                            Padding(
+//                                padding: EdgeInsets.symmetric(vertical: 10.0)),
 //                            Text(
 //                              "أو",
 //                              style: TextStyle(

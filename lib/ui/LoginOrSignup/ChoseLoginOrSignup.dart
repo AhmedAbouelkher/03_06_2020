@@ -172,26 +172,44 @@ class _ChoseLoginState extends State<ChoseLogin> with TickerProviderStateMixin {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
-                              /// To create animation if user tap == animation play (Click to open code)
-                              tapLogin == 0
+                              tapSignup == 0
                                   ? Material(
-                                      color: Colors.transparent,
-                                      child: InkWell(
-                                        splashColor: Colors.white,
-                                        onTap: () {
-                                          setState(() {
-                                            tapLogin = 1;
-                                          });
-                                          _Playanimation();
-                                          return tapLogin;
-                                        },
-                                        child: ButtonCustom(txt: "حساب جديد"),
-                                      ),
-                                    )
-                                  : AnimationSplashSignup(
-                                      animationController:
-                                          animationController.view,
-                                    ),
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  splashColor: Colors.white,
+                                  onTap: () {
+                                    setState(() {
+                                      tapSignup = 1;
+                                    });
+                                    _Playanimation();
+                                    return tapSignup;
+                                  },
+                                  child: ButtonCustom(txt: "تسجيل دخول"),
+                                ),
+                              )
+                                  : AnimationSplashLogin(
+                                animationController: animationController.view,
+                              ),
+                              /// To create animation if user tap == animation play (Click to open code)
+//                              tapLogin == 0
+//                                  ? Material(
+//                                      color: Colors.transparent,
+//                                      child: InkWell(
+//                                        splashColor: Colors.white,
+//                                        onTap: () {
+//                                          setState(() {
+//                                            tapLogin = 1;
+//                                          });
+//                                          _Playanimation();
+//                                          return tapLogin;
+//                                        },
+//                                        child: ButtonCustom(txt: "حساب جديد"),
+//                                      ),
+//                                    )
+//                                  : AnimationSplashSignup(
+//                                      animationController:
+//                                          animationController.view,
+//                                    ),
                               Padding(padding: EdgeInsets.only(top: 15.0)),
                               Center(
                                 child: Row(
@@ -240,24 +258,7 @@ class _ChoseLoginState extends State<ChoseLogin> with TickerProviderStateMixin {
                           ),
 
                           /// To create animation if user tap == animation play (Click to open code)
-                          tapSignup == 0
-                              ? Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    splashColor: Colors.white,
-                                    onTap: () {
-                                      setState(() {
-                                        tapSignup = 1;
-                                      });
-                                      _Playanimation();
-                                      return tapSignup;
-                                    },
-                                    child: ButtonCustom(txt: "تسجيل دخول"),
-                                  ),
-                                )
-                              : AnimationSplashLogin(
-                                  animationController: animationController.view,
-                                ),
+
                         ],
                       ),
                     ],
