@@ -168,7 +168,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
 
   signIn() {
     if (code.length != 6) {
-      _showSnackBar("Invalid OTP");
+      _showSnackBar("كود غير صالح");
     }
     Provider.of<PhoneAuthDataProvider>(context, listen: false)
         .verifyOTPAndLogin(smsCode: code);
@@ -332,21 +332,49 @@ class _PhoneAuthState extends State<PhoneAuth> {
            *  where is asked to enter the OTP he has received on his mobile (or) wait for the system to automatically detect the OTP
            */
           SizedBox(height: _fixedPadding * 1.5),
-          RaisedButton(
-            elevation: 16.0,
-            onPressed: startPhoneAuth,
+          InkWell(
+            onTap: startPhoneAuth,
+            // onTap: () => submit(context),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'إرسال الكود',
-                style: TextStyle(
-                     fontSize: 18.0),
+              padding: EdgeInsets.all(30.0),
+              child: Container(
+                height: 55.0,
+                width: 600.0,
+                child: Text(
+                  'إرسال الكود',
+                  style: TextStyle(
+                      color: Colors.white,
+                      letterSpacing: 0.2,
+                      fontFamily: "Sans",
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w800),
+                ),
+                alignment: FractionalOffset.center,
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(color: Colors.black38, blurRadius: 15.0)
+                    ],
+                    borderRadius: BorderRadius.circular(30.0),
+                    gradient: LinearGradient(
+                        colors: <Color>[Color(0xFF121940), Color(0xFF6E48AA)])),
               ),
             ),
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0)),
           ),
+//          RaisedButton(
+//            elevation: 16.0,
+//            onPressed: startPhoneAuth,
+//            child: Padding(
+//              padding: const EdgeInsets.all(8.0),
+//              child: Text(
+//                'إرسال الكود',
+//                style: TextStyle(
+//                     fontSize: 18.0),
+//              ),
+//            ),
+//            color: Colors.white,
+//            shape: RoundedRectangleBorder(
+//                borderRadius: BorderRadius.circular(30.0)),
+//          ),
         ],
       );
   startPhoneAuth() async {
@@ -368,22 +396,22 @@ class _PhoneAuthState extends State<PhoneAuth> {
         });
     if (!validPhone) {
       phoneAuthDataProvider.loading = false;
-      _showSnackBar("Oops! Number seems invaild");
+      _showSnackBar("الرقم غير صالح");
       return;
     }
   }
   onStarted() {
-    _showSnackBar("PhoneAuth started");
+    _showSnackBar("بدء التسجيل");
 //    _showSnackBar(phoneAuthDataProvider.message);
   }
 
   onCodeSent() {
-    _showSnackBar("OPT sent");
+    _showSnackBar("تم إرسال الكود");
 //    _showSnackBar(phoneAuthDataProvider.message);
   }
 
   onCodeResent() {
-    _showSnackBar("OPT resent");
+    _showSnackBar("تم إعادة إرسال الكود");
 //    _showSnackBar(phoneAuthDataProvider.message);
   }
 
@@ -412,13 +440,15 @@ class _PhoneAuthState extends State<PhoneAuth> {
   onError() {
 //    _showSnackBar(phoneAuthDataProvider.message);
     _showSnackBar(
-        "PhoneAuth error ${Provider
+        "خطأ دخول ${Provider
             .of<PhoneAuthDataProvider>(context, listen: false)
             .message}");
   }
 
   onAutoRetrievalTimeOut() {
-    _showSnackBar("PhoneAuth autoretrieval timeout");
+    _showSnackBar("انتهى وقت استرداد الكود");
+
+    //_showSnackBar("PhoneAuth autoretrieval timeout");
 //    _showSnackBar(phoneAuthDataProvider.message);
   }
   @override
@@ -534,13 +564,13 @@ class _PhoneAuthState extends State<PhoneAuth> {
       children: <Widget>[
         _getColumnBody(),
         //getPinField(),
-        (Provider.of<PhoneAuthDataProvider>(context, listen: false).status !=
-                    PhoneAuthState.CodeSent ||
-                Provider.of<PhoneAuthDataProvider>(context, listen: false)
-                        .status ==
-                    null)
-            ? phoneTextbox
-            : Container(),
+//        (Provider.of<PhoneAuthDataProvider>(context, listen: false).status !=
+//                    PhoneAuthState.CodeSent ||
+//                Provider.of<PhoneAuthDataProvider>(context, listen: false)
+//                        .status ==
+//                    null)
+//            ? phoneTextbox
+//            : Container(),
         Padding(
           padding: EdgeInsets.only(top: 10),
         ),
@@ -557,34 +587,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
               fontFamily: 'Sans',
               fontSize: 17.0),
         ),
-        InkWell(
-          onTap: startPhoneAuth,
-          // onTap: () => submit(context),
-          child: Padding(
-            padding: EdgeInsets.all(30.0),
-            child: Container(
-              height: 55.0,
-              width: 600.0,
-              child: Text(
-                'التالي',
-                style: TextStyle(
-                    color: Colors.white,
-                    letterSpacing: 0.2,
-                    fontFamily: "Sans",
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w800),
-              ),
-              alignment: FractionalOffset.center,
-              decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(color: Colors.black38, blurRadius: 15.0)
-                  ],
-                  borderRadius: BorderRadius.circular(30.0),
-                  gradient: LinearGradient(
-                      colors: <Color>[Color(0xFF121940), Color(0xFF6E48AA)])),
-            ),
-          ),
-        )
+
       ],
     );
   }

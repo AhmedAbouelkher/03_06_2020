@@ -19,7 +19,7 @@ class SearchCountryTF extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding:
-      const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 2.0, right: 8.0),
+          const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 2.0, right: 8.0),
       child: Card(
         child: TextFormField(
           autofocus: false,
@@ -75,10 +75,16 @@ class SubTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-        alignment: Alignment.centerLeft,
-        child: Text(' $text',
-            style: TextStyle(color: Colors.white, fontSize: 14.0)));
+    return Padding(
+      padding: const EdgeInsets.only(right:10.0),
+      child: Align(
+        alignment: Alignment.topRight,
+        child:
+            Text(' $text',
+                textAlign: TextAlign.right,
+                style: TextStyle(color: Colors.white, fontSize: 14.0)),
+      ),
+    );
   }
 }
 
