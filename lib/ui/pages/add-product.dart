@@ -482,7 +482,7 @@ class _AddProductState extends State<AddProduct> {
                                   keyboardType: TextInputType.number,
                                   controller: startPriceEditingController,
                                   decoration: InputDecoration(
-                                      labelText: "يبدأ المزاد بسعر",
+                                      labelText: "السعر الابتدائي",
                                       hintText: "يبدأ بـ",
                                       hintStyle:
                                           TextStyle(color: Colors.black54)),
