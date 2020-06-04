@@ -154,7 +154,7 @@ class _AppbarGradientState extends State<AppbarGradient> {
                   onPressed: () {
                     if (Provider.of<PhoneAuthDataProvider>(context,
                                 listen: false)
-                            .status !=
+                            .status ==
                         PhoneAuthState.Verified) {
                       Navigator.pushNamed(context, 'choose-login');
                     } else {
