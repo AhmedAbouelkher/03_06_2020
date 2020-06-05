@@ -408,7 +408,7 @@ class _AdvancedSearchState extends State<AdvancedSearch> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context).push(PageRouteBuilder(
-                          pageBuilder: (_, ___, ____) => new chatItem()));
+                          pageBuilder: (_, ___, ____) => new Chatitem()));
                     },
                     child: Container(
                       height: 40.0,

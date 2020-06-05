@@ -1,19 +1,33 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:haftaa/ListItem/BrandDataList.dart';
+import 'package:haftaa/constants.dart';
 
-class chatItem extends StatefulWidget {
+
+class Chatitem extends StatefulWidget {
+
   @override
-  _chatItemState createState() => _chatItemState();
+  _chatItemState ChatitemState() => _chatItemState();
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return null;
+  }
 }
 
 /// defaultUserName use in a Chat name
 const String defaultUserName = "Alisa Hearth";
 
-class _chatItemState extends State<chatItem> with TickerProviderStateMixin {
+class _chatItemState extends State<Chatitem> with TickerProviderStateMixin {
   final List<Msg> _messages = <Msg>[];
   final TextEditingController _textController = new TextEditingController();
   bool _isWriting = false;
+  final messageTextController = TextEditingController();
+
+  String messageText;
+  final dbRef = FirebaseDatabase.instance.reference().child("Chats").child("chatID");
+
 
   @override
   Widget build(BuildContext ctx) {
@@ -48,7 +62,7 @@ class _chatItemState extends State<chatItem> with TickerProviderStateMixin {
           /// Line
           new Divider(height: 1.5),
           new Container(
-            child: _buildComposer(),
+            child: null/*_buildComposer()*/,
             decoration: new BoxDecoration(
                 color: Theme.of(ctx).cardColor,
                 boxShadow: [BoxShadow(blurRadius: 1.0, color: Colors.black12)]),
@@ -60,63 +74,59 @@ class _chatItemState extends State<chatItem> with TickerProviderStateMixin {
 
   /// Component for typing text
   Widget _buildComposer() {
-    return new IconTheme(
-      data: new IconThemeData(color: Theme.of(context).accentColor),
-      child: new Container(
-          margin: const EdgeInsets.symmetric(horizontal: 9.0),
-          child: new Row(
-            children: <Widget>[
-              Icon(Icons.add,color: Colors.blueAccent,size: 27.0,),
-              new Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 5.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black12),
-
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: new TextField(
-                        keyboardType: TextInputType.number,
-                        controller: _textController,
-                        onChanged: (String txt) {
-                          setState(() {
-                            _isWriting = txt.length > 0;
-                          });
-                        },
-                        onSubmitted: _submitMsg,
-                        decoration: new InputDecoration.collapsed(
-                            hintText: "اكتب قيمة المزايدة ..",
-                            hintStyle: TextStyle(
-                                fontFamily: "Sans",
-                                fontSize: 16.0,
-                                color: Colors.black26)),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              new Container(
-                  margin: new EdgeInsets.symmetric(horizontal: 3.0),
-                  child: Theme.of(context).platform == TargetPlatform.iOS
-                      ? new CupertinoButton(
-                      child: new Text("Submit"),
-                      onPressed: _isWriting
-                          ? () => _submitMsg(_textController.text)
-                          : null)
-                      : new IconButton(
-                    icon: new Icon(Icons.message),
-                    onPressed: _isWriting
-                        ? () => _submitMsg(_textController.text)
-                        : null,
-                  )),
-            ],
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Expanded(
+          child: TextField(
+            style: TextStyle(color: Colors.black),
+            controller: messageTextController,
+            onChanged: (value) {
+              messageText = value;
+            },
+            decoration: kMessageTextFieldDecoration,
           ),
-          decoration: Theme.of(context).platform == TargetPlatform.iOS
-              ? new BoxDecoration(
-                  border: new Border(top: new BorderSide(color: Colors.brown)))
-              : null),
+        ),
+        FlatButton(
+          onPressed: () {
+            messageTextController.clear();
+            dbRef.push().set({
+              "sender": 'Sender1',
+              "text":messageText,
+              "time":DateTime.now().millisecondsSinceEpoch,
+
+            }).then((_) {
+              messageTextController.clear();
+
+            }).catchError((onError) {
+              print(onError);
+            });
+          },
+          child: Text(
+            'Sender1',
+            style: kSendButtonTextStyle,
+          ),
+        ),
+        FlatButton(
+          onPressed: () {
+            dbRef.push().set({
+              "sender": 'Sender2',
+              "text":messageText,
+              "time":DateTime.now().millisecondsSinceEpoch,
+
+            }).then((_) {
+
+              messageTextController.clear();
+            }).catchError((onError) {
+              print(onError);
+            });
+          },
+          child: Text(
+            'Sender2',
+            style: kSendButtonTextStyle,
+          ),
+        ),
+      ],
     );
   }
 

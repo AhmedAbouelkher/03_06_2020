@@ -125,8 +125,6 @@ flutter:
     - assets/avatars/
     - assets/launcher/
     - assets/country_phone_codes.json
-    - assets/solar_slash.png
-
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

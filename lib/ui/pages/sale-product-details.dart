@@ -11,9 +11,9 @@ import 'package:haftaa/ui/widgets/product/product-properties/product-user-widget
 import 'package:haftaa/ui/widgets/product/product-speedial.dart';
 import 'package:haftaa/ui/widgets/share/share-buttons.dart';
 import 'package:haftaa/product/sale-product.dart';
+import 'package:haftaa/ui/HomeUIComponent/Chat/PrivateChatscreen.dart';
 
 import 'package:haftaa/UI/CartUIComponent/CartLayout.dart';
-import 'package:haftaa/UI/HomeUIComponent/ChatItem.dart';
 
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:haftaa/search/search.dart';
@@ -64,7 +64,6 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
     widget._user.then((user) {
       setState(() {
         _user = user;
-        print('bbbb : ${_user.id}');
 
       });
     });
@@ -639,12 +638,33 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                       onTap: () {
 
 
-                        (widget.product.arabicTypeName == 'للبيع' || widget.product.arabicTypeName == 'للشراء')?
+                        if(widget.product.arabicTypeName == 'للبيع' || widget.product.arabicTypeName == 'للشراء'){
 
-                          Navigator.of(context).push(PageRouteBuilder(
-                              pageBuilder: (_, ___, ____) => new chatItem()))
-                           :
-                            null;
+                          var myId = Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid;
+                          var peerId =  _user.id ;
+                          var title = 'شراء - بيع';
+                          var ChatId  = '';
+
+
+
+                            if (myId.hashCode <= peerId.hashCode) {
+                              ChatId = '$myId-$widget.peerId';
+                            } else {
+                              ChatId = '$peerId-$myId';
+                            }
+
+
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                              PrivateChatscreen(
+                                  title ,
+                                  widget.product.id ,
+                                  widget.product.title,
+                                  ChatId,
+                              )));
+                        }
+                        else
+                          {}
+
 
 
                       },

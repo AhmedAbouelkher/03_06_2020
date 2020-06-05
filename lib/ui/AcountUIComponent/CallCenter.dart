@@ -71,7 +71,7 @@ class _callCenterState extends State<callCenter> {
               child: InkWell(
                onTap: () {
                 Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => new chatItem()));
+                    pageBuilder: (_, __, ___) => new Chatitem()));
                },
                child: Center(
                 child: Container(
