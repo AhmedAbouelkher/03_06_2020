@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:haftaa/constants.dart';
+import 'package:haftaa/product/base-product.dart';
 import 'package:haftaa/product/sale-product.dart';
 import 'package:haftaa/providers/phone_auth.dart';
 import 'package:provider/provider.dart';
@@ -10,13 +11,24 @@ var dbRef;
 
 class PrivateChatscreen extends StatefulWidget {
   String title = '';
-  String ChatId = '';
-  var productID ;
-  var productTitle ;
+  String chatId = '';
 
+  BaseProduct product;
 
+  PrivateChatscreen({
+    this.product,
+    this.title,
+    this.chatId,
+  });
 
-  PrivateChatscreen(this.title, this.productID, this.productTitle, this.ChatId);
+  String productTitleFromNotification;
+  String productIdFromNotification;
+
+  PrivateChatscreen.FromNotification(
+      {this.title,
+      this.chatId,
+      this.productTitleFromNotification,
+      this.productIdFromNotification}) ;
 
   @override
   _PrivateChatscreen createState() => _PrivateChatscreen();
@@ -29,14 +41,12 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
 
   @override
   Widget build(BuildContext context) {
-
     dbRef = FirebaseDatabase.instance
         .reference()
         .child("Chat")
         .child("PrivateChat")
-        .child('${widget.productID}')
-        .child('${widget.ChatId}');
-
+        .child('${widget.product.id}')
+        .child('${widget.chatId}');
 
     return SafeArea(
       child: Scaffold(
@@ -65,38 +75,35 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                       width: MediaQuery.of(context).size.width * .2,
                       child: FlatButton(
                         onPressed: () {
+                          if (messageText.isEmpty || messageText == null) {
+                          } else {
+                            messageTextController.clear();
+                            dbRef.push().set({
+                              "sender":
+                                  '${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber}',
+                              "text": messageText,
+                              "time": DateTime.now().millisecondsSinceEpoch,
+                            }).catchError((onError) {
+                              print(onError);
+                            });
+                          }
 
-
-                          if(messageText.isEmpty || messageText == null){}
-                          else
-                            {
-
-                              messageTextController.clear();
-                              dbRef.push().set({
-                                "sender": '${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber}',
-                                "text":messageText,
-                                "time":DateTime.now().millisecondsSinceEpoch,
-
-                              }).catchError((onError) {
-                                print(onError);
-                              });
-                            }
-
-                            // notification
-                          FirebaseDatabase.instance.reference()
+                          // notification
+                          FirebaseDatabase.instance
+                              .reference()
                               .child('Notification')
-                              .child('${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid}')
-                              .child('${widget.productID}')
+                              .child('${widget.product.userId}')
+                              .child('${widget.product.id}')
                               .update({
-                                  "sender": '${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber}',
-                                  "text":messageText,
-                                  "time":DateTime.now().millisecondsSinceEpoch,
-                                  "ChatID" : widget.ChatId,
-                                  "ProID" : widget.productID,
-                                  "ProTitle" : widget.productTitle,
-                                  "Title" : widget.title,
-                              });
-
+                            "senderPhone":
+                                '${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber}',
+                            "text": messageText,
+                            "time": DateTime.now().millisecondsSinceEpoch,
+                            "chatID": widget.chatId,
+                            "productID": widget.product.id,
+                            "productTitle": widget.product.title,
+                            "title": widget.title,
+                          });
                         },
                         child: Icon(
                           Icons.send,
@@ -107,7 +114,6 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                     Expanded(
                       child: TextField(
                         textAlign: TextAlign.start,
-
                         style: TextStyle(
                             fontSize: MediaQuery.of(context).size.width * .05),
                         keyboardType: TextInputType.multiline,
@@ -115,8 +121,6 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                         controller: messageTextController,
                         onChanged: (value) {
                           messageText = value;
-
-
                         },
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
@@ -124,12 +128,10 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                               horizontal:
                                   MediaQuery.of(context).size.width * .05),
                           hintText: 'اكتب رسالتك....',
-
                           border: InputBorder.none,
                         ),
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -141,10 +143,7 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
   }
 }
 
-
-
 class MessagesStream extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -152,42 +151,39 @@ class MessagesStream extends StatelessWidget {
         builder: (context, snap) {
           if (snap.data?.snapshot?.value == null) {
             return NoMessage();
+          } else {
+            Map data = snap.data.snapshot.value;
+            List<MsgModel> item = [];
 
+            for (var i in data.values) {
+              item.add(MsgModel.fromJson(i));
+            }
+
+            item.sort((a, b) => b.time.compareTo(a.time));
+
+            return Expanded(
+              child: ListView.builder(
+                reverse: true,
+                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+                itemCount: item.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return MessageBubble(
+                    text: item[index].text,
+                    isMe: Provider.of<PhoneAuthDataProvider>(context,
+                                listen: false)
+                            .isLoggedIn ==
+                        true,
+                  );
+                },
+              ),
+            );
           }
-           else
-             {
-               Map data = snap.data.snapshot.value;
-               List<MsgModel> item = [];
-
-               for (var i in data.values) {
-                 item.add(MsgModel.fromJson(i));
-               }
-
-               item.sort((a, b) => b.time.compareTo(a.time));
-
-               return Expanded(
-                 child: ListView.builder(
-                   reverse: true,
-                   padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-                   itemCount: item.length,
-                   itemBuilder: (BuildContext context, int index) {
-                     return MessageBubble(
-                       text: item[index].text,
-                       isMe:  Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true,
-                     );
-                   },
-                 ),
-               );
-             }
-
-
         });
   }
 }
 
 class MessageBubble extends StatelessWidget {
   MessageBubble({this.text, this.isMe});
-
 
   final String text;
   final bool isMe;
@@ -200,7 +196,6 @@ class MessageBubble extends StatelessWidget {
         crossAxisAlignment:
             isMe ? CrossAxisAlignment.start : CrossAxisAlignment.end,
         children: <Widget>[
-
           Material(
             borderRadius: isMe
                 ? BorderRadius.only(

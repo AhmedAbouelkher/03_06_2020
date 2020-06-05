@@ -7,45 +7,41 @@ import 'package:provider/provider.dart';
 
 var dbRef;
 
-
 class notification extends StatefulWidget {
   @override
   _notificationState createState() => _notificationState();
 }
 
 class _notificationState extends State<notification> {
-
   Widget build(BuildContext context) {
-    dbRef = FirebaseDatabase.instance
-        .reference()
-        .child("Notification")
-        .child("${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid}");
+    dbRef = FirebaseDatabase.instance.reference().child("Notification").child(
+        "${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid}");
 
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Text(
-            "إشعارات",
-            style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 18.0,
-                color: Colors.black54,
-                fontFamily: "Gotik"),
-          ),
-          iconTheme: IconThemeData(
-            color: const Color(0xFF6991C7),
-          ),
-          centerTitle: true,
-          elevation: 0.0,
-          backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text(
+          "إشعارات",
+          style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 18.0,
+              color: Colors.black54,
+              fontFamily: "Gotik"),
         ),
-        body: NotificationsStream(),
+        iconTheme: IconThemeData(
+          color: const Color(0xFF6991C7),
+        ),
+        centerTitle: true,
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+      ),
+      body: NotificationsStream(),
     );
   }
 }
-class NotificationsStream extends StatelessWidget {
 
+class NotificationsStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -53,54 +49,53 @@ class NotificationsStream extends StatelessWidget {
         builder: (context, snap) {
           if (snap.hasData && snap.data.snapshot.value != null) {
             Map data = snap.data.snapshot.value;
-            List<Post> item = [];
+            List<NotificationModel> notificationItems = [];
 
             for (var i in data.values) {
-              item.add(Post.fromJson(i));
+              notificationItems.add(NotificationModel.fromJson(i));
             }
 
-            item.sort((a, b) => b.time.compareTo(a.time));
+            notificationItems.sort((a, b) => b.time.compareTo(a.time));
 
             return ListView.builder(
               padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-              itemCount: item.length,
+              itemCount: notificationItems.length,
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                        PrivateChatscreen(
-                            item[index].Title ,
-                            item[index].ProID ,
-                            item[index].ProTitle,
-                            item[index].ChatID
-                        )));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                PrivateChatscreen.FromNotification(
+                                  title: notificationItems[index].title,
+                                  chatId: notificationItems[index].chatID,
+                                  productTitleFromNotification:
+                                      notificationItems[index].productTitle,
+                                  productIdFromNotification:
+                                      notificationItems[index].productID,
+                                )));
                   },
                   child: PostCard(
-                    item[index].sender,
-                    item[index].text,
-                    item[index].time,
-                    item[index].ChatID,
-                    item[index].ProID,
-                    item[index].ProTitle,
-                    item[index].Title,
+                    notificationItems[index].senderPhone,
+                    notificationItems[index].text,
+                    notificationItems[index].time,
+                    notificationItems[index].chatID,
+                    notificationItems[index].productID,
+                    notificationItems[index].productTitle,
+                    notificationItems[index].title,
                   ),
                 );
               },
             );
-          }
-          else
-          {
+          } else {
             return noItemNotifications();
-
           }
-
-
         });
   }
 }
 
 class PostCard extends StatelessWidget {
-
   String sender;
   String text;
   String time;
@@ -109,8 +104,8 @@ class PostCard extends StatelessWidget {
   String ProTitle;
   String Title;
 
-
-  PostCard(this.sender, this.text, this.time, this.ChatID, this.ProID, this.ProTitle, this.Title);
+  PostCard(this.sender, this.text, this.time, this.ChatID, this.ProID,
+      this.ProTitle, this.Title);
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +121,8 @@ class PostCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(right: 8,top: 8 , left: 5,bottom: 8),
+              padding:
+                  const EdgeInsets.only(right: 8, top: 8, left: 5, bottom: 8),
               child: SizedBox(
                 height: 100,
                 child: Image.asset("assets/img/Logo.png"),
@@ -136,38 +132,39 @@ class PostCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(ProTitle, style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),),
-                  Text(sender,style: TextStyle(
-                    fontSize: 12,
+                  Text(
+                    ProTitle,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
                   ),
+                  Text(
+                    sender,
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(text,)
-
-
+                  Text(
+                    text,
+                  )
                 ],
               ),
             ),
-
           ],
-        )
-    );
+        ));
   }
 }
 
-
 class noItemNotifications extends StatelessWidget {
   @override
-
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
-    return  Container(
+    return Container(
       width: 500.0,
       child: SingleChildScrollView(
         child: Column(
@@ -175,7 +172,7 @@ class noItemNotifications extends StatelessWidget {
           children: <Widget>[
             Padding(
                 padding:
-                EdgeInsets.only(top: mediaQueryData.padding.top + 100.0)),
+                    EdgeInsets.only(top: mediaQueryData.padding.top + 100.0)),
             Image.asset(
               "assets/img/noNotification.png",
               height: 200.0,
@@ -195,5 +192,3 @@ class noItemNotifications extends StatelessWidget {
     );
   }
 }
-
-

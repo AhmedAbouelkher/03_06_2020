@@ -84,12 +84,13 @@ class _ProfileState extends State<Profile> {
                 ),
                 InkWell(
                   onTap: () {
-                    PhoneAuthState phoneAuthState =
-                        Provider.of<PhoneAuthDataProvider>(context,
-                                listen: false)
-                            .status;
 
-                    if (phoneAuthState == PhoneAuthState.Verified) {
+
+                    if (Provider.of<PhoneAuthDataProvider>(context,
+                        listen: false).isLoggedIn
+
+
+                    ) {
                       var user = Provider.of<PhoneAuthDataProvider>(context,
                               listen: false)
                           .user;

@@ -1,26 +1,26 @@
 
-class Post {
+class NotificationModel {
 
-  String sender;
+  String senderPhone;
   String text;
   String time;
-  String ChatID;
-  String ProID;
-  String ProTitle;
-  String Title;
+  String chatID;
+  String productID;
+  String productTitle;
+  String title;
 
 
-  Post(this.sender, this.text, this.time, this.ChatID, this.ProID, this.ProTitle, this.Title);
+  NotificationModel(this.senderPhone, this.text, this.time, this.chatID, this.productID, this.productTitle, this.title);
 
-  factory Post.fromJson(Map<dynamic, dynamic> json) {
-    return Post(
-      json['sender'],
+  factory NotificationModel.fromJson(Map<dynamic, dynamic> json) {
+    return NotificationModel(
+      json['senderPhone'],
       json['text'],
       json['time'].toString(),
-      json['ChatID'],
-      json['ProID'],
-      json['ProTitle'],
-      json['Title'].toString(),
+      json['chatID'],
+      json['productID'],
+      json['productTitle'],
+      json['title'].toString(),
 
     );
   }

@@ -652,10 +652,9 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => PrivateChatscreen(
-                                              title,
-                                              widget.product.id,
-                                              widget.product.title,
-                                              ChatId,
+                                              product: widget.product,
+                                              chatId: ChatId,
+                                              title: title,
                                             )));
                               } else {}
                             },
