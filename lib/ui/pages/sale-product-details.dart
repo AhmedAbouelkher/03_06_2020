@@ -42,7 +42,8 @@ var _txtCustomSub = TextStyle(
 class SaleProductDetails extends StatefulWidget {
   final SaleProduct product;
   Future<User> _user;
-  SaleProductDetails(this.product,this._user);
+
+  SaleProductDetails(this.product, this._user);
 
   @override
   _SaleProductDetailsState createState() => _SaleProductDetailsState();
@@ -64,20 +65,17 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
     widget._user.then((user) {
       setState(() {
         _user = user;
-
       });
     });
 
-    if(Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true){
-
-      var x = Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid;
+    if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn ==
+        true) {
+      var x =
+          Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid;
       print('isLoggedIn:true : ${x}');
-
-
-
     }
-
   }
+
   /// Declaration List item HomeGridItemRe....dart Class
 
   _SaleProductDetailsState();
@@ -259,12 +257,11 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                       //   AssetImage('assets/img/man.png'),
                       //   AssetImage('assets/img/man.png'),
                       // ],
-                      images: List.generate(widget.product.images.length,
-                          (index) {
-                        return new NetworkImage(
-                            widget.product.images[index]);
+                      images:
+                          List.generate(widget.product.images.length, (index) {
+                        return new NetworkImage(widget.product.images[index]);
                       })
-                        ..add(new NetworkImage(widget.product.mainImage)),
+                            ..add(new NetworkImage(widget.product.mainImage)),
                     ),
                   ),
                 ),
@@ -299,8 +296,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                         height: 1.0,
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                        padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
@@ -311,25 +307,20 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                   width: 75.0,
                                   decoration: BoxDecoration(
                                     color: Colors.lightGreen,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(20.0)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
                                   ),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
-                                        widget.product.used
-                                            ? 'مستعمل'
-                                            : 'جديد',
-                                        style:
-                                            TextStyle(color: Colors.white),
+                                        widget.product.used ? 'مستعمل' : 'جديد',
+                                        style: TextStyle(color: Colors.white),
                                       ),
                                       Padding(
-                                          padding:
-                                              EdgeInsets.only(right: 8.0)),
+                                          padding: EdgeInsets.only(right: 8.0)),
                                       // Icon(
                                       //   Icons.star,
                                       //   color: Colors.white,
@@ -343,9 +334,9 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                             Padding(
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: (Provider.of<PhoneAuthDataProvider>(
-                                                    context,
-                                                    listen: false)
-                                                .isLoggedIn &&
+                                                context,
+                                                listen: false)
+                                            .isLoggedIn &&
                                         Provider.of<PhoneAuthDataProvider>(
                                                     context,
                                                     listen: false)
@@ -356,14 +347,13 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10)),
-                                            side: BorderSide(
-                                                color: Colors.teal)),
+                                            side:
+                                                BorderSide(color: Colors.teal)),
                                         color: Colors.blueAccent,
                                         onPressed: () {
                                           Navigator.of(context).push(
                                               PageRouteBuilder(
-                                                  pageBuilder: (_, __,
-                                                          ___) =>
+                                                  pageBuilder: (_, __, ___) =>
                                                       new AddProduct.edit(
                                                           widget.product)));
                                         },
@@ -403,8 +393,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                 child: Container(
                   height: 250.0,
                   width: 600.0,
-                  decoration:
-                      BoxDecoration(color: Colors.white, boxShadow: [
+                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
                     BoxShadow(
                       color: Color(0xFF656565).withOpacity(0.15),
                       blurRadius: 1.0,
@@ -490,8 +479,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                 child: Container(
                   height: 205.0,
                   width: 600.0,
-                  decoration:
-                      BoxDecoration(color: Colors.white, boxShadow: [
+                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
                     BoxShadow(
                       color: Color(0xFF656565).withOpacity(0.15),
                       blurRadius: 1.0,
@@ -633,55 +621,57 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     /// Chat Icon
-                    Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true?
-                    InkWell(
-                      onTap: () {
+                    Provider.of<PhoneAuthDataProvider>(context, listen: false)
+                                    .isLoggedIn ==
+                                true &&
+                            Provider.of<PhoneAuthDataProvider>(context,
+                                        listen: false)
+                                    .user
+                                    .uid !=
+                                widget.product.userId
+                        ? InkWell(
+                            onTap: () {
+                              if (widget.product.type == 'sale' ||
+                                  widget.product.type == 'request') {
+                                var myId = Provider.of<PhoneAuthDataProvider>(
+                                        context,
+                                        listen: false)
+                                    .user
+                                    .uid;
+                                var peerId = _user.id;
+                                var title = 'شراء - بيع';
+                                var ChatId = '';
 
+                                if (myId.hashCode <= peerId.hashCode) {
+                                  ChatId = '$myId-$widget.peerId';
+                                } else {
+                                  ChatId = '$peerId-$myId';
+                                }
 
-                        if(widget.product.arabicTypeName == 'للبيع' || widget.product.arabicTypeName == 'للشراء'){
-
-                          var myId = Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid;
-                          var peerId =  _user.id ;
-                          var title = 'شراء - بيع';
-                          var ChatId  = '';
-
-
-
-                            if (myId.hashCode <= peerId.hashCode) {
-                              ChatId = '$myId-$widget.peerId';
-                            } else {
-                              ChatId = '$peerId-$myId';
-                            }
-
-
-                          Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                              PrivateChatscreen(
-                                  title ,
-                                  widget.product.id ,
-                                  widget.product.title,
-                                  ChatId,
-                              )));
-                        }
-                        else
-                          {}
-
-
-
-                      },
-                      child: Container(
-                        height: 40.0,
-                        width: 60.0,
-                        decoration: BoxDecoration(
-                            color: Colors.white12.withOpacity(0.1),
-                            border: Border.all(color: Colors.black12)),
-                        child: Center(
-                          child: Image.asset("assets/icon/message.png",
-                              height: 20.0),
-                        ),
-                      ),
-                    )
-                    :
-                    Container(),
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => PrivateChatscreen(
+                                              title,
+                                              widget.product.id,
+                                              widget.product.title,
+                                              ChatId,
+                                            )));
+                              } else {}
+                            },
+                            child: Container(
+                              height: 40.0,
+                              width: 60.0,
+                              decoration: BoxDecoration(
+                                  color: Colors.white12.withOpacity(0.1),
+                                  border: Border.all(color: Colors.black12)),
+                              child: Center(
+                                child: Image.asset("assets/icon/message.png",
+                                    height: 20.0),
+                              ),
+                            ),
+                          )
+                        : Container(),
 
                     /// Button Pay
                     InkWell(

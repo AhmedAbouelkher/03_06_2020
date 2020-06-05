@@ -56,52 +56,17 @@ class _RequestProductItemGridState extends State<RequestProductItemGrid> {
                 Hero(
                   tag: "hero-grid-${widget.productItem.id}",
                   child: Material(
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(PageRouteBuilder(
-                            opaque: false,
-                            pageBuilder: (BuildContext context, _, __) {
-                              return new Material(
-                                color: Colors.black54,
-                                child: Container(
-                                  padding: EdgeInsets.all(30.0),
-                                  child: InkWell(
-                                    child: Hero(
-                                        tag:
-                                        "hero-grid-${widget.productItem.id}",
-                                        child: Image.network(
-                                            widget.productItem.mainImage)
-
-                                      // Image.asset(
-                                      //   productItem.img,
-                                      //   width: 300.0,
-                                      //   height: 300.0,
-                                      //   alignment: Alignment.center,
-                                      //   fit: BoxFit.contain,
-                                      // )
-
-                                    ),
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ),
-                              );
-                            },
-                            transitionDuration: Duration(milliseconds: 500)));
-                      },
-                      child: Container(
-                        height: mediaQueryData.size.height / 3.3,
-                        width: 200.0,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(7.0),
-                                topRight: Radius.circular(7.0)),
-                            image: DecorationImage(
-                                image: new NetworkImage(
-                                    widget.productItem.mainImage),
-                                fit: BoxFit.cover)),
-                      ),
+                    child: Container(
+                      height: mediaQueryData.size.height / 3.3,
+                      width: 200.0,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(7.0),
+                              topRight: Radius.circular(7.0)),
+                          image: DecorationImage(
+                              image: new NetworkImage(
+                                  widget.productItem.mainImage),
+                              fit: BoxFit.cover)),
                     ),
                   ),
                 ),

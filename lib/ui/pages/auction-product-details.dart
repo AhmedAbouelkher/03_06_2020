@@ -612,38 +612,38 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Container(
-                      height: 40.0,
-                      width: 60.0,
-                      decoration: BoxDecoration(
-                          color: Colors.white12.withOpacity(0.1),
-                          border: Border.all(color: Colors.black12)),
-                      child: Center(
-                        child: Image.asset(
-                          "assets/icon/shopping-cart.png",
-                          height: 23.0,
-                        ),
-                      ),
-                    ),
+//                    Container(
+//                      height: 40.0,
+//                      width: 60.0,
+//                      decoration: BoxDecoration(
+//                          color: Colors.white12.withOpacity(0.1),
+//                          border: Border.all(color: Colors.black12)),
+//                      child: Center(
+//                        child: Image.asset(
+//                          "assets/icon/shopping-cart.png",
+//                          height: 23.0,
+//                        ),
+//                      ),
+//                    ),
 
                     /// Icon Message in bottom layout with Flexible
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(PageRouteBuilder(
-                            pageBuilder: (_, ___, ____) => new Chatitem()));
-                      },
-                      child: Container(
-                        height: 40.0,
-                        width: 60.0,
-                        decoration: BoxDecoration(
-                            color: Colors.white12.withOpacity(0.1),
-                            border: Border.all(color: Colors.black12)),
-                        child: Center(
-                          child: Image.asset("assets/icon/message.png",
-                              height: 20.0),
-                        ),
-                      ),
-                    ),
+//                    InkWell(
+//                      onTap: () {
+//                        Navigator.of(context).push(PageRouteBuilder(
+//                            pageBuilder: (_, ___, ____) => new Chatitem()));
+//                      },
+//                      child: Container(
+//                        height: 40.0,
+//                        width: 60.0,
+//                        decoration: BoxDecoration(
+//                            color: Colors.white12.withOpacity(0.1),
+//                            border: Border.all(color: Colors.black12)),
+//                        child: Center(
+//                          child: Image.asset("assets/icon/message.png",
+//                              height: 20.0),
+//                        ),
+//                      ),
+//                    ),
 
                     /// Button Pay
                     InkWell(

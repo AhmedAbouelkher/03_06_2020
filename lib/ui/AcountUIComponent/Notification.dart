@@ -182,7 +182,7 @@ class noItemNotifications extends StatelessWidget {
             ),
             Padding(padding: EdgeInsets.only(bottom: 30.0)),
             Text(
-              "Not Have Notification",
+              "لا يوجد إشعارات جديدة",
               style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 18.5,

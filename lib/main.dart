@@ -63,7 +63,7 @@ class myApp extends StatelessWidget {
             primaryColorLight: Colors.white,
             primaryColorBrightness: Brightness.light,
             primaryColor: Colors.white),
-        debugShowCheckedModeBanner: true,
+        debugShowCheckedModeBanner: false,
         //home: AddProduct(),
         //home: testFirebase(),
         home: SplashScreen(),

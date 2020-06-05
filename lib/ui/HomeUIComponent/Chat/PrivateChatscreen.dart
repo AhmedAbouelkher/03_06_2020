@@ -150,7 +150,7 @@ class MessagesStream extends StatelessWidget {
     return StreamBuilder(
         stream: dbRef.onValue,
         builder: (context, snap) {
-          if (snap.data.snapshot.value == null) {
+          if (snap.data?.snapshot?.value == null) {
             return NoMessage();
 
           }

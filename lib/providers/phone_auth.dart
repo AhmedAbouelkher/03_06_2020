@@ -76,7 +76,7 @@ class PhoneAuthDataProvider with ChangeNotifier {
     this.onError = onError;
     this.onAutoRetrievalTimeout = onAutoRetrievalTimeout;
 
-    if (phoneNumberController.text.length < 10) {
+    if (phoneNumberController.text.length <6) {
       return false;
     }
     phone = dialCode + phoneNumberController.text;

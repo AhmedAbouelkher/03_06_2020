@@ -172,21 +172,36 @@ class _AppbarGradientState extends State<AppbarGradient> {
           ),
 
           /// Icon chat (if user click navigate to chat layout)
-          InkWell(
-              onTap: () {
-                Navigator.of(context).push(
-                    PageRouteBuilder(pageBuilder: (_, __, ___) => new chat()));
-              },
-              child: Image.asset(
-                "assets/img/chat.png",
-                height: media.devicePixelRatio + 20.0,
-              )),
+//          InkWell(
+//              onTap: () {
+//                Navigator.of(context).push(
+//                    PageRouteBuilder(pageBuilder: (_, __, ___) => new chat()));
+//              },
+//              child: Image.asset(
+//                "assets/img/chat.png",
+//                height: media.devicePixelRatio + 20.0,
+//              )),
 
           /// Icon notification (if user click navigate to notification layout)
           InkWell(
             onTap: () {
-              Navigator.of(context).push(PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => new notification()));
+
+
+
+              if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true) {
+
+                Navigator.of(context).push(PageRouteBuilder(
+                    pageBuilder: (_, __, ___) =>
+                    new notification()));
+
+              } else {
+                Navigator.pushNamed(context, 'choose-login');
+              }
+
+
+
+//              Navigator.of(context).push(PageRouteBuilder(
+//                  pageBuilder: (_, __, ___) => new notification()));
             },
             child: Stack(
               alignment: AlignmentDirectional(-3.0, -3.0),
@@ -195,11 +210,22 @@ class _AppbarGradientState extends State<AppbarGradient> {
                   "assets/img/notifications-button.png",
                   height: 24.0,
                 ),
+                Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn?
+
                 CircleAvatar(
                   radius: 8.6,
                   backgroundColor: Colors.redAccent,
                   child: Text(
                     CountNotice,
+                    style: TextStyle(fontSize: 13.0, color: Colors.white),
+                  ),
+                ):
+
+                CircleAvatar(
+                  radius: 0,
+                  backgroundColor: Colors.redAccent,
+                  child: Text(
+                    '',
                     style: TextStyle(fontSize: 13.0, color: Colors.white),
                   ),
                 )
