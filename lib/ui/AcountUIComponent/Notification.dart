@@ -1,5 +1,12 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:haftaa/ListItem/notificationsData.dart';
+import 'package:haftaa/providers/phone_auth.dart';
+import 'package:haftaa/ui/HomeUIComponent/Chat/PrivateChatscreen.dart';
+import 'package:provider/provider.dart';
+
+var dbRef;
+
 
 class notification extends StatefulWidget {
   @override
@@ -7,35 +14,13 @@ class notification extends StatefulWidget {
 }
 
 class _notificationState extends State<notification> {
-  final List<Post> items = new List();
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      items.add(  Post(
-          image:"assets/img/Logo.png",
-          id: 1,
-          title:"مزايدة جديدة",
-          desc: "يوجد مزايدة على مزاد سيارة جيب"),);
-      items.add( Post(
-          image:"assets/img/Logo.png",
-          id: 2,
-          title:"مزايدة جديدة",
-          desc: "يوجد مزايدة على مزاد ساعة ذهبية"),);
-      // items.add( Post(
-      //     image:"assets/img/Logo.png",
-      //     id: 3,
-      //     title:"Treva Shop",
-      //     desc: "Pending List Item Shoes"),);
-      // items.add( Post(
-      //     image:"assets/img/Logo.png",
-      //     id: 4,
-      //     title:"Treva Shop",
-      //     desc: "Get 10% Discount for macbook pro 2018"),);
-    });
-  }
 
   Widget build(BuildContext context) {
+    dbRef = FirebaseDatabase.instance
+        .reference()
+        .child("Notification")
+        .child("${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid}");
+
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
@@ -55,77 +40,128 @@ class _notificationState extends State<notification> {
           elevation: 0.0,
           backgroundColor: Colors.white,
         ),
-        body: items.length>0?
-        ListView.builder(
-            itemCount: items.length,
-            padding: const EdgeInsets.all(5.0),
-            itemBuilder: (context, position) {
-              return Dismissible(
-                  key: Key(items[position].id.toString()),
-                  onDismissed: (direction) {
-                    setState(() {
-                      items.removeAt(position);
-                    });
-                  },
-                  background: Container(
-                    color: Color(0xFF6991C7),
-                  ),
-                  child: Container(
-                    height: 88.0,
-                    child: Column(
-                      children: <Widget>[
-                        Divider(height: 5.0),
-                        ListTile(
-                          title: Text(
-                            '${items[position].title}',
-                            style: TextStyle(
-                                fontSize: 17.5,
-                                color: Colors.black87,
-                                fontWeight: FontWeight.w600
-                            ),
-                          ),
-                          subtitle: Padding(
-                            padding: const EdgeInsets.only(top:6.0),
-                            child: Container(
-                              width: 440.0,
-                              child: Text(
-                                '${items[position].desc}',
-                                style: new TextStyle(
-                                    fontSize: 15.0,
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.black38
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ),
-                          leading: Column(
-                            children: <Widget>[
-                              Container(
-                                height: 40.0,
-                                width: 40.0,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(60.0)),
-                                    image: DecorationImage(image: AssetImage('${items[position].image}'),fit: BoxFit.cover)
-                                ),
-                              )
-                            ],
-                          ),
-                          onTap: () => _onTapItem(context, items[position]),
-                        ),
-                        Divider(height: 5.0),
-                      ],
-                    ),
-                  ));
-            }):noItemNotifications()
+        body: NotificationsStream(),
     );
   }
 }
-void _onTapItem(BuildContext context, Post post) {
-  Scaffold
-      .of(context)
-      .showSnackBar(new SnackBar(content: new Text(post.id.toString() + ' - ' + post.title)));
+class NotificationsStream extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+        stream: dbRef.onValue,
+        builder: (context, snap) {
+          if (snap.hasData && snap.data.snapshot.value != null) {
+            Map data = snap.data.snapshot.value;
+            List<Post> item = [];
+
+            for (var i in data.values) {
+              item.add(Post.fromJson(i));
+            }
+
+            item.sort((a, b) => b.time.compareTo(a.time));
+
+            return ListView.builder(
+              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+              itemCount: item.length,
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                        PrivateChatscreen(
+                            item[index].Title ,
+                            item[index].ProID ,
+                            item[index].ProTitle,
+                            item[index].ChatID
+                        )));
+                  },
+                  child: PostCard(
+                    item[index].sender,
+                    item[index].text,
+                    item[index].time,
+                    item[index].ChatID,
+                    item[index].ProID,
+                    item[index].ProTitle,
+                    item[index].Title,
+                  ),
+                );
+              },
+            );
+          }
+          else
+          {
+            return noItemNotifications();
+
+          }
+
+
+        });
+  }
 }
+
+class PostCard extends StatelessWidget {
+
+  String sender;
+  String text;
+  String time;
+  String ChatID;
+  String ProID;
+  String ProTitle;
+  String Title;
+
+
+  PostCard(this.sender, this.text, this.time, this.ChatID, this.ProID, this.ProTitle, this.Title);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        margin: EdgeInsets.all(10),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Colors.white70, width: 1),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        color: Colors.white,
+        elevation: 20,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 8,top: 8 , left: 5,bottom: 8),
+              child: SizedBox(
+                height: 100,
+                child: Image.asset("assets/img/Logo.png"),
+              ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(ProTitle, style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),),
+                  Text(sender,style: TextStyle(
+                    fontSize: 12,
+                  ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(text,)
+
+
+                ],
+              ),
+            ),
+
+          ],
+        )
+    );
+  }
+}
+
+
 class noItemNotifications extends StatelessWidget {
   @override
 
