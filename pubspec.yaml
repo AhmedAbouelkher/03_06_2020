@@ -61,9 +61,10 @@ dependencies:
 
 
 flutter_icons:
-  android: "launcher_icon"
+  image_path: "assets/launcher/icon_hourse.png"
+  android: true
   ios: true
-  image_path: "assets/launcher/icon.png"
+
 
 
 dev_dependencies:
@@ -71,6 +72,7 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^1.8.1
   json_serializable: ^3.3.0
+  flutter_launcher_icons: ^0.7.5
 
 
 

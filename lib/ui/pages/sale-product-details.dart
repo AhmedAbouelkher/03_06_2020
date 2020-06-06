@@ -392,7 +392,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
               Padding(
                 padding: const EdgeInsets.only(top: 10.0),
                 child: Container(
-                  height: 250.0,
+                  height: 150.0,
                   width: 600.0,
                   decoration: BoxDecoration(color: Colors.white, boxShadow: [
                     BoxShadow(
