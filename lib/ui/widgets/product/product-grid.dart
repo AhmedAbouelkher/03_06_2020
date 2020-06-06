@@ -82,6 +82,9 @@ class _ProductGridState extends State<ProductGrid> {
 
   @override
   Widget build(BuildContext context) {
+
+
+    var productList=  Provider.of<ProductProvider>(context).productList;
     return
 
       ///  Grid item in bottom of Category
@@ -143,7 +146,7 @@ class _ProductGridState extends State<ProductGrid> {
                 shrinkWrap: true,
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
                 primary: false,
-                itemCount: Provider.of<ProductProvider>(context).productList.length,
+                itemCount: productList.length,
                 itemBuilder: (context, index) {
 
                   if (Provider.of<ProductProvider>(context).productList[index]

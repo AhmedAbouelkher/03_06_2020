@@ -145,10 +145,17 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 
     /// Declare device Size
     var deviceSize = MediaQuery.of(context).size;
-    var sliderImages = Provider.of<ProductProvider>(context)
+    var sliderProducts = Provider.of<ProductProvider>(context)
         .productList
         .where((element) => element.displayInMobileHome == true)
         .toList();
+
+    var images = [
+      NetworkImage(
+          "http://icons.iconarchive.com/icons/paomedia/small-n-flat/24/map-marker-icon.png"),
+    ];
+    images = List.generate(sliderProducts.length,
+        (index) => NetworkImage(sliderProducts[index].mainImage));
 
     /// ImageSlider in header
     var imageSlider = Container(
@@ -163,14 +170,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
         overlayShadow: true,
         overlayShadowColors: Colors.white.withOpacity(0.9),
         overlayShadowSize: 0.9,
-        images: [
-
-          AssetImage("assets/img/baner1.png"),
-          AssetImage("assets/img/baner12.png"),
-          AssetImage("assets/img/baner2.png"),
-          AssetImage("assets/img/baner3.png"),
-          AssetImage("assets/img/baner4.png"),
-        ],
+        images: images,
       ),
     );
     var categoryIconGrid = CategoryIconsGrid();

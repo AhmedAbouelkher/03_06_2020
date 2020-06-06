@@ -43,51 +43,49 @@ class myApp extends StatelessWidget {
       statusBarColor: Colors.transparent, //or set color with: Color(0xFF0000FF)
     ));
 
-    return ProviderCustom(
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => CountryProvider(),
-          ),
-          ChangeNotifierProvider(
-            create: (context) => PhoneAuthDataProvider()..currentuser(),
-          ),
-          ChangeNotifierProvider(
-            create: (context) => ProductProvider(),
-          ),
-        ],
-        child: MaterialApp(
-          title: "سوق الهفتاء",
-          theme: ThemeData(
-              brightness: Brightness.light,
-              backgroundColor: Colors.white,
-              primaryColorLight: Colors.white,
-              primaryColorBrightness: Brightness.light,
-              primaryColor: Colors.white),
-          debugShowCheckedModeBanner: false,
-          //home: AddProduct(),
-          //home: testFirebase(),
-          home: SplashScreen(),
-          localizationsDelegates: [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate
-          ],
-          supportedLocales: [const Locale('ar')],
-
-          /// Move splash screen to ChoseLogin Layout
-          /// Routes
-          routes: <String, WidgetBuilder>{
-            "onBoarding": (BuildContext context) => new onBoarding(),
-            "home": (BuildContext context) => new bottomNavigationBar(),
-            // "root": (BuildContext context) => new BottomNavigationBar(items: <BottomNavigationBarItem>[],),
-            "choose-login": (BuildContext context) => new ChoseLogin(),
-          },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => CountryProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => PhoneAuthDataProvider()..currentuser(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProductProvider()..startLoading(-1),
+        ),
+      ],
+      child: MaterialApp(
+        title: "سوق الهفتاء",
+        theme: ThemeData(
+            brightness: Brightness.light,
+            backgroundColor: Colors.white,
+            primaryColorLight: Colors.white,
+            primaryColorBrightness: Brightness.light,
+            primaryColor: Colors.white),
+        debugShowCheckedModeBanner: false,
+        //home: AddProduct(),
+        //home: testFirebase(),
+        home: SplashScreen(),
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate
+        ],
+        supportedLocales: [const Locale('ar')],
+
+        /// Move splash screen to ChoseLogin Layout
+        /// Routes
+        routes: <String, WidgetBuilder>{
+          "onBoarding": (BuildContext context) => new onBoarding(),
+          "home": (BuildContext context) => new bottomNavigationBar(),
+          // "root": (BuildContext context) => new BottomNavigationBar(items: <BottomNavigationBarItem>[],),
+          "choose-login": (BuildContext context) => new ChoseLogin(),
+        },
+      ),
 //      child: MaterialApp(
 //        home: PhoneAuthGetPhone(),
 //        debugShowCheckedModeBanner: false,
 //      ),
-      ),
     );
 //    return Provider(
 //      auth: Auth(),

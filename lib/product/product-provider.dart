@@ -18,9 +18,9 @@ class ProductProvider extends ChangeNotifier {
 
   List<BaseProduct> productList = List<BaseProduct>();
 //product list observable subject
-  BehaviorSubject<List<BaseProduct>> _subjectProducts;
-  BehaviorSubject<List<BaseProduct>> get productsObservable =>
-      _subjectProducts.stream;
+  //BehaviorSubject<List<BaseProduct>> _subjectProducts;
+//  BehaviorSubject<List<BaseProduct>> get productsObservable =>
+//      _subjectProducts.stream;
 //product observable subject
   BehaviorSubject<BaseProduct> _subjectProduct = BehaviorSubject<BaseProduct>();
 
@@ -30,13 +30,13 @@ class ProductProvider extends ChangeNotifier {
   int startLoadingWithCount;
   ProductProvider({this.searchModel, this.startLoadingWithCount}) {
     //products obervable subject
-    _subjectProducts =
-    new BehaviorSubject<List<BaseProduct>>.seeded(productList);
-    //product observable subject
-    _subjectProduct.stream.listen(_onProductObjectAdded);
+//    _subjectProducts =
+//    new BehaviorSubject<List<BaseProduct>>.seeded(productList);
+//    //product observable subject
+//    _subjectProduct.stream.listen(_onProductObjectAdded);
 
 //start loading
-    startLoading(startLoadingWithCount ?? -1);
+    //startLoading(startLoadingWithCount ?? 1);
   }
   bool _isItemMatchedToSearch(BaseProduct product) {
     if (searchModel == null) {
@@ -80,6 +80,12 @@ class ProductProvider extends ChangeNotifier {
   Stream<Event> _onProductChildAddedStream;
   Stream<Event> _onProductChildUpdatedStream;
   startLoading(int limit) async {
+//    _subjectProducts =
+//    new BehaviorSubject<List<BaseProduct>>.seeded(productList);
+    //product observable subject
+    _subjectProduct.stream.listen(_onProductObjectAdded);
+
+
     _onProductChildAddedStream =
         _productRepositoy.getProducts(limit, searchModel);
     //_onProductChildUpdatedStream = searchQuery.onChildChanged;
@@ -96,7 +102,8 @@ class ProductProvider extends ChangeNotifier {
       return;
     }
     productList.add(product);
-    _subjectProducts.sink.add(productList);
+    notifyListeners();
+    //_subjectProducts.sink.add(productList);
   }
 
   bool gettingMorePorducts = false;
@@ -141,7 +148,7 @@ class ProductProvider extends ChangeNotifier {
     if (product != null) {
       _subjectProduct.sink.add(product);
     }
-    //notifyListeners();
+    notifyListeners();
   }
 
   void _onProductUpdated(Event event) {
@@ -173,7 +180,7 @@ class ProductProvider extends ChangeNotifier {
 
   @override
   dispose() {
-    _subjectProducts.drain();
-    _subjectProducts.close();
+//    _subjectProducts.drain();
+//    _subjectProducts.close();
   }
 }
