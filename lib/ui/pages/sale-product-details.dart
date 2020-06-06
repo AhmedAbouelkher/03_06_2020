@@ -69,12 +69,8 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
       });
     });
 
-    if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn ==
-        true) {
-      var x =
-          Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid;
-      print('isLoggedIn:true : ${x}');
-    }
+
+
   }
 
   /// Declaration List item HomeGridItemRe....dart Class
@@ -656,6 +652,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                               product: widget.product,
                                               chatId: ChatId,
                                               title: title,
+                                              peerId: peerId,
                                             )));
                               } else {}
                             },

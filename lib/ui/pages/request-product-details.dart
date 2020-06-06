@@ -639,6 +639,8 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                                     product: product,
                                     chatId: ChatId,
                                     title: title,
+                                    peerId: peerId,
+
                                   )));
                         } else {}
 
