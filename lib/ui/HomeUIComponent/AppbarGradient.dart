@@ -164,7 +164,17 @@ class _AppbarGradientState extends State<AppbarGradient> {
                     Icons.add_circle_outline,
                     color: Colors.white,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true) {
+
+                      Navigator.of(context).push(PageRouteBuilder(
+                          pageBuilder: (_, __, ___) =>
+                          new AddProduct.newOne()));
+
+                    } else {
+                      Navigator.pushNamed(context, 'choose-login');
+                    }
+                  },
                 )
               ],
             ),
