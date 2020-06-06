@@ -151,11 +151,10 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
         .toList();
 
     var images = [
-      NetworkImage(
-          "http://icons.iconarchive.com/icons/paomedia/small-n-flat/24/map-marker-icon.png"),
+      AssetImage("assets/img/bannerMan1.png"),
     ];
-    images = List.generate(sliderProducts.length,
-        (index) => NetworkImage(sliderProducts[index].mainImage));
+//    images.addAll(List.generate(sliderProducts.length,
+//        (index) => NetworkImage(sliderProducts[index].mainImage)));
 
     /// ImageSlider in header
     var imageSlider = Container(
@@ -170,7 +169,9 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
         overlayShadow: true,
         overlayShadowColors: Colors.white.withOpacity(0.9),
         overlayShadowSize: 0.9,
-        images: images,
+        images: [
+          AssetImage("assets/img/bannerMan1.png"),
+        ],
       ),
     );
     var categoryIconGrid = CategoryIconsGrid();
