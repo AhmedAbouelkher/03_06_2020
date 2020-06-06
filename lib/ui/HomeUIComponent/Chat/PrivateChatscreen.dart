@@ -13,23 +13,29 @@ class PrivateChatscreen extends StatefulWidget {
   String chatId = '';
 
   BaseProduct product;
+  var peerId ;
 
   PrivateChatscreen({
     this.product,
     this.title,
     this.chatId,
+    this.peerId
   });
 
   String productTitleFromNotification;
   String productIdFromNotification;
   String userpProductIDFromNotification;
+  String myIDFromNotification;
+  String peerIdFromNotification;
 
   PrivateChatscreen.FromNotification(
       {this.title,
       this.chatId,
       this.productTitleFromNotification,
       this.productIdFromNotification,
-      this.userpProductIDFromNotification
+      this.userpProductIDFromNotification,
+      this.peerIdFromNotification,
+      this.myIDFromNotification
       }) ;
 
   @override
@@ -108,11 +114,13 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                             FirebaseDatabase.instance
                                 .reference()
                                 .child('Notification')
-                                .child('${widget.userpProductIDFromNotification}')
+                                .child('${widget.userpProductIDFromNotification==Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid?widget.myIDFromNotification:widget.userpProductIDFromNotification}')
                                 .child('${widget.productIdFromNotification}')
                                 .update({
                               "senderPhone":
                               '${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber}',
+                              "myID":
+                              '${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid}',
                               "text": messageText,
                               "time": DateTime.now().millisecondsSinceEpoch,
                               "chatID": widget.chatId,
@@ -120,16 +128,19 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                               "productTitle": widget.productTitleFromNotification,
                               "userpProductID": widget.userpProductIDFromNotification,
                               "title": widget.title,
+                              "peerId" : widget.peerIdFromNotification,
                             });
                           }else{
                             FirebaseDatabase.instance
                                 .reference()
                                 .child('Notification')
-                                .child('${widget.product.userId}')
+                                .child('${widget.product.userId==Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid?widget.peerId:widget.product.userId}')
                                 .child('${widget.product.id}')
                                 .update({
                               "senderPhone":
                               '${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber}',
+                              "myID":
+                              '${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid}',
                               "text": messageText,
                               "time": DateTime.now().millisecondsSinceEpoch,
                               "chatID": widget.chatId,
@@ -137,6 +148,8 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                               "userpProductID": widget.product.userId,
                               "productTitle": widget.product.title,
                               "title": widget.title,
+                              "peerId" : widget.peerId,
+
                             });
                           }
 

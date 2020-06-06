@@ -74,7 +74,13 @@ class NotificationsStream extends StatelessWidget {
                                       notificationItems[index].productTitle,
                                   productIdFromNotification:
                                       notificationItems[index].productID,
-                                )));
+                                  userpProductIDFromNotification:notificationItems[index].userpProductID,
+                                  peerIdFromNotification: notificationItems[index].peerId,
+                                  myIDFromNotification:notificationItems[index].myID ,
+
+
+                                ))
+                    );
                   },
                   child: PostCard(
                     notificationItems[index].senderPhone,
@@ -84,6 +90,10 @@ class NotificationsStream extends StatelessWidget {
                     notificationItems[index].productID,
                     notificationItems[index].productTitle,
                     notificationItems[index].title,
+                    notificationItems[index].userpProductID,
+                    notificationItems[index].myID,
+                    notificationItems[index].peerId,
+
                   ),
                 );
               },
@@ -103,9 +113,13 @@ class PostCard extends StatelessWidget {
   String ProID;
   String ProTitle;
   String Title;
+  String userpProductID;
+  String myID;
+  String peerId;
+
 
   PostCard(this.sender, this.text, this.time, this.ChatID, this.ProID,
-      this.ProTitle, this.Title);
+      this.ProTitle, this.Title, this.userpProductID , this.myID , this.peerId);
 
   @override
   Widget build(BuildContext context) {
