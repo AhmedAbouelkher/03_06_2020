@@ -1,6 +1,8 @@
+import 'package:haftaa/Enums/enums.dart';
 import 'package:haftaa/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:haftaa/providers/phone_auth.dart';
+import 'package:haftaa/ui/HomeUIComponent/Chat/PrivateChatscreen.dart';
 import 'package:haftaa/ui/pages/products-list.dart';
 import 'package:haftaa/provider/provider.dart';
 import 'package:haftaa/ui/pages/add-product.dart';
@@ -597,26 +599,51 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Container(
-                      height: 40.0,
-                      width: 60.0,
-                      decoration: BoxDecoration(
-                          color: Colors.white12.withOpacity(0.1),
-                          border: Border.all(color: Colors.black12)),
-                      child: Center(
-                        child: Image.asset(
-                          "assets/icon/shopping-cart.png",
-                          height: 23.0,
-                        ),
-                      ),
-                    ),
 
                     /// Icon Message in bottom layout with Flexible
+                    Provider.of<PhoneAuthDataProvider>(context, listen: false)
+                        .isLoggedIn ==
+                        true &&
+                        Provider.of<PhoneAuthDataProvider>(context,
+                            listen: false)
+                            .user
+                            .uid !=
+                            product.userId
+                        ?
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).push(PageRouteBuilder(
-                            pageBuilder: (_, ___, ____) => new Chatitem()));
-                      },
+
+
+
+                        if (product.type == ItemType.sale ||
+                            product.type == ItemType.request) {
+                          var myId = Provider.of<PhoneAuthDataProvider>(
+                              context,
+                              listen: false)
+                              .user
+                              .uid;
+                          var peerId = product.userId;
+                          var title = 'شراء - بيع';
+                          var ChatId = '';
+
+                          if (myId.hashCode <= peerId.hashCode) {
+                            ChatId = '$myId-$peerId';
+                          } else {
+                            ChatId = '$peerId-$myId';
+                          }
+
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PrivateChatscreen(
+                                    product: product,
+                                    chatId: ChatId,
+                                    title: title,
+                                  )));
+                        } else {}
+
+
+                        },
                       child: Container(
                         height: 40.0,
                         width: 60.0,
@@ -628,7 +655,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                               height: 20.0),
                         ),
                       ),
-                    ),
+                    ): Container(),
 
                     /// Button Pay
                     InkWell(

@@ -633,7 +633,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                         ? InkWell(
                             onTap: () {
                               if (widget.product.type == ItemType.sale ||
-                                  widget.product.type == ItemType.request ) {
+                                  widget.product.type == ItemType.request) {
                                 var myId = Provider.of<PhoneAuthDataProvider>(
                                         context,
                                         listen: false)
@@ -644,7 +644,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                 var ChatId = '';
 
                                 if (myId.hashCode <= peerId.hashCode) {
-                                  ChatId = '$myId-$widget.peerId';
+                                  ChatId = '$myId-$peerId';
                                 } else {
                                   ChatId = '$peerId-$myId';
                                 }
