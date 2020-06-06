@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 
 class BaseProduct {
   BaseProduct();
+
   String _id;
   String _userId;
   Future<User> _user;
@@ -33,6 +34,7 @@ class BaseProduct {
   Future<Governorate> _governorate;
   List<String> _images = [];
   Map<dynamic, dynamic> _favUsers = Map();
+  bool _displayInMobileHome = false;
 
   BaseProduct.map(dynamic obj) {
     this._id = obj['id'];
@@ -41,36 +43,49 @@ class BaseProduct {
   }
 
   String get id => _id;
+
   set id(value) {
     _id = value;
   }
 
   String get userId => _userId;
+
   set userId(value) {
     _userId = value;
   }
 
   bool get used => _used;
+
   set used(value) {
     _used = value;
   }
 
+  bool get displayInMobileHome => _displayInMobileHome;
+
+  set displayInMobileHome(value) {
+    _displayInMobileHome = value;
+  }
+
   DateTime get updateDate => _updateDate;
+
   set updateDate(value) {
     _updateDate = value;
   }
 
   ItemType get type => _type;
+
   set type(value) {
     _type = value;
   }
 
   String get title => _title;
+
   set title(value) {
     _title = value;
   }
 
   Map<dynamic, dynamic> get favUsers => _favUsers;
+
   set favUsers(value) {
     _favUsers = value;
   }
@@ -100,16 +115,19 @@ class BaseProduct {
   }
 
   String get mainImage => _mainImage;
+
   set mainImage(value) {
     _mainImage = value;
   }
 
   String get governorateId => _governorateId;
+
   set governorateId(value) {
     _governorateId = value;
   }
 
   String get description => _description;
+
   set description(value) {
     _description = value;
   }
@@ -120,16 +138,19 @@ class BaseProduct {
   }
 
   DateTime get creationDate => _creationDate;
+
   set creationDate(value) {
     _creationDate = value;
   }
 
   String get categoryId => _categoryId;
+
   set categoryId(value) {
     _categoryId = value;
   }
 
   String get regionId => _regionId;
+
   set regionId(value) {
     _regionId = value;
   }
@@ -167,6 +188,7 @@ class BaseProduct {
   }
 
   bool get available => _available;
+
   set available(value) {
     _available = value;
   }
@@ -193,6 +215,7 @@ class BaseProduct {
   }
 
   List<String> get images => _images;
+
   set images(value) {
     _images = value;
   }
@@ -226,27 +249,27 @@ class BaseProduct {
     _title = mapedData['title'] == null ? '' : mapedData['title'];
 
     //todo: make image local
-    _mainImage = mapedData['mainImage'] ;
+    _mainImage = mapedData['mainImage'];
     // == null
     //     ? 'http://endpointworks.com/content/images/2018/10/Registry_Editor_icon.png'
     //     : mapedData['mainImage'];
 
     _governorateId =
-    mapedData['governorateId'] == null ? '' : mapedData['governorateId'];
+        mapedData['governorateId'] == null ? '' : mapedData['governorateId'];
 
     _regionId = mapedData['regionID'] == null ? '' : mapedData['regionID'];
 
     _description =
-    mapedData['description'] == null ? '' : mapedData['description'];
+        mapedData['description'] == null ? '' : mapedData['description'];
 
     try {
-      _creationDate = mapedData['creationDate'] ;
+      _creationDate = mapedData['creationDate'];
     } catch (e) {
       _creationDate = null;
     }
 
     _categoryId =
-    mapedData['categoryId'] == null ? '-' : mapedData['categoryId'];
+        mapedData['categoryId'] == null ? '-' : mapedData['categoryId'];
 
     if (mapedData['images'] != null) {
       for (final image in mapedData['images']) {
@@ -259,7 +282,10 @@ class BaseProduct {
     }
 
     _available = mapedData['available'];
+    _displayInMobileHome = mapedData['displayInMobileHome'];
+
   }
+
   BaseProduct.fromSnapshot(DataSnapshot snapshot) {
     //print('emoo:' + snapshot.value['title']);
 
@@ -299,7 +325,7 @@ class BaseProduct {
         : snapshot.value['governorateId'];
 
     _regionId =
-    snapshot.value['regionID'] == null ? '' : snapshot.value['regionID'];
+        snapshot.value['regionID'] == null ? '' : snapshot.value['regionID'];
 
     _description = snapshot.value['description'] == null
         ? ''
@@ -329,7 +355,9 @@ class BaseProduct {
     }
 
     _available = snapshot.value['available'];
+    _displayInMobileHome = snapshot.value['displayInMobileHome'] ?? false;
   }
+
   Map<String, dynamic> toJson() {
     return {
       'available': available,
@@ -344,7 +372,8 @@ class BaseProduct {
       'updateDate': updateDate == null ? null : updateDate.toString(),
       'used': used,
       'userId': userId,
-      'used': used
+      'used': used,
+      'displayInMobileHome': displayInMobileHome,
     };
   }
 }

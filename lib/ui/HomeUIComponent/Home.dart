@@ -2,6 +2,7 @@ import 'package:haftaa/authentication/auth.dart';
 import 'package:haftaa/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:haftaa/ListItem/HomeGridItemRecomended.dart';
+import 'package:haftaa/product/product-provider.dart';
 import 'package:haftaa/ui/widgets/category/category-icons-grid/category-icons-grid.dart';
 import 'package:haftaa/ui/widgets/product/product-list-horizontal/product-list-horizontal.dart';
 import 'package:haftaa/ui/HomeUIComponent/AppbarGradient.dart';
@@ -14,6 +15,7 @@ import 'package:haftaa/ui/HomeUIComponent/PromotionDetail.dart';
 import 'package:haftaa/ui/widgets/product/product-grid.dart';
 import 'package:haftaa/provider/provider.dart';
 import 'package:haftaa/search/search.dart';
+import 'package:provider/provider.dart';
 
 class Menu extends StatefulWidget {
   @override
@@ -82,7 +84,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
   void _scrollListener() {
     print(listScrollController.position.extentAfter);
     if (listScrollController.position.extentAfter < 100) {
-      ProviderCustom.of(context).productBloc.loadMoreProducts(2);
+      Provider.of<ProductProvider>(context).loadMoreProducts(2);
     }
   }
 
@@ -143,6 +145,16 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 
     /// Declare device Size
     var deviceSize = MediaQuery.of(context).size;
+    var sliderProducts = Provider.of<ProductProvider>(context)
+        .productList
+        .where((element) => element.displayInMobileHome == true)
+        .toList();
+
+    var images = [
+      AssetImage("assets/img/bannerMan1.png"),
+    ];
+//    images.addAll(List.generate(sliderProducts.length,
+//        (index) => NetworkImage(sliderProducts[index].mainImage)));
 
     /// ImageSlider in header
     var imageSlider = Container(
@@ -158,11 +170,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
         overlayShadowColors: Colors.white.withOpacity(0.9),
         overlayShadowSize: 0.9,
         images: [
-          AssetImage("assets/img/baner1.png"),
-          AssetImage("assets/img/baner12.png"),
-          AssetImage("assets/img/baner2.png"),
-          AssetImage("assets/img/baner3.png"),
-          AssetImage("assets/img/baner4.png"),
+          AssetImage("assets/img/bannerMan1.png"),
         ],
       ),
     );
@@ -293,7 +301,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
     );
 
     ProductSearchModel auctionSearh =
-    ProductSearchModel.FromSearchParams(productTypeInArabic: 'مزاد');
+        ProductSearchModel.FromSearchParams(productTypeInArabic: 'مزاد');
     var auctionList = ProductListHorizontal.Search(
       titleFirstWord: 'مزادات',
       titleSecondWord: 'مفتوحة',
@@ -321,7 +329,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
             children: <Widget>[
               Padding(
                 padding:
-                EdgeInsets.only(left: mediaQueryData.padding.left + 20),
+                    EdgeInsets.only(left: mediaQueryData.padding.left + 20),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -355,7 +363,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                   ),
                   Padding(
                     padding:
-                    EdgeInsets.only(top: mediaQueryData.padding.top + 30),
+                        EdgeInsets.only(top: mediaQueryData.padding.top + 30),
                   ),
                   Text(
                     "End sale in :",
@@ -621,7 +629,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                 primary: false,
                 children: List.generate(
                   gridItemArray.length,
-                      (index) => ItemGrid(gridItemArray[index]),
+                  (index) => ItemGrid(gridItemArray[index]),
                 ))
           ],
         ),
@@ -685,6 +693,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 class ItemGrid extends StatelessWidget {
   /// Get data from HomeGridItem.....dart class
   GridItem gridItem;
+
   ItemGrid(this.gridItem);
 
   @override
@@ -797,7 +806,7 @@ class ItemGrid extends StatelessWidget {
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0),
+                      const EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -853,14 +862,14 @@ class flashSaleItem extends StatelessWidget {
 
   flashSaleItem(
       {this.image,
-        this.title,
-        this.normalprice,
-        this.discountprice,
-        this.ratingvalue,
-        this.place,
-        this.stock,
-        this.colorLine,
-        this.widthLine});
+      this.title,
+      this.normalprice,
+      this.discountprice,
+      this.ratingvalue,
+      this.place,
+      this.stock,
+      this.colorLine,
+      this.widthLine});
 
   @override
   Widget build(BuildContext context) {
@@ -901,7 +910,7 @@ class flashSaleItem extends StatelessWidget {
                     ),
                     Padding(
                       padding:
-                      EdgeInsets.only(right: 8.0, left: 3.0, top: 15.0),
+                          EdgeInsets.only(right: 8.0, left: 3.0, top: 15.0),
                       child: Text(title,
                           style: TextStyle(
                               fontSize: 10.5,
@@ -1006,7 +1015,7 @@ class flashSaleItem extends StatelessWidget {
                         decoration: BoxDecoration(
                             color: Color(colorLine),
                             borderRadius:
-                            BorderRadius.all(Radius.circular(4.0)),
+                                BorderRadius.all(Radius.circular(4.0)),
                             shape: BoxShape.rectangle),
                       ),
                     )
@@ -1050,15 +1059,15 @@ class CategoryItemValue extends StatelessWidget {
           ),
           child: Center(
               child: Text(
-                title,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: "Berlin",
-                  fontSize: 18.5,
-                  letterSpacing: 0.7,
-                  fontWeight: FontWeight.w800,
-                ),
-              )),
+            title,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: "Berlin",
+              fontSize: 18.5,
+              letterSpacing: 0.7,
+              fontWeight: FontWeight.w800,
+            ),
+          )),
         ),
       ),
     );
@@ -1072,17 +1081,17 @@ class CategoryIconValue extends StatelessWidget {
 
   CategoryIconValue(
       {this.icon1,
-        this.tap1,
-        this.icon2,
-        this.tap2,
-        this.icon3,
-        this.tap3,
-        this.icon4,
-        this.tap4,
-        this.title1,
-        this.title2,
-        this.title3,
-        this.title4});
+      this.tap1,
+      this.icon2,
+      this.tap2,
+      this.icon3,
+      this.tap3,
+      this.icon4,
+      this.tap4,
+      this.title1,
+      this.title2,
+      this.title3,
+      this.title4});
 
   @override
   Widget build(BuildContext context) {

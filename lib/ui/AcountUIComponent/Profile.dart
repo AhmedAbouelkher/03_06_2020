@@ -94,7 +94,7 @@ class _ProfileState extends State<Profile> {
                       var user = Provider.of<PhoneAuthDataProvider>(context,
                               listen: false)
                           .user;
-                      // var user = ProviderCustom.of(context).auth.user;
+                      // var user = Provider.of<ProductProvider>(context).auth.user;
                       Navigator.of(context).push(
                         PageRouteBuilder(
                             pageBuilder: (_, __, ___) => new EditProfile(
@@ -137,7 +137,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     firebaseuser =
         Provider.of<PhoneAuthDataProvider>(context, listen: false).user;
-    //firebaseuser = ProviderCustom.of(context).auth.firebaseUser;
+    //firebaseuser = Provider.of<ProductProvider>(context).auth.firebaseUser;
     var loginRawMaterial = Column(
       children: <Widget>[
         Container(
@@ -178,7 +178,7 @@ class _ProfileState extends State<Profile> {
 
     /// Declare MediaQueryData
     MediaQueryData mediaQueryData = MediaQuery.of(context);
-    // final auth = ProviderCustom.of(context).auth;
+    // final auth = Provider.of<ProductProvider>(context).auth;
 
     /// To Sett PhotoProfile,Name and Edit Profile
     var _profile = Padding(
@@ -201,7 +201,7 @@ class _ProfileState extends State<Profile> {
                   : loginRawMaterial,
               // getLogedInPart(),
 //              StreamBuilder<FirebaseUser>(
-//                stream: ProviderCustom.of(context).auth.onAuthStateChanged,
+//                stream: Provider.of<ProductProvider>(context).auth.onAuthStateChanged,
 //                builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
 //                  if (snapshot.hasData) {
 //                    return getLogedInPart(snapshot.data);

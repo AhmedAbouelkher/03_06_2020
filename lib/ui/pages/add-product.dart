@@ -8,6 +8,7 @@ import 'package:haftaa/models/image-file.dart';
 import 'package:haftaa/product/auction-product.dart';
 import 'package:haftaa/product/base-product.dart';
 import 'package:haftaa/product/product-controller.dart';
+import 'package:haftaa/product/product-provider.dart';
 import 'package:haftaa/product/request-product.dart';
 import 'package:haftaa/product/sale-product.dart';
 import 'package:haftaa/provider/image-provider.dart';
@@ -433,7 +434,7 @@ class _AddProductState extends State<AddProduct> {
                       selectedGovernorate: selected_Governorate,
                       selectionIsRequired: true,
                       hintText: "اختر المحافظة",
-                      title: "المحافظة",
+                      title: "المدينة",
                       onChange: (Governorate governorate) {
                         onGovernorateSelectChanged(governorate);
                       },
@@ -776,7 +777,7 @@ class _AddProductState extends State<AddProduct> {
         completer.complete(productMap);
         break;
       case ItemType.auction:
-        Settings settings = await ProviderCustom.of(context).settings;
+        Settings settings = await Provider.of<ProductProvider>(context).settings;
         productMap['options'] = {
           'startPrice': double.parse(startPriceEditingController.value.text),
           'status': 'open',

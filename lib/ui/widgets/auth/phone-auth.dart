@@ -63,12 +63,12 @@ class _PhoneAuthState extends State<PhoneAuth> {
 //      return;
 //    }
 //    try {
-//      final AuthResult authResult = await ProviderCustom.of(context)
+//      final AuthResult authResult = await Provider.of<ProductProvider>(context)
 //          .auth
 //          .signInWithPhoneNumber(textCodeController.text);
-//      await ProviderCustom.of(context).auth.refreshUserData();
+//      await Provider.of<ProductProvider>(context).auth.refreshUserData();
 //      final User currentUser =
-//          await ProviderCustom.of(context).auth.currentUser();
+//          await Provider.of<ProductProvider>(context).auth.currentUser();
 //      assert(authResult.user.uid == currentUser.id);
 //
 //      Navigator.pushAndRemoveUntil(
@@ -106,21 +106,21 @@ class _PhoneAuthState extends State<PhoneAuth> {
 //      setState(() {
 //        errorMessage = '';
 //      });
-//      await ProviderCustom.of(context)
+//      await Provider.of<ProductProvider>(context)
 //          .auth
 //          .verifyPhoneNumber(
 //            phone: textPhoneController.text,
 //            verificationCompleted: (authCredential) async {
 //              //rdirect to home page
-//              final AuthResult authResult = await ProviderCustom.of(context)
+//              final AuthResult authResult = await Provider.of<ProductProvider>(context)
 //                  .auth
 //                  .signInWithCredential(authCredential)
 //                  .catchError((onError) {
 //                var ss;
 //              });
-//              await ProviderCustom.of(context).auth.refreshUserData();
+//              await Provider.of<ProductProvider>(context).auth.refreshUserData();
 //              final User currentUser =
-//                  await ProviderCustom.of(context).auth.currentUser();
+//                  await Provider.of<ProductProvider>(context).auth.currentUser();
 //              assert(authResult.user.uid == currentUser.id);
 //
 //              Navigator.pushAndRemoveUntil(
