@@ -423,7 +423,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
-                                  "المحافظة",
+                                  "المدينة",
                                   style: _txtCustomSub,
                                 ),
                                 ProductGovernorateWidget(
@@ -434,36 +434,36 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 20.0, right: 20.0, left: 60.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text("المنطقة", style: _txtCustomSub),
-                                ProductRegionWidget(
-                                    product.region,
-                                    _txtCustomHead.copyWith(
-                                        fontSize: 17.0,
-                                        fontWeight: FontWeight.w600))
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 20.0, right: 20.0, left: 60.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text("صاحب المنتج", style: _txtCustomSub),
-                                ProductUserWidget(
-                                    product.user,
-                                    _txtCustomHead.copyWith(
-                                        fontSize: 17.0,
-                                        fontWeight: FontWeight.w600))
-                              ],
-                            ),
-                          )
+//                          Padding(
+//                            padding: const EdgeInsets.only(
+//                                top: 20.0, right: 20.0, left: 60.0),
+//                            child: Row(
+//                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                              children: <Widget>[
+//                                Text("المنطقة", style: _txtCustomSub),
+//                                ProductRegionWidget(
+//                                    product.region,
+//                                    _txtCustomHead.copyWith(
+//                                        fontSize: 17.0,
+//                                        fontWeight: FontWeight.w600))
+//                              ],
+//                            ),
+//                          ),
+//                          Padding(
+//                            padding: const EdgeInsets.only(
+//                                top: 20.0, right: 20.0, left: 60.0),
+//                            child: Row(
+//                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                              children: <Widget>[
+//                                Text("صاحب المنتج", style: _txtCustomSub),
+//                                ProductUserWidget(
+//                                    product.user,
+//                                    _txtCustomHead.copyWith(
+//                                        fontSize: 17.0,
+//                                        fontWeight: FontWeight.w600))
+//                              ],
+//                            ),
+//                          )
                         ],
                       ),
                     ),

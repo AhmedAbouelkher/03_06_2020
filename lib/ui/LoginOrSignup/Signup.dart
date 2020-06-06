@@ -37,7 +37,7 @@ class _SignupState extends State<Signup> with TickerProviderStateMixin {
     _warningMessage = '';
     if (validate()) {
 //      try {
-//        final auth = ProviderCustom.of(context).auth;
+//        final auth = Provider.of<ProductProvider>(context).auth;
 //
 //        setState(() {
 //          _isRegistring = true;

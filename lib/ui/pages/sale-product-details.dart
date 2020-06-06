@@ -428,7 +428,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(
-                              "المحافظة",
+                              "المدينة",
                               style: _txtCustomSub,
                             ),
                             ProductGovernorateWidget(
@@ -439,36 +439,36 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 20.0, right: 20.0, left: 60.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text("المنطقة", style: _txtCustomSub),
-                            ProductRegionWidget(
-                                widget.product.region,
-                                _txtCustomHead.copyWith(
-                                    fontSize: 17.0,
-                                    fontWeight: FontWeight.w600))
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 20.0, right: 20.0, left: 60.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text("صاحب المنتج", style: _txtCustomSub),
-                            ProductUserWidget(
-                                widget.product.user,
-                                _txtCustomHead.copyWith(
-                                    fontSize: 17.0,
-                                    fontWeight: FontWeight.w600)),
-                          ],
-                        ),
-                      ),
+//                      Padding(
+//                        padding: const EdgeInsets.only(
+//                            top: 20.0, right: 20.0, left: 60.0),
+//                        child: Row(
+//                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                          children: <Widget>[
+//                            Text("المنطقة", style: _txtCustomSub),
+//                            ProductRegionWidget(
+//                                widget.product.region,
+//                                _txtCustomHead.copyWith(
+//                                    fontSize: 17.0,
+//                                    fontWeight: FontWeight.w600))
+//                          ],
+//                        ),
+//                      ),
+//                      Padding(
+//                        padding: const EdgeInsets.only(
+//                            top: 20.0, right: 20.0, left: 60.0),
+//                        child: Row(
+//                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                          children: <Widget>[
+//                            Text("صاحب المنتج", style: _txtCustomSub),
+//                            ProductUserWidget(
+//                                widget.product.user,
+//                                _txtCustomHead.copyWith(
+//                                    fontSize: 17.0,
+//                                    fontWeight: FontWeight.w600)),
+//                          ],
+//                        ),
+//                      ),
                     ],
                   ),
                 ),

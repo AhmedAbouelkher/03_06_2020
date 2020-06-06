@@ -421,7 +421,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
-                                  "المحافظة",
+                                  "المدينة",
                                   style: _txtCustomSub,
                                 ),
                                 ProductGovernorateWidget(

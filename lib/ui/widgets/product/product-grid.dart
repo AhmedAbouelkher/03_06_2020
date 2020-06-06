@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:haftaa/product/auction-product.dart';
 import 'package:haftaa/product/base-product.dart';
+import 'package:haftaa/product/product-provider.dart';
 import 'package:haftaa/product/request-product.dart';
 import 'package:haftaa/product/sale-product.dart';
 
@@ -12,6 +13,7 @@ import 'package:haftaa/ui/widgets/product/sale-product-itemGrid.dart';
 import 'package:haftaa/ui/widgets/product/request-product-itemGrid.dart';
 import 'package:haftaa/product/product-controller.dart';
 import 'package:haftaa/search/search.dart';
+import 'package:provider/provider.dart';
 
 class ProductGrid extends StatefulWidget {
   ProductGrid() ;
@@ -141,20 +143,21 @@ class _ProductGridState extends State<ProductGrid> {
                 shrinkWrap: true,
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
                 primary: false,
-                itemCount: ProviderCustom.of(context).productBloc.productList.length,
+                itemCount: Provider.of<ProductProvider>(context).productList.length,
                 itemBuilder: (context, index) {
-                  if (ProviderCustom.of(context).productBloc.productList[index]
+
+                  if (Provider.of<ProductProvider>(context).productList[index]
                   is SaleProduct) {
                     return SaleProductItemGrid(
-                        ProviderCustom.of(context).productBloc.productList[index]);
-                  } else if (ProviderCustom.of(context).productBloc.productList[index]
+                        Provider.of<ProductProvider>(context).productList[index]);
+                  } else if (Provider.of<ProductProvider>(context).productList[index]
                   is AuctionProduct) {
                     return AuctionProductItemGrid(
-                        ProviderCustom.of(context).productBloc.productList[index]);
-                  } else if (ProviderCustom.of(context).productBloc.productList[index]
+                        Provider.of<ProductProvider>(context).productList[index]);
+                  } else if (Provider.of<ProductProvider>(context).productList[index]
                   is RequestProduct) {
                     return RequestProductItemGrid(
-                        ProviderCustom.of(context).productBloc.productList[index]);
+                        Provider.of<ProductProvider>(context).productList[index]);
                   }
                 },
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

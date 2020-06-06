@@ -41,7 +41,7 @@ class _loginScreenState extends State<loginScreen>
     _warningMessage = '';
     if (validate()) {
 //      try {
-//        final auth = ProviderCustom.of(context).auth;
+//        final auth = Provider.of<ProductProvider>(context).auth;
 //        if (_formType == FormType.login) {
 //          setState(() {
 //            _isLoging = true;

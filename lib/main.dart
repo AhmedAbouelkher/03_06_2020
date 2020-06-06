@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:haftaa/authentication/firebase-authenticate.dart';
 import 'package:haftaa/bloc/product-bloc.dart';
+import 'package:haftaa/product/product-provider.dart';
 import 'package:haftaa/providers/countries.dart';
 import 'package:haftaa/providers/phone_auth.dart';
 import 'package:haftaa/settings/settings_controller.dart';
@@ -11,6 +12,7 @@ import 'package:haftaa/ui/LoginOrSignup/ChoseLoginOrSignup.dart';
 import 'package:haftaa/ui/HomeUIComponent/Home.dart';
 import 'package:haftaa/ui/OnBoarding.dart';
 import 'dart:async';
+
 //import 'package:haftaa/Authentication/auth.dart';
 import 'package:haftaa/provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -41,52 +43,51 @@ class myApp extends StatelessWidget {
       statusBarColor: Colors.transparent, //or set color with: Color(0xFF0000FF)
     ));
 
-    return
-
-      ProviderCustom(
-        child:
-
-      MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => CountryProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => PhoneAuthDataProvider()..currentuser(),
-        ),
-      ],
-      child: MaterialApp(
-        title: "سوق الهفتاء",
-        theme: ThemeData(
-            brightness: Brightness.light,
-            backgroundColor: Colors.white,
-            primaryColorLight: Colors.white,
-            primaryColorBrightness: Brightness.light,
-            primaryColor: Colors.white),
-        debugShowCheckedModeBanner: false,
-        //home: AddProduct(),
-        //home: testFirebase(),
-        home: SplashScreen(),
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate
+    return ProviderCustom(
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => CountryProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => PhoneAuthDataProvider()..currentuser(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ProductProvider(),
+          ),
         ],
-        supportedLocales: [const Locale('ar')],
+        child: MaterialApp(
+          title: "سوق الهفتاء",
+          theme: ThemeData(
+              brightness: Brightness.light,
+              backgroundColor: Colors.white,
+              primaryColorLight: Colors.white,
+              primaryColorBrightness: Brightness.light,
+              primaryColor: Colors.white),
+          debugShowCheckedModeBanner: false,
+          //home: AddProduct(),
+          //home: testFirebase(),
+          home: SplashScreen(),
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate
+          ],
+          supportedLocales: [const Locale('ar')],
 
-        /// Move splash screen to ChoseLogin Layout
-        /// Routes
-        routes: <String, WidgetBuilder>{
-          "onBoarding": (BuildContext context) => new onBoarding(),
-          "home": (BuildContext context) => new bottomNavigationBar(),
-          // "root": (BuildContext context) => new BottomNavigationBar(items: <BottomNavigationBarItem>[],),
-          "choose-login": (BuildContext context) => new ChoseLogin(),
-        },
-      ),
+          /// Move splash screen to ChoseLogin Layout
+          /// Routes
+          routes: <String, WidgetBuilder>{
+            "onBoarding": (BuildContext context) => new onBoarding(),
+            "home": (BuildContext context) => new bottomNavigationBar(),
+            // "root": (BuildContext context) => new BottomNavigationBar(items: <BottomNavigationBarItem>[],),
+            "choose-login": (BuildContext context) => new ChoseLogin(),
+          },
+        ),
 //      child: MaterialApp(
 //        home: PhoneAuthGetPhone(),
 //        debugShowCheckedModeBanner: false,
 //      ),
-    ),
+      ),
     );
 //    return Provider(
 //      auth: Auth(),
@@ -224,7 +225,8 @@ class _SplashScreenState extends State<SplashScreen> {
         /// Set Background image in splash screen layout (Click to open code)
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/solar_slash.png'), fit: BoxFit.cover)),
+                image: AssetImage('assets/solar_slash.png'),
+                fit: BoxFit.cover)),
         child: Container(
           /// Set gradient black in image splash screen (Click to open code)
           decoration: BoxDecoration(
