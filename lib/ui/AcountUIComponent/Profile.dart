@@ -317,11 +317,20 @@ class _ProfileState extends State<Profile> {
             padding: 35.0,
             image: "assets/icon/notification.png",
             tap: () {
-              if (widget.onMenuItemClick != null) {
-                widget.onMenuItemClick();
+
+              if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true) {
+
+                if (widget.onMenuItemClick != null) {
+                  widget.onMenuItemClick();
+                }
+                Navigator.of(context).push(PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => new notification()));
+
+              } else {
+                Navigator.pushNamed(context, 'choose-login');
               }
-              Navigator.of(context).push(PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => new notification()));
+
+
             },
           ),
           // Padding(
