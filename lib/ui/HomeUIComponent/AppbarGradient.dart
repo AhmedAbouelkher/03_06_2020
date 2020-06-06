@@ -1,5 +1,7 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:haftaa/Enums/enums.dart';
+import 'package:haftaa/ListItem/notificationsData.dart';
 import 'package:haftaa/UI/pages/sale-product-details.dart';
 import 'package:haftaa/bloc/product-bloc.dart';
 import 'package:haftaa/providers/phone_auth.dart';
@@ -13,17 +15,28 @@ import 'package:haftaa/ui/pages/request-product-details.dart';
 import 'package:haftaa/ui/widgets/product-search.dart';
 import 'package:provider/provider.dart';
 
+var dbRef;
+
+
 class AppbarGradient extends StatefulWidget {
   @override
   _AppbarGradientState createState() => _AppbarGradientState();
 }
 
 class _AppbarGradientState extends State<AppbarGradient> {
-  String CountNotice = "4";
+
 
   /// Build Appbar in layout home
   @override
   Widget build(BuildContext context) {
+    if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true) {
+      dbRef = FirebaseDatabase.instance.reference().child("Notification").child(
+          "${Provider
+              .of<PhoneAuthDataProvider>(context, listen: false)
+              .user
+              .uid}");
+    }
+
     /// Create responsive height and padding
     final MediaQueryData media = MediaQuery.of(context);
     final double statusBarHeight = MediaQuery.of(context).padding.top;
@@ -45,8 +58,8 @@ class _AppbarGradientState extends State<AppbarGradient> {
               stops: [0.0, 1.0],
               tileMode: TileMode.clamp)),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+
         children: <Widget>[
           /// if user click shape white in appbar navigate to search layout
           InkWell(
@@ -151,24 +164,21 @@ class _AppbarGradientState extends State<AppbarGradient> {
                     Icons.add_circle_outline,
                     color: Colors.white,
                   ),
-                  onPressed: () {
-
-
-
-                    if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true) {
-
-                      Navigator.of(context).push(PageRouteBuilder(
-                          pageBuilder: (_, __, ___) =>
-                          new AddProduct.newOne()));
-
-                    } else {
-                      Navigator.pushNamed(context, 'choose-login');
-                    }
-                  },
+                  onPressed: () {},
                 )
               ],
             ),
-            onPressed: () {},
+            onPressed: () {
+              if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true) {
+
+                Navigator.of(context).push(PageRouteBuilder(
+                    pageBuilder: (_, __, ___) =>
+                    new AddProduct.newOne()));
+
+              } else {
+                Navigator.pushNamed(context, 'choose-login');
+              }
+            },
           ),
 
           /// Icon chat (if user click navigate to chat layout)
@@ -212,23 +222,32 @@ class _AppbarGradientState extends State<AppbarGradient> {
                 ),
                 Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn?
 
-                CircleAvatar(
-                  radius: 8.6,
-                  backgroundColor: Colors.redAccent,
-                  child: Text(
-                    CountNotice,
-                    style: TextStyle(fontSize: 13.0, color: Colors.white),
-                  ),
-                ):
+                    StreamBuilder(
+                      stream: dbRef.onValue,
+                      builder: (context, snap) {
+                        Map data = snap.data.snapshot.value;
+                        List<NotificationModel> notificationItems = [];
 
-                CircleAvatar(
-                  radius: 0,
-                  backgroundColor: Colors.redAccent,
-                  child: Text(
-                    '',
-                    style: TextStyle(fontSize: 13.0, color: Colors.white),
-                  ),
-                )
+                        for (var i in data.values) {
+                          notificationItems.add(NotificationModel.fromJson(i));
+                        }
+
+                        notificationItems.sort((a, b) => b.time.compareTo(a.time));
+
+                        return CircleAvatar(
+                          radius: 8.6,
+                          backgroundColor: Colors.redAccent,
+                          child: Text(
+                            notificationItems.length.toString(),
+                            style: TextStyle(fontSize: 13.0, color: Colors.white),
+                          ),
+                        );
+                      },
+
+                    )
+                  :
+
+                Container()
               ],
             ),
           ),
