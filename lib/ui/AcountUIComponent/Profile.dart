@@ -75,12 +75,14 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
                 Text(
+
                   (user.email == null || user.email == ''
                           ? null
                           : user.email) ??
 
                       user.phoneNumber,
                   style: _txtName,
+                  textDirection: TextDirection.ltr,
                 ),
                 InkWell(
                   onTap: () {

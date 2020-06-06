@@ -45,8 +45,9 @@ class _ProductUserWidgetState extends State<ProductUserWidget> {
                 
                 snapshot.data.name?? snapshot.data.email??snapshot.data.mobile ,
                 textAlign: TextAlign.right,
-                textDirection: TextDirection.rtl,
+                textDirection: TextDirection.ltr,
                 style: widget._textStyle,
+
               );
             }
         }

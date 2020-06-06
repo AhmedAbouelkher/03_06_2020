@@ -118,7 +118,7 @@ class _AppbarGradientState extends State<AppbarGradient> {
             child: Container(
               margin: EdgeInsets.only(left: media.padding.left + 15),
               height: 37.0,
-              width: 222.0,
+              width: 120.0,
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -126,7 +126,7 @@ class _AppbarGradientState extends State<AppbarGradient> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Padding(padding: EdgeInsets.only(left: 17.0)),
+                  Padding(padding: EdgeInsets.only(left: 5.0)),
                   Image.asset(
                     "assets/img/search2.png",
                     height: 22.0,
@@ -138,7 +138,7 @@ class _AppbarGradientState extends State<AppbarGradient> {
                   Padding(
                     padding: EdgeInsets.only(top: 3.0),
                     child: Text(
-                      "سوق الهفتاء",
+                      "الهفتاء",
                       style: TextStyle(
                           fontFamily: "Popins",
                           color: Colors.black12,
