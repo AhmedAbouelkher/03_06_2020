@@ -1,4 +1,3 @@
-import 'package:haftaa/Enums/enums.dart';
 import 'package:haftaa/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:haftaa/provider/provider.dart';
@@ -632,8 +631,8 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                 widget.product.userId
                         ? InkWell(
                             onTap: () {
-                              if (widget.product.type == ItemType.sale ||
-                                  widget.product.type == ItemType.request) {
+                              if (widget.product.type == 'sale' ||
+                                  widget.product.type == 'request') {
                                 var myId = Provider.of<PhoneAuthDataProvider>(
                                         context,
                                         listen: false)
@@ -644,7 +643,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                 var ChatId = '';
 
                                 if (myId.hashCode <= peerId.hashCode) {
-                                  ChatId = '$myId-$peerId';
+                                  ChatId = '$myId-$widget.peerId';
                                 } else {
                                   ChatId = '$peerId-$myId';
                                 }
