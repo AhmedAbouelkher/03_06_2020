@@ -628,15 +628,14 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                 widget.product.userId
                         ? InkWell(
                             onTap: () {
-                              if (widget.product.type == ItemType.sale ||
-                                  widget.product.type == ItemType.request) {
+                              if (widget.product.type == ItemType.sale) {
                                 var myId = Provider.of<PhoneAuthDataProvider>(
                                         context,
                                         listen: false)
                                     .user
                                     .uid;
                                 var peerId = _user.id;
-                                var title = 'شراء - بيع';
+                                var title = 'بيع ${widget.product.title}';
                                 var ChatId = '';
 
                                 if (myId.hashCode <= peerId.hashCode) {

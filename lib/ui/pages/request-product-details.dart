@@ -615,15 +615,14 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
 
 
 
-                        if (product.type == ItemType.sale ||
-                            product.type == ItemType.request) {
+                        if (product.type == ItemType.request) {
                           var myId = Provider.of<PhoneAuthDataProvider>(
                               context,
                               listen: false)
                               .user
                               .uid;
                           var peerId = product.userId;
-                          var title = 'شراء - بيع';
+                          var title = 'شراء ${product.title}';
                           var ChatId = '';
 
                           if (myId.hashCode <= peerId.hashCode) {

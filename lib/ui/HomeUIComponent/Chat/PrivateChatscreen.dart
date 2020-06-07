@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:haftaa/constants.dart';
@@ -41,23 +42,48 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
   final messageTextController = TextEditingController();
 
   String messageText;
+  var _firestore;
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
+//    if (widget.product == null) {
+//      dbRef = FirebaseDatabase.instance
+//          .reference()
+//          .child("Chat")
+//          .child("PrivateChat")
+//          .child('${widget.productIdFromNotification}')
+//          .child('${widget.chatId}');
+//    } else {
+//      dbRef = FirebaseDatabase.instance
+//          .reference()
+//          .child("Chat")
+//          .child("PrivateChat")
+//          .child('${widget.product.id}')
+//          .child('${widget.chatId}');
+//    }
+
     if (widget.product == null) {
-      dbRef = FirebaseDatabase.instance
-          .reference()
-          .child("Chat")
-          .child("PrivateChat")
-          .child('${widget.productIdFromNotification}')
-          .child('${widget.chatId}');
-    } else {
-      dbRef = FirebaseDatabase.instance
-          .reference()
-          .child("Chat")
-          .child("PrivateChat")
-          .child('${widget.product.id}')
-          .child('${widget.chatId}');
+       _firestore = Firestore.instance
+          .collection('PrivateChat')
+          .document('${widget.productIdFromNotification}')
+          .collection('${widget.chatId}')
+          .document('${DateTime
+          .now()
+          .millisecondsSinceEpoch}');
+    }else
+    {
+      _firestore = Firestore.instance
+          .collection('PrivateChat')
+          .document('${widget.product.id}')
+          .collection('${widget.chatId}')
+          .document('${DateTime
+          .now()
+          .millisecondsSinceEpoch}');
     }
 
     return SafeArea(
@@ -71,7 +97,10 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              MessagesStream(),
+              widget.product == null?
+              MessagesStreamFireStore(widget.productIdFromNotification,widget.chatId)
+              :
+              MessagesStreamFireStore(widget.product.id,widget.chatId),
               Container(
                 decoration: BoxDecoration(
                   border: Border(
@@ -90,14 +119,22 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                           if (messageText.isEmpty || messageText == null) {
                           } else {
                             messageTextController.clear();
-                            dbRef.push().set({
-                              "sender":
-                                  '${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber}',
-                              "text": messageText,
-                              "time": DateTime.now().millisecondsSinceEpoch,
-                            }).catchError((onError) {
-                              print(onError);
-                            });
+
+
+                          _firestore.setData(
+                          {'message': messageText, 'sender': Provider
+                              .of<PhoneAuthDataProvider>(context, listen: false)
+                              .user
+                              .phoneNumber,'time': DateTime.now().millisecondsSinceEpoch});
+
+//                            dbRef.push().set({
+//                              "sender":
+//                                  '${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber}',
+//                              "text": messageText,
+//                              "time": DateTime.now().millisecondsSinceEpoch,
+//                            }).catchError((onError) {
+//                              print(onError);
+//                            });
                           }
 
                           // notification
@@ -186,52 +223,64 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
   }
 }
 
-class MessagesStream extends StatelessWidget {
+class MessagesStreamFireStore extends StatelessWidget {
+
+  String chatId ;
+  String productId ;
+
+  MessagesStreamFireStore(this.productId, this.chatId);
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: dbRef.onValue,
-        builder: (context, snap) {
-          if (snap.data?.snapshot?.value == null) {
-            return NoMessage();
-          } else {
-            Map data = snap.data.snapshot.value;
-            List<MsgModel> messageList = [];
+    return StreamBuilder<QuerySnapshot>(
+      stream:
+                Firestore.instance
+                .collection('PrivateChat')
+                .document('$productId')
+                .collection('$chatId')
+                    .orderBy('time')
+                    .snapshots(),
+      builder: (context,   snapshot) {
+        if (!snapshot.hasData||snapshot.data.documents.isEmpty) {
+          return NoMessage();
+        }
+        final messages = snapshot.data.documents.reversed;
+        List<MessageBubbleFireStore> messageBubbles = [];
+        for (var message in messages) {
 
-            for (var i in data.values) {
-              messageList.add(MsgModel.fromJson(i));
-            }
+          final messageText = message.data['message'];
+          final messageSender = message.data['sender'];
 
-            messageList.sort((a, b) => a.time.compareTo(b.time));
 
-            return Expanded(
-              child: ListView.builder(
-                reverse: true,
-                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-                itemCount: messageList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return MessageBubble(
-                    message: messageList[index],
-                    isMe: messageList[index].sender ==
-                        Provider.of<PhoneAuthDataProvider>(context,
-                                listen: false)
-                            .user
-                            .phoneNumber,
-                  );
-                },
-              ),
-            );
-          }
-        });
+          final messageBubble = MessageBubbleFireStore(
+              text: messageText,
+              isMe: messageSender == Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber,
+
+          );
+
+          messageBubbles.add(messageBubble);
+         }
+        return Expanded(
+          child: ListView(
+            reverse: true,
+            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+            children: messageBubbles,
+          ),
+        );
+      },
+    );
   }
 }
 
-class MessageBubble extends StatelessWidget {
-  MessageBubble({ this.isMe, this.message});
+class MessageBubbleFireStore extends StatelessWidget {
+  MessageBubbleFireStore({this.text, this.isMe});
 
-
+  final String text;
   final bool isMe;
-  final MsgModel message;
 
   @override
   Widget build(BuildContext context) {
@@ -239,28 +288,32 @@ class MessageBubble extends StatelessWidget {
       padding: EdgeInsets.all(10.0),
       child: Column(
         crossAxisAlignment:
-            isMe ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+        isMe ? CrossAxisAlignment.start : CrossAxisAlignment.end,
         children: <Widget>[
+
           Material(
             borderRadius: isMe
                 ? BorderRadius.only(
-                    topLeft: Radius.circular(10.0),
-                    bottomLeft: Radius.circular(10.0),
-                    bottomRight: Radius.circular(20.0))
+                topLeft: Radius.circular(30.0),
+                bottomLeft: Radius.circular(30.0),
+                bottomRight: Radius.circular(30.0))
                 : BorderRadius.only(
-                    bottomLeft: Radius.circular(20.0),
-                    bottomRight: Radius.circular(10.0),
-                    topRight: Radius.circular(10.0),
-                  ),
+              bottomLeft: Radius.circular(30.0),
+              bottomRight: Radius.circular(30.0),
+              topRight: Radius.circular(30.0),
+            ),
             elevation: 5.0,
             color: isMe ? Colors.grey : Colors.white70,
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
               child: Text(
-                message.text + ' '+message.time.toString(),
+                text,
                 style: TextStyle(
-                  color: isMe ? Colors.white : Colors.black54,
-                  fontSize: 15.0,
+                  color: isMe ? Colors.white : Colors.black,
+                  fontSize: MediaQuery
+                      .of(context)
+                      .size
+                      .width * .05,
                 ),
               ),
             ),
@@ -270,6 +323,93 @@ class MessageBubble extends StatelessWidget {
     );
   }
 }
+
+
+//class MessagesStream extends StatelessWidget {
+//  @override
+//  Widget build(BuildContext context) {
+//    return StreamBuilder(
+//        stream: dbRef.onValue,
+//        builder: (context, snap) {
+//          if (snap.data?.snapshot?.value == null) {
+//            return NoMessage();
+//          } else {
+//            Map data = snap.data.snapshot.value;
+//            List<MsgModel> messageList = [];
+//
+//            for (var i in data.values) {
+//              messageList.add(MsgModel.fromJson(i));
+//            }
+//
+//
+//            messageList.sort((a, b) => b.time.compareTo(a.time));
+//
+//            return Expanded(
+//              child: ListView.builder(
+//                reverse: true,
+//                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+//                itemCount: messageList.length,
+//                itemBuilder: (BuildContext context, int index) {
+//                  return MessageBubble(
+//                    message: messageList[index],
+//                    isMe: messageList[index].sender ==
+//                        Provider.of<PhoneAuthDataProvider>(context,
+//                                listen: false)
+//                            .user
+//                            .phoneNumber,
+//                  );
+//                },
+//              ),
+//            );
+//          }
+//        });
+//  }
+//}
+
+//class MessageBubble extends StatelessWidget {
+//  MessageBubble({ this.isMe, this.message});
+//
+//
+//  final bool isMe;
+//  final MsgModel message;
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return Padding(
+//      padding: EdgeInsets.all(10.0),
+//      child: Column(
+//        crossAxisAlignment:
+//            isMe ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+//        children: <Widget>[
+//          Material(
+//            borderRadius: isMe
+//                ? BorderRadius.only(
+//                    topLeft: Radius.circular(10.0),
+//                    bottomLeft: Radius.circular(10.0),
+//                    bottomRight: Radius.circular(20.0))
+//                : BorderRadius.only(
+//                    bottomLeft: Radius.circular(20.0),
+//                    bottomRight: Radius.circular(10.0),
+//                    topRight: Radius.circular(10.0),
+//                  ),
+//            elevation: 5.0,
+//            color: isMe ? Colors.grey : Colors.white70,
+//            child: Padding(
+//              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+//              child: Text(
+//                message.text + ' '+message.time.toString(),
+//                style: TextStyle(
+//                  color: isMe ? Colors.white : Colors.black54,
+//                  fontSize: 15.0,
+//                ),
+//              ),
+//            ),
+//          ),
+//        ],
+//      ),
+//    );
+//  }
+//}
 
 class NoMessage extends StatelessWidget {
   @override

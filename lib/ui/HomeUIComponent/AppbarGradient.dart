@@ -17,24 +17,19 @@ import 'package:provider/provider.dart';
 
 var dbRef;
 
-
 class AppbarGradient extends StatefulWidget {
   @override
   _AppbarGradientState createState() => _AppbarGradientState();
 }
 
 class _AppbarGradientState extends State<AppbarGradient> {
-
-
   /// Build Appbar in layout home
   @override
   Widget build(BuildContext context) {
-    if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true) {
+    if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn ==
+        true) {
       dbRef = FirebaseDatabase.instance.reference().child("Notification").child(
-          "${Provider
-              .of<PhoneAuthDataProvider>(context, listen: false)
-              .user
-              .uid}");
+          "${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid}");
     }
 
     /// Create responsive height and padding
@@ -58,8 +53,6 @@ class _AppbarGradientState extends State<AppbarGradient> {
               stops: [0.0, 1.0],
               tileMode: TileMode.clamp)),
       child: Row(
-
-
         children: <Widget>[
           /// if user click shape white in appbar navigate to search layout
           InkWell(
@@ -165,12 +158,13 @@ class _AppbarGradientState extends State<AppbarGradient> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true) {
-
+                    if (Provider.of<PhoneAuthDataProvider>(context,
+                                listen: false)
+                            .isLoggedIn ==
+                        true) {
                       Navigator.of(context).push(PageRouteBuilder(
                           pageBuilder: (_, __, ___) =>
-                          new AddProduct.newOne()));
-
+                              new AddProduct.newOne()));
                     } else {
                       Navigator.pushNamed(context, 'choose-login');
                     }
@@ -179,12 +173,11 @@ class _AppbarGradientState extends State<AppbarGradient> {
               ],
             ),
             onPressed: () {
-              if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true) {
-
+              if (Provider.of<PhoneAuthDataProvider>(context, listen: false)
+                      .isLoggedIn ==
+                  true) {
                 Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (_, __, ___) =>
-                    new AddProduct.newOne()));
-
+                    pageBuilder: (_, __, ___) => new AddProduct.newOne()));
               } else {
                 Navigator.pushNamed(context, 'choose-login');
               }
@@ -205,20 +198,14 @@ class _AppbarGradientState extends State<AppbarGradient> {
           /// Icon notification (if user click navigate to notification layout)
           InkWell(
             onTap: () {
-
-
-
-              if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true) {
-
+              if (Provider.of<PhoneAuthDataProvider>(context, listen: false)
+                      .isLoggedIn ==
+                  true) {
                 Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (_, __, ___) =>
-                    new notification()));
-
+                    pageBuilder: (_, __, ___) => new notification()));
               } else {
                 Navigator.pushNamed(context, 'choose-login');
               }
-
-
 
 //              Navigator.of(context).push(PageRouteBuilder(
 //                  pageBuilder: (_, __, ___) => new notification()));
@@ -230,35 +217,36 @@ class _AppbarGradientState extends State<AppbarGradient> {
                   "assets/img/notifications-button.png",
                   height: 24.0,
                 ),
-                Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn?
+                Provider.of<PhoneAuthDataProvider>(context, listen: false)
+                        .isLoggedIn ==true
+                    ?
+                         StreamBuilder(
+                            stream: dbRef.onValue,
+                            builder: (context, snap) {
+                              Map data = snap.data.snapshot.value;
+                              List<NotificationModel> notificationItems = [];
 
-                    StreamBuilder(
-                      stream: dbRef.onValue,
-                      builder: (context, snap) {
-                        Map data = snap.data.snapshot.value;
-                        List<NotificationModel> notificationItems = [];
+                              for (var i in data.values) {
+                                notificationItems
+                                    .add(NotificationModel.fromJson(i));
+                              }
 
-                        for (var i in data.values) {
-                          notificationItems.add(NotificationModel.fromJson(i));
-                        }
+                              notificationItems
+                                  .sort((a, b) => b.time.compareTo(a.time));
 
-                        notificationItems.sort((a, b) => b.time.compareTo(a.time));
-
-                        return CircleAvatar(
-                          radius: 8.6,
-                          backgroundColor: Colors.redAccent,
-                          child: Text(
-                            notificationItems.length.toString(),
-                            style: TextStyle(fontSize: 13.0, color: Colors.white),
-                          ),
-                        );
-                      },
-
-                    )
-                  :
-
-                Container()
-              ],
+                              return CircleAvatar(
+                                radius: 8.6,
+                                backgroundColor: Colors.redAccent,
+                                child: Text(
+                                  notificationItems.length.toString(),
+                                  style: TextStyle(
+                                      fontSize: 13.0, color: Colors.white),
+                                ),
+                              );
+                            },
+                          )
+                    : SizedBox(),
+               ],
             ),
           ),
         ],
