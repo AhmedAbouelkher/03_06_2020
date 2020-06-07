@@ -67,24 +67,7 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
 //          .child('${widget.chatId}');
 //    }
 
-    if (widget.product == null) {
-       _firestore = Firestore.instance
-          .collection('PrivateChat')
-          .document('${widget.productIdFromNotification}')
-          .collection('${widget.chatId}')
-          .document('${DateTime
-          .now()
-          .millisecondsSinceEpoch}');
-    }else
-    {
-      _firestore = Firestore.instance
-          .collection('PrivateChat')
-          .document('${widget.product.id}')
-          .collection('${widget.chatId}')
-          .document('${DateTime
-          .now()
-          .millisecondsSinceEpoch}');
-    }
+
 
     return SafeArea(
       child: Scaffold(
@@ -120,12 +103,28 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                           } else {
                             messageTextController.clear();
 
+                            if (widget.product == null) {
+                              _firestore = Firestore.instance
+                                  .collection('PrivateChat')
+                                  .document('${widget.productIdFromNotification}')
+                                  .collection('${widget.chatId}').add({'message': messageText, 'sender': Provider
+                                  .of<PhoneAuthDataProvider>(context, listen: false)
+                                  .user
+                                  .phoneNumber,'time': FieldValue.serverTimestamp()});
 
-                          _firestore.setData(
-                          {'message': messageText, 'sender': Provider
-                              .of<PhoneAuthDataProvider>(context, listen: false)
-                              .user
-                              .phoneNumber,'time': DateTime.now().millisecondsSinceEpoch});
+                            }else
+                            {
+                              _firestore = Firestore.instance
+                                  .collection('PrivateChat')
+                                  .document('${widget.product.id}')
+                                  .collection('${widget.chatId}').add({'message': messageText, 'sender': Provider
+                                  .of<PhoneAuthDataProvider>(context, listen: false)
+                                  .user
+                                  .phoneNumber,'time': FieldValue.serverTimestamp()});
+
+
+                            }
+
 
 //                            dbRef.push().set({
 //                              "sender":
@@ -254,15 +253,18 @@ class MessagesStreamFireStore extends StatelessWidget {
 
           final messageText = message.data['message'];
           final messageSender = message.data['sender'];
-
+         // int messgaeTime = message.data['time'];
 
           final messageBubble = MessageBubbleFireStore(
               text: messageText,
               isMe: messageSender == Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber,
 
+
           );
 
           messageBubbles.add(messageBubble);
+         // messageBubbles..sort((a, b) => a.time.compareTo(b.time));
+
          }
         return Expanded(
           child: ListView(
