@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:haftaa/ListItem/notificationsData.dart';
 import 'package:haftaa/providers/phone_auth.dart';
 import 'package:haftaa/ui/HomeUIComponent/Chat/PrivateChatscreen.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 var dbRef;
@@ -108,7 +109,7 @@ class NotificationsStream extends StatelessWidget {
 class PostCard extends StatelessWidget {
   String sender;
   String text;
-  String time;
+  int time;
   String ChatID;
   String ProID;
   String ProTitle;
@@ -121,8 +122,14 @@ class PostCard extends StatelessWidget {
   PostCard(this.sender, this.text, this.time, this.ChatID, this.ProID,
       this.ProTitle, this.Title, this.userpProductID , this.myID , this.peerId);
 
+
+
   @override
   Widget build(BuildContext context) {
+
+    var date = DateTime.fromMillisecondsSinceEpoch(time);
+    var formattedDate = DateFormat('dd-MM-yyyy HH:MM').format(date);
+
     return Card(
         margin: EdgeInsets.all(10),
         shape: RoundedRectangleBorder(
@@ -149,7 +156,7 @@ class PostCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      ProTitle,
+                      Title,
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -157,7 +164,7 @@ class PostCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      sender,
+                      formattedDate+'\n'+sender ,
                       style: TextStyle(
                         fontSize: 12,
                       ),
