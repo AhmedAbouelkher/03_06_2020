@@ -324,9 +324,37 @@ class _PhoneAuthState extends State<PhoneAuth> {
                     ])),
               ),
               SizedBox(width: _fixedPadding),
+
+
             ],
           ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SizedBox(width: _fixedPadding),
+              Icon(Icons.info, color: Colors.white, size: 20.0),
+              SizedBox(width: 10.0),
+              Expanded(
+                child: RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                          text: 'موافق على ',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w400)),
+                      TextSpan(
+                          text: 'شروط استخدام التطبيق',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w700)),
 
+                    ])),
+              ),
+              SizedBox(width: _fixedPadding),
+
+
+            ],
+          ),
           /*
            *  Button: OnTap of this, it appends the dial code and the phone number entered by the user to send OTP,
            *  knowing once the OTP has been sent to the user - the user will be navigated to a new Screen,
