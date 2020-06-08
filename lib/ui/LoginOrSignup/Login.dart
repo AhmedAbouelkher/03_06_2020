@@ -281,16 +281,22 @@ class _loginScreenState extends State<loginScreen>
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(40)),
-                                  child: Image(
-                                    image: AssetImage(
-                                      "assets/img/Logo.png",
-                                    ),
-                                    height: 70.0,
+                                Image(
+                                  image: AssetImage(
+                                    "assets/launcher/rsz_icon_hourse.png",
                                   ),
+                                  height: 70.0,
                                 ),
+//                                ClipRRect(
+//                                  borderRadius:
+//                                      BorderRadius.all(Radius.circular(40)),
+//                                  child: Image(
+//                                    image: AssetImage(
+//                                      "assets/launcher/rsz_icon_hourse.png",
+//                                    ),
+//                                    height: 70.0,
+//                                  ),
+//                                ),
                                 Padding(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 10.0)),

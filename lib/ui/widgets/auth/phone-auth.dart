@@ -230,6 +230,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
 
   Widget _getColumnBody() =>
       Column(
+
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           //  Logo: scaling to occupy 2 parts of 10 in the whole height of device
@@ -254,7 +255,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
             // optional. Shows only country name and flag when popup is closed.
             showOnlyCountryWhenClosed: false,
             // optional. aligns the flag and the Text left
-            alignLeft: false,
+            alignLeft: true,
             textStyle: TextStyle(color: Colors.white),
           ),
           /*

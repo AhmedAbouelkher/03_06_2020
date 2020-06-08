@@ -48,10 +48,11 @@ class PhoneNumberField extends StatelessWidget {
     return Card(
       child: Row(
         children: <Widget>[
-          Text("  " + prefix + "  ", style: TextStyle(fontSize: 16.0)),
+
           SizedBox(width: 8.0),
           Expanded(
             child: TextFormField(
+              textDirection: TextDirection.ltr,
               controller: controller,
               autofocus: false,
               keyboardType: TextInputType.phone,
@@ -61,6 +62,10 @@ class PhoneNumberField extends StatelessWidget {
                 errorMaxLines: 1,
               ),
             ),
+          ),
+          Text("  " + prefix + "  ", style: TextStyle(fontSize: 16.0)
+
+            ,textDirection: TextDirection.ltr,
           ),
         ],
       ),
