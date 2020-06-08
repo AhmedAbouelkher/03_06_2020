@@ -219,10 +219,20 @@ class _AppbarGradientState extends State<AppbarGradient> {
                 ),
                 Provider.of<PhoneAuthDataProvider>(context, listen: false)
                         .isLoggedIn ==true
-                    ?
-                         StreamBuilder(
+                    ? dbRef == null?
+                        Image.asset(
+                        "assets/img/notifications-button.png",
+                        height: 24.0,
+                        )
+                        : StreamBuilder(
                             stream: dbRef.onValue,
                             builder: (context, snap) {
+                        if (snap.data?.snapshot?.value == null) {
+                                return Image.asset(
+                                  "assets/img/notifications-button.png",
+                                  height: 24.0,
+                                );
+                              }
                               Map data = snap.data.snapshot.value;
                               List<NotificationModel> notificationItems = [];
 
@@ -231,8 +241,6 @@ class _AppbarGradientState extends State<AppbarGradient> {
                                     .add(NotificationModel.fromJson(i));
                               }
 
-                              notificationItems
-                                  .sort((a, b) => b.time.compareTo(a.time));
 
                               return CircleAvatar(
                                 radius: 8.6,

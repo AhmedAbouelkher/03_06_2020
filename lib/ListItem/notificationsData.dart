@@ -3,7 +3,7 @@ class NotificationModel {
 
   String senderPhone;
   String text;
-  String time;
+  int time;
   String chatID;
   String productID;
   String productTitle;
@@ -29,7 +29,7 @@ class NotificationModel {
     return NotificationModel(
       json['senderPhone'].toString(),
       json['text'].toString(),
-      json['time'].toString(),
+      json['time'] as int,
       json['chatID'].toString(),
       json['productID'].toString(),
       json['productTitle'].toString(),

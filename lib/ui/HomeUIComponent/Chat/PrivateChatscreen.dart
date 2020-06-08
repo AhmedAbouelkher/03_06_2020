@@ -51,24 +51,6 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
 
   @override
   Widget build(BuildContext context) {
-//    if (widget.product == null) {
-//      dbRef = FirebaseDatabase.instance
-//          .reference()
-//          .child("Chat")
-//          .child("PrivateChat")
-//          .child('${widget.productIdFromNotification}')
-//          .child('${widget.chatId}');
-//    } else {
-//      dbRef = FirebaseDatabase.instance
-//          .reference()
-//          .child("Chat")
-//          .child("PrivateChat")
-//          .child('${widget.product.id}')
-//          .child('${widget.chatId}');
-//    }
-
-
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -147,7 +129,12 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                                 .child('${widget.productIdFromNotification}')
                                 .update({
                               "senderPhone":
-                                  '${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber}',
+                              Provider.of<PhoneAuthDataProvider>(context, listen: false).user.displayName == null
+                                  ?
+                              Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber
+                                  :
+                              Provider.of<PhoneAuthDataProvider>(context, listen: false).user.displayName
+                              ,
                               "myID":
                                   '${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid}',
                               "text": messageText,
@@ -158,7 +145,7 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                                   widget.productTitleFromNotification,
                               "userpProductID":
                                   widget.userpProductIDFromNotification,
-                              "title": widget.title,
+                              "title": widget.title ,
                               "peerId": widget.peerIdFromNotification,
                             });
                           } else {
@@ -170,7 +157,12 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                                 .child('${widget.product.id}')
                                 .update({
                               "senderPhone":
-                                  '${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber}',
+                              Provider.of<PhoneAuthDataProvider>(context, listen: false).user.displayName == null
+                                  ?
+                              Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber
+                                  :
+                              Provider.of<PhoneAuthDataProvider>(context, listen: false).user.displayName
+                                 ,
                               "myID":
                                   '${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid}',
                               "text": messageText,
