@@ -121,15 +121,30 @@ class _ProductListWidgetState extends State<ProductListWidget> {
 
                         // Navigator.of(context).push(MaterialPageRoute(
                         //     builder: (BuildContext context) => new Menu()));
+                      setState(() {
+                        Provider.of<ProductProvider>(context).productList.sort((a,b)
+                        => a.creationDate.compareTo(b.creationDate));
+                      });
                       },
                       child: Text(
                         "الأحدث",
                         style: _fontCostumSheetBotom,
                       )),
                   Padding(padding: EdgeInsets.only(top: 25.0)),
-                  Text(
-                    "الأقل سعرا",
-                    style: _fontCostumSheetBotom,
+                  InkWell(
+                    onTap: () {
+
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (BuildContext context) => new Menu()));
+//                      setState(() {
+//                        Provider.of<ProductProvider>(context).productList.sort((a,b)
+//                        => a.new.compareTo(b.creationDate));
+//                      });
+                    },
+                    child: Text(
+                      "الأقل سعرا",
+                      style: _fontCostumSheetBotom,
+                    ),
                   ),
                   Padding(padding: EdgeInsets.only(top: 25.0)),
                   Text(

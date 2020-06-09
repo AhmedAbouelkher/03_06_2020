@@ -681,7 +681,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                             PageRouteBuilder(
                                 pageBuilder: (_, __, ___) =>
                                     new ProductList.Search(_searchModel,
-                                        'المستخدم (${user.name})'),
+                                        'المستخدم (${user.name??user.mobile??user.email})'),
                                 transitionDuration: Duration(milliseconds: 600),
                                 transitionsBuilder: (_,
                                     Animation<double> animation,
