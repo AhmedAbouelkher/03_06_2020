@@ -247,6 +247,10 @@ class _PhoneAuthState extends State<PhoneAuth> {
             child: SubTitle(text: 'اختر الدولة'),
           ),
           CountryCodePicker(
+            initialSelection: "sa",
+            onInit: (code){
+              countryCode = code.toString();
+            },
             onChanged: (val){
               countryCode = val.toString();
             },
