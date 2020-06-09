@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:haftaa/bloc/product-bloc.dart';
 import 'package:haftaa/product/auction-product.dart';
+import 'package:haftaa/product/product-provider.dart';
 import 'package:haftaa/product/request-product.dart';
 import 'package:haftaa/product/sale-product.dart';
 import 'package:haftaa/ui/HomeUIComponent/advanced-search.dart';
@@ -11,6 +12,7 @@ import 'package:haftaa/search/search.dart';
 import 'package:haftaa/ui/widgets/product/auction-product-itemGrid.dart';
 import 'package:haftaa/ui/widgets/product/request-product-itemGrid.dart';
 import 'package:haftaa/ui/widgets/product/sale-product-itemGrid.dart';
+import 'package:provider/provider.dart';
 
 class ProductListWidget extends StatefulWidget {
   //Future<List<BaseProduct>> _productsFuture;
@@ -20,20 +22,23 @@ class ProductListWidget extends StatefulWidget {
   String pageTitle;
   String titleQuery;
   ProductBloc _productBloc;
+
   ProductListWidget(
       {this.searchModel,
-        this.pageTitle,
-        this.showCategoriesSlider,
-        this.titleQuery,
-        this.onSearchPopup}) {
+      this.pageTitle,
+      this.showCategoriesSlider,
+      this.titleQuery,
+      this.onSearchPopup}) {
     _productBloc =
-    new ProductBloc(searchModel: searchModel, startLoadingWithCount: -1);
+        new ProductBloc(searchModel: searchModel, startLoadingWithCount: -1);
   }
+
   bool showCategoriesSlider = true;
+
   ProductListWidget.Search(this.searchModel, this.pageTitle,
       {this.showCategoriesSlider}) {
     _productBloc =
-    new ProductBloc(searchModel: searchModel, startLoadingWithCount: -1);
+        new ProductBloc(searchModel: searchModel, startLoadingWithCount: -1);
   }
 
   @override
@@ -46,6 +51,7 @@ class _ProductListWidgetState extends State<ProductListWidget> {
     // TODO: implement initState
     super.initState();
   }
+
   // var grid;
 
   // var _search = Container(
@@ -112,6 +118,7 @@ class _ProductListWidgetState extends State<ProductListWidget> {
                   Padding(padding: EdgeInsets.only(top: 25.0)),
                   InkWell(
                       onTap: () {
+
                         // Navigator.of(context).push(MaterialPageRoute(
                         //     builder: (BuildContext context) => new Menu()));
                       },
@@ -150,6 +157,8 @@ class _ProductListWidgetState extends State<ProductListWidget> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
+    var list = Provider.of<ProductProvider>(context).productList;
+
     var column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -209,59 +218,39 @@ class _ProductListWidgetState extends State<ProductListWidget> {
         ),
         SingleChildScrollView(
             child: Container(
-              child: Column(
-                children: <Widget>[
-                  // (widget.showCategoriesSlider == null || widget.showCategoriesSlider)
-                  //     ? CategoryListOneRow(widget._searchModel == null
-                  //         ? ""
-                  //         : (widget._searchModel.CategoryID == null
-                  //             ? ""
-                  //             : widget._searchModel.CategoryID))
-                  //     : Container(),
-                  StreamBuilder(
-                    stream: widget._productBloc.productsObservable,
-                    builder: (context, AsyncSnapshot<List<BaseProduct>> snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.none:
-                        case ConnectionState.waiting:
-                          return Loading();
-                          break;
-                        default:
-                          if (!snapshot.hasData || snapshot.data.length == 0) {
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Center(
-                                child: Text('لا يوجد بيانات'),
-                              ),
-                            );
-                          }
-                          return GridView.count(
-                              shrinkWrap: true,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10.0, vertical: 20.0),
-                              crossAxisSpacing: 10.0,
-                              mainAxisSpacing: 17.0,
-                              childAspectRatio: 0.545,
-                              crossAxisCount: 2,
-                              primary: false,
-                              children:
-                              List.generate(snapshot.data.length, (index) {
-                                if (snapshot.data[index] is SaleProduct) {
-                                  return SaleProductItemGrid(snapshot.data[index]);
-                                } else if (snapshot.data[index] is AuctionProduct) {
-                                  return AuctionProductItemGrid(
-                                      snapshot.data[index]);
-                                } else if (snapshot.data[index] is RequestProduct) {
-                                  return RequestProductItemGrid(
-                                      snapshot.data[index]);
-                                }
-                              }));
-                      }
-                    },
-                  ),
-                ],
-              ),
-            )),
+          child: Column(
+            children: <Widget>[
+              // (widget.showCategoriesSlider == null || widget.showCategoriesSlider)
+              //     ? CategoryListOneRow(widget._searchModel == null
+              //         ? ""
+              //         : (widget._searchModel.CategoryID == null
+              //             ? ""
+              //             : widget._searchModel.CategoryID))
+              //     : Container(),
+
+              GridView.count(
+                  shrinkWrap: true,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+                  crossAxisSpacing: 10.0,
+                  mainAxisSpacing: 17.0,
+                  childAspectRatio: 0.545,
+                  crossAxisCount: 2,
+                  primary: false,
+                  children: List.generate(list.length, (index) {
+                    if (list[index] is SaleProduct) {
+                      return SaleProductItemGrid(list[index]);
+                    } else if (list[index] is AuctionProduct) {
+                      return AuctionProductItemGrid(list[index]);
+                    } else if (list[index] is RequestProduct) {
+                      return RequestProductItemGrid(list[index]);
+                    } else {
+                      return Center(child: Text('يوجد عنصر غير متطابق'));
+                    }
+                  })),
+            ],
+          ),
+        )),
       ],
     );
 
