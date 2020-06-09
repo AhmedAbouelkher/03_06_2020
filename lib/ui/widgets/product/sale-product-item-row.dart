@@ -89,31 +89,31 @@ class SaleProductItemRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                        padding: EdgeInsets.all(10.0),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                          padding: EdgeInsets.all(10.0),
 
-                        /// Image item
-                        child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.1),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.black12.withOpacity(0.1),
-                                      blurRadius: 0.5,
-                                      spreadRadius: 0.1)
-                                ]),
-                            child: Image.network(
-                              product.mainImage,
-                              height: 130.0,
-                              width: 120.0,
-                              fit: BoxFit.cover,
-                            ))),
-                    Flexible(
-                      child: Padding(
+                          /// Image item
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.1),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.black12.withOpacity(0.1),
+                                        blurRadius: 0.5,
+                                        spreadRadius: 0.1)
+                                  ]),
+                              child: Image.network(
+                                product.mainImage,
+                                height: 130.0,
+                                width: 120.0,
+                                fit: BoxFit.cover,
+                              ))),
+                      Padding(
                         padding: const EdgeInsets.only(
                             top: 25.0, left: 10.0, right: 5.0),
                         child: Column(
@@ -131,12 +131,14 @@ class SaleProductItemRow extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                             Padding(padding: EdgeInsets.only(top: 10.0)),
-                            Text(
-                              '${product.descriptionSubString(35)}..',
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12.0,
+                            Expanded(
+                              child: Text(
+                                '${product.descriptionSubString(35)}..',
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 12.0,
+                                ),
                               ),
                             ),
                             Padding(padding: EdgeInsets.only(top: 0.0)),
@@ -200,8 +202,8 @@ class SaleProductItemRow extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 Padding(padding: EdgeInsets.only(top: 8.0)),
                 Divider(
