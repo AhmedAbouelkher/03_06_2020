@@ -154,7 +154,7 @@ class _AppbarGradientState extends State<AppbarGradient> {
                 ),
                 IconButton(
                   icon: Icon(
-                    Icons.add_circle_outline,
+                    Icons.add,
                     color: Colors.white,
                   ),
                   onPressed: () {
