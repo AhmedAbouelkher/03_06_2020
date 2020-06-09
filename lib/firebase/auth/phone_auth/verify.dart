@@ -151,17 +151,7 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               getPinField(key: "1", focusNode: focusNode1),
-              SizedBox(width: 5.0),
-              getPinField(key: "2", focusNode: focusNode2),
-              SizedBox(width: 5.0),
-              getPinField(key: "3", focusNode: focusNode3),
-              SizedBox(width: 5.0),
-              getPinField(key: "4", focusNode: focusNode4),
-              SizedBox(width: 5.0),
-              getPinField(key: "5", focusNode: focusNode5),
-              SizedBox(width: 5.0),
-              getPinField(key: "6", focusNode: focusNode6),
-              SizedBox(width: 5.0),
+
             ],
           ),
 
@@ -205,7 +195,7 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
   // This will return pin field - it accepts only single char
   Widget getPinField({String key, FocusNode focusNode}) => SizedBox(
         height: 40.0,
-        width: 35.0,
+        width: MediaQuery.of(context).size.width*.5,
         child: TextField(
           //key: Key(key),
           expands: false,

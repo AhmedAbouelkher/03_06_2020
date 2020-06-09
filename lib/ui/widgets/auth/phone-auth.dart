@@ -35,6 +35,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
   FocusNode focusNode5 = FocusNode();
   FocusNode focusNode6 = FocusNode();
   String code = "";
+  bool checkBoxValue = false;
 
   final scaffoldKey =
       GlobalKey<ScaffoldState>(debugLabel: "scaffold-get-phone");
@@ -254,6 +255,8 @@ class _PhoneAuthState extends State<PhoneAuth> {
             onChanged: (val){
               countryCode = val.toString();
             },
+            favorite: ['KW','SA','AE','QA','BH','OM','JO','EG','SD','PK'],
+
             // optional. Shows only country name and flag
             showCountryOnly: false,
             // optional. Shows only country name and flag when popup is closed.
@@ -336,23 +339,60 @@ class _PhoneAuthState extends State<PhoneAuth> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               SizedBox(width: _fixedPadding),
-              Icon(Icons.info, color: Colors.white, size: 20.0),
-              SizedBox(width: 10.0),
-              Expanded(
-                child: RichText(
-                    text: TextSpan(children: [
-                      TextSpan(
-                          text: 'موافق على ',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w400)),
-                      TextSpan(
-                          text: 'شروط استخدام التطبيق',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w700)),
 
-                    ])),
+              Checkbox(value: checkBoxValue,
+                  activeColor: Colors.green,
+                  onChanged:(bool newValue){
+                    setState(() {
+                      checkBoxValue = newValue;
+                    });
+                  }),
+
+              Expanded(
+                child: GestureDetector(
+                    onTap: (){
+
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          // return object of type Dialog
+                          return AlertDialog(
+                            title: new Text("شروط استخدام التطبيق"),
+                            content: ListView(
+                              scrollDirection: Axis.vertical,
+                              children: <Widget>[
+                                Text("لالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاه"),
+                              ],
+                            ),
+                            actions: <Widget>[
+                              // usually buttons at the bottom of the dialog
+                              new FlatButton(
+                                child: new Text("إغلاق"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+
+                    }
+                  ,child: RichText(
+                      text: TextSpan(children: [
+                        TextSpan(
+                            text: 'موافق على ',
+                            style: TextStyle(
+                                color: Colors.white, fontWeight: FontWeight.w400)),
+                        TextSpan(
+                            text: 'شروط استخدام التطبيق',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w700)),
+
+                      ])),
+                ),
               ),
               SizedBox(width: _fixedPadding),
 
@@ -364,9 +404,10 @@ class _PhoneAuthState extends State<PhoneAuth> {
            *  knowing once the OTP has been sent to the user - the user will be navigated to a new Screen,
            *  where is asked to enter the OTP he has received on his mobile (or) wait for the system to automatically detect the OTP
            */
+
           SizedBox(height: _fixedPadding * 1.5),
           InkWell(
-            onTap: startPhoneAuth,
+            onTap:checkBoxValue?startPhoneAuth:null,
             // onTap: () => submit(context),
             child: Padding(
               padding: EdgeInsets.all(30.0),
