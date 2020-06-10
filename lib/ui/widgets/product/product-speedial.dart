@@ -8,7 +8,8 @@ import 'package:haftaa/user/user.dart';
 
 class ProductSpeeDial extends StatefulWidget {
   Future<User> _user;
-  ProductSpeeDial(this._user);
+  bool Shownumber;
+  ProductSpeeDial(this._user,this.Shownumber);
 
   @override
   _ProductSpeeDialState createState() => _ProductSpeeDialState();
@@ -63,11 +64,10 @@ class _ProductSpeeDialState extends State<ProductSpeeDial> {
             backgroundColor: Colors.green,
             label: (_user == null
                 ? 'تحميل ..'
-                : (_user.mobile == null
-                    ? 'للأسف لا يوجد رقم'
-                    : 'اتصل ${_user.mobile}')),
+                : (_user.mobile == null ? widget.Shownumber?'للأسف لا يوجد رقم' : 'اتصل ${_user.mobile}':'للأسف لا يوجد رقم')
+            ),
             labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () => _user.mobile == null
+            onTap: () => _user.mobile == null || widget.Shownumber == false
                 ? () {}
                 : _callAndMessageSerive.call(_user.mobile)),
         SpeedDialChild(
@@ -77,7 +77,7 @@ class _ProductSpeeDialState extends State<ProductSpeeDial> {
                 ? 'تحميل ..'
                 : (_user.mobile == null ? 'للأسف لا يوجد رقم' : 'أرسل رسالة')),
             labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () => _user.mobile == null
+            onTap: () => _user.mobile == null || widget.Shownumber == false
                 ? () {}
                 : _callAndMessageSerive.sendSms(_user.mobile)),
         // SpeedDialChild(

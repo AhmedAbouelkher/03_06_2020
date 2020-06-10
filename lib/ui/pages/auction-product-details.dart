@@ -137,7 +137,7 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
         hideWidgetWhenEmpty: true);
 
     return Scaffold(
-      floatingActionButton: new ProductSpeeDial(product.user),
+      floatingActionButton: new ProductSpeeDial(product.user,product.showMobileNumber),
       key: _key,
       appBar: AppBar(
         actions: <Widget>[
@@ -684,7 +684,8 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
                               product.user,
                               TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w700)),
+                                  fontWeight: FontWeight.w700),
+                              product.showMobileNumber),
                         ),
                       ),
                     ),

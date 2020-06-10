@@ -137,7 +137,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
         expectedProduct: product,
         hideWidgetWhenEmpty: true);
     return Scaffold(
-      floatingActionButton: new ProductSpeeDial(product.user),
+      floatingActionButton: new ProductSpeeDial(product.user,product.showMobileNumber),
       key: _key,
       appBar: AppBar(
         actions: <Widget>[
@@ -458,7 +458,8 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                                     product.user,
                                     _txtCustomHead.copyWith(
                                         fontSize: 17.0,
-                                        fontWeight: FontWeight.w600))
+                                        fontWeight: FontWeight.w600),
+                                    product.showMobileNumber)
                               ],
                             ),
                           )
@@ -667,7 +668,8 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                               product.user,
                               TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w700)),
+                                  fontWeight: FontWeight.w700),
+                              product.showMobileNumber),
                         ),
                       ),
                     ),

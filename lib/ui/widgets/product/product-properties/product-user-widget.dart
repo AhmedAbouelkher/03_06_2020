@@ -5,7 +5,8 @@ import 'package:haftaa/user/user.dart';
 class ProductUserWidget extends StatefulWidget {
   Future<User> _user;
   TextStyle _textStyle;
-  ProductUserWidget(this._user, this._textStyle);
+  bool showMobile;
+  ProductUserWidget(this._user, this._textStyle, this.showMobile);
 
   @override
   _ProductUserWidgetState createState() => _ProductUserWidgetState();
@@ -42,8 +43,8 @@ class _ProductUserWidgetState extends State<ProductUserWidget> {
               );
             } else {
               return Text(
-                
-                snapshot.data.name?? snapshot.data.email??snapshot.data.mobile ,
+
+                widget.showMobile?snapshot.data.name?? snapshot.data.email??snapshot.data.mobile:'إعلانات المستخدم' ,
                 textAlign: TextAlign.right,
                 textDirection: TextDirection.ltr,
                 style: widget._textStyle,

@@ -736,6 +736,7 @@ class _AddProductState extends State<AddProduct> {
     productMap['regionID'] = regionDropdownWidget.selectedRegion.Id;
     productMap['available'] = true;
     productMap['used'] = productIsUsed;
+    productMap['showMobileNumber'] = checkBoxValue;
     var nowTime = DateTime.now();
     if (newProduct) {
       productMap['userId'] =

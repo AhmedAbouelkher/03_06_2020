@@ -179,7 +179,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
         hideWidgetWhenEmpty: true);
 
     return Scaffold(
-      floatingActionButton: new ProductSpeeDial(widget.product.user),
+      floatingActionButton: new ProductSpeeDial(widget.product.user,widget.product.showMobileNumber),
       key: _key,
       appBar: AppBar(
         actions: <Widget>[
@@ -681,7 +681,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                             PageRouteBuilder(
                                 pageBuilder: (_, __, ___) =>
                                     new ProductList.Search(_searchModel,
-                                        'المستخدم (${user.name??user.mobile??user.email})'),
+                                        'المستخدم (${widget.product.showMobileNumber?user.name??user.mobile??user.email:'الحالى'})'),
                                 transitionDuration: Duration(milliseconds: 600),
                                 transitionsBuilder: (_,
                                     Animation<double> animation,
@@ -703,10 +703,12 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                         ),
                         child: Center(
                             child: ProductUserWidget(
+
                                 widget.product.user,
                                 TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.w700))
+                                    fontWeight: FontWeight.w700),
+                                widget.product.showMobileNumber)
                             // Text(
                             //   "Pay",
                             //   style: TextStyle(
