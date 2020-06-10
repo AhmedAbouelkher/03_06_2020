@@ -76,9 +76,9 @@ class _ProfileState extends State<Profile> {
                 ),
                 Text(
 
-                  (user.email == null || user.email == ''
+                  (user.displayName == null || user.displayName == ''
                           ? null
-                          : user.email) ??
+                          : user.displayName) ??
 
                       user.phoneNumber,
                   style: _txtName,

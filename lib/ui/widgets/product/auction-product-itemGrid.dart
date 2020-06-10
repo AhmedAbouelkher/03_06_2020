@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:haftaa/ui/pages/auction-product-details.dart';
 import 'package:haftaa/ui/theme/theme.dart';
+
 //import 'package:haftaa/ui/pages/product-details.dart';
 import 'package:haftaa/product/auction-product.dart';
 
 class AuctionProductItemGrid extends StatefulWidget {
   AuctionProduct productItem;
+
   AuctionProductItemGrid(this.productItem) {
     print(this.productItem);
   }
@@ -22,7 +24,7 @@ class _AuctionProductItemGridState extends State<AuctionProductItemGrid> {
       onTap: () {
         Navigator.of(context).push(PageRouteBuilder(
             pageBuilder: (_, __, ___) =>
-            new AuctionProductDetails(widget.productItem),
+                new AuctionProductDetails(widget.productItem),
             transitionDuration: Duration(milliseconds: 900),
 
             /// Set animation Opacity in route to detailProduk layout
@@ -100,7 +102,7 @@ class _AuctionProductItemGridState extends State<AuctionProductItemGrid> {
                 // ),
                 Padding(
                   padding:
-                  const EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0),
+                      const EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,7 +129,7 @@ class _AuctionProductItemGridState extends State<AuctionProductItemGrid> {
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0),
+                      const EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

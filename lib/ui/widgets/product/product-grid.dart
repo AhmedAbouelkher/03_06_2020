@@ -162,6 +162,9 @@ class _ProductGridState extends State<ProductGrid> {
                     return RequestProductItemGrid(
                         Provider.of<ProductProvider>(context).productList[index]);
                   }
+                  else {
+                    return Center(child: Text(''),);
+                  }
                 },
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisSpacing: 10.0,
