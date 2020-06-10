@@ -35,6 +35,14 @@ class BaseProduct {
   List<String> _images = [];
   Map<dynamic, dynamic> _favUsers = Map();
   bool _displayInMobileHome = false;
+  bool _showMobileNumber = true;
+
+
+  bool get showMobileNumber => _showMobileNumber;
+
+  set showMobileNumber(bool value) {
+    _showMobileNumber = value;
+  }
 
   BaseProduct.map(dynamic obj) {
     this._id = obj['id'];
@@ -283,6 +291,8 @@ class BaseProduct {
 
     _available = mapedData['available'];
     _displayInMobileHome = mapedData['displayInMobileHome'];
+    _showMobileNumber = mapedData['showMobileNumber'];
+
 
   }
 
@@ -356,6 +366,8 @@ class BaseProduct {
 
     _available = snapshot.value['available'];
     _displayInMobileHome = snapshot.value['displayInMobileHome'] ?? false;
+    _showMobileNumber = snapshot.value['showMobileNumber'] ?? false;
+
   }
 
   Map<String, dynamic> toJson() {
@@ -374,6 +386,8 @@ class BaseProduct {
       'userId': userId,
       'used': used,
       'displayInMobileHome': displayInMobileHome,
+      'showMobileNumber': showMobileNumber,
+
     };
   }
 }
