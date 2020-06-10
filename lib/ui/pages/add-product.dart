@@ -189,10 +189,6 @@ class _AddProductState extends State<AddProduct> {
       child: Text('شراء'),
       value: ItemType.request,
     ),
-    DropdownMenuItem(
-      child: Text('مزاد'),
-      value: ItemType.auction,
-    ),
   ];
 
   @override
@@ -278,8 +274,9 @@ class _AddProductState extends State<AddProduct> {
   final _scaffoldkey = GlobalKey<ScaffoldState>();
   bool isSaving = false;
   bool gettingProductdataForEditing = false;
-
+  bool checkBoxValue = false;
   List<Map> defaultItemsList = [];
+
 
   loadProductDataForEdit() async {
     gettingProductdataForEditing = true;
@@ -456,8 +453,8 @@ class _AddProductState extends State<AddProduct> {
                         });
                       },
                     ),
-                   ( product.type == ItemType.sale ||
-                            product.type == ItemType.request)
+                    selected_category?.defaultItems != null &&
+                    ( product.type == ItemType.sale || product.type == ItemType.request)
                    &&
                   selected_category.defaultItems['price'] == true
                         ? Container(
@@ -470,27 +467,6 @@ class _AddProductState extends State<AddProduct> {
                                   decoration: InputDecoration(
                                       labelText: "السعر",
                                       hintText: "السعر",
-                                      hintStyle:
-                                          TextStyle(color: Colors.black54)),
-                                  validator: (d) => Validators.valueNotLessZero(
-                                    d,
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        : new Container(),
-                    product.type  == ItemType.auction
-                        ? Container(
-                            child: Column(
-                              children: <Widget>[
-                                Padding(padding: EdgeInsets.only(top: 3.0)),
-                                TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  controller: startPriceEditingController,
-                                  decoration: InputDecoration(
-                                      labelText: "السعر الابتدائي",
-                                      hintText: "يبدأ بـ",
                                       hintStyle:
                                           TextStyle(color: Colors.black54)),
                                   validator: (d) => Validators.valueNotLessZero(
@@ -519,6 +495,17 @@ class _AddProductState extends State<AddProduct> {
                       },
                     )
                       : new Container(),
+
+                    CheckboxListTile(
+                      title: Text("اظهار رقم جوال الخاص بك"),
+                      value: checkBoxValue,
+                      onChanged: (bool newValue){
+                        setState(() {
+                          checkBoxValue = newValue;
+                        });
+                      },
+                      controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+                    ),
 
                     Padding(padding: EdgeInsets.only(top: 80.0)),
                     InkWell(
@@ -631,8 +618,7 @@ class _AddProductState extends State<AddProduct> {
 
   saveExsitedProduct(BuildContext context, GlobalKey formkey) async {
     //check if user loged in
-    if (Provider.of<PhoneAuthDataProvider>(context, listen: false).status !=
-        PhoneAuthState.Verified) {
+    if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn !=true) {
       showSnackBar('سجل دخول من فضلك');
       return;
     }
@@ -797,8 +783,7 @@ class _AddProductState extends State<AddProduct> {
 
   saveNewProduct(BuildContext context, GlobalKey formkey) async {
     //set the user id
-    if (Provider.of<PhoneAuthDataProvider>(context, listen: false).status !=
-        PhoneAuthState.Verified) {
+    if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn != true) {
       showSnackBar('سجل دخول من فضلك');
       return;
     }

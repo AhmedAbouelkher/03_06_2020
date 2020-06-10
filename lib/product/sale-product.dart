@@ -1,7 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:haftaa/product/base-product.dart';
 
-class SaleProduct extends BaseProduct {
+class
+SaleProduct extends BaseProduct {
   double _price;
   double get price => _price;
 
