@@ -146,7 +146,7 @@ class PostCard extends StatelessWidget {
                   const EdgeInsets.only(right: 8, top: 8, left: 5, bottom: 8),
               child: SizedBox(
                 height: 100,
-                child: Image.asset("assets/img/Logo.png"),
+                child: Image.asset("assets/launcher/rsz_icon_hourse.png"),
               ),
             ),
             Expanded(
