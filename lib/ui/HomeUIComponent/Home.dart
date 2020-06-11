@@ -660,15 +660,15 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
     var images = [];
     images.addAll(List.generate(
         sliderProducts.length,
-        (index) => Container(
-          child: CachedNetworkImage(
+        (index) => Column(children: [
+              CachedNetworkImage(
                 fit: BoxFit.cover,
                 imageUrl: sliderProducts[index].mainImage,
                 placeholder: (context, url) =>
                     Center(child: CircularProgressIndicator()),
                 errorWidget: (context, url, error) => new Icon(Icons.error),
               ),
-        )));
+            ])));
 
     // NetworkImage(sliderProducts[index].mainImage)));
 
