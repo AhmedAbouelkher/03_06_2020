@@ -661,36 +661,13 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
     images.addAll(List.generate(
         sliderProducts.length,
         (index) => Container(
-          child: Stack(
-            children: <Widget>[
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: CachedNetworkImage(
-                      fit: BoxFit.cover,
-                      imageUrl: sliderProducts[index].mainImage,
-                      placeholder: (context, url) =>
-                          Center(child: CircularProgressIndicator()),
-                      errorWidget: (context, url, error) => new Icon(Icons.error),
-                    ),
+          child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: sliderProducts[index].mainImage,
+                placeholder: (context, url) =>
+                    Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => new Icon(Icons.error),
               ),
-              Center(child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black54,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10 , right: 10),
-                    child: Text(sliderProducts[index].title,style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),),
-                  ),
-                ),
-              )),
-
-            ],
-          ),
         )));
 
     // NetworkImage(sliderProducts[index].mainImage)));
