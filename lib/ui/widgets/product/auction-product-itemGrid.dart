@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:haftaa/ui/pages/auction-product-details.dart';
 import 'package:haftaa/ui/theme/theme.dart';
@@ -55,13 +56,19 @@ class _AuctionProductItemGridState extends State<AuctionProductItemGrid> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                /// Set Animation image to detailProduk layout
                 Hero(
                   tag: "hero-grid-${widget.productItem.id}",
                   child: Material(
                     child: Container(
                       height: mediaQueryData.size.height / 3.3,
                       width: 200.0,
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        imageUrl: widget.productItem.mainImage,
+                        placeholder: (context, url) =>
+                            Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => new Icon(Icons.error),
+                      ),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(7.0),
@@ -73,6 +80,24 @@ class _AuctionProductItemGridState extends State<AuctionProductItemGrid> {
                     ),
                   ),
                 ),
+                /// Set Animation image to detailProduk layout
+//                Hero(
+//                  tag: "hero-grid-${widget.productItem.id}",
+//                  child: Material(
+//                    child: Container(
+//                      height: mediaQueryData.size.height / 3.3,
+//                      width: 200.0,
+//                      decoration: BoxDecoration(
+//                          borderRadius: BorderRadius.only(
+//                              topLeft: Radius.circular(7.0),
+//                              topRight: Radius.circular(7.0)),
+//                          image: DecorationImage(
+//                              image: new NetworkImage(
+//                                  widget.productItem.mainImage),
+//                              fit: BoxFit.cover)),
+//                    ),
+//                  ),
+//                ),
                 Padding(padding: EdgeInsets.only(top: 7.0)),
                 Padding(
                   padding: const EdgeInsets.only(left: 15.0, right: 15.0),

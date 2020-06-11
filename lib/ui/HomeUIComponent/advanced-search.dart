@@ -359,18 +359,18 @@ class _AdvancedSearchState extends State<AdvancedSearch> {
       },
     );
 
-    productStatusDropdownWidget = CustomDropdownWidget.Custom(
-      items: productStatuses,
-      selectedValue: productIsUsed,
-      hintText: 'الحالة',
-      title: 'حالة المنتج',
-      selectionIsRequired: true,
-      onChange: (value) {
-        setState(() {
-          productIsUsed = value;
-        });
-      },
-    );
+//    productStatusDropdownWidget = CustomDropdownWidget.Custom(
+//      items: productStatuses,
+//      selectedValue: productIsUsed,
+//      hintText: 'الحالة',
+//      title: 'حالة المنتج',
+//      selectionIsRequired: true,
+//      onChange: (value) {
+//        setState(() {
+//          productIsUsed = value;
+//        });
+//      },
+//    );
     var bottomButtons = Column(
       children: <Widget>[
         InkWell(

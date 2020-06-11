@@ -30,8 +30,8 @@ class UploadImageProvider {
   }
 
   static Future<dynamic> uploadImageAsset(
-      Asset asset, String directoryPath, String uploadedImageFileName) async {
-    ByteData byteData = await asset.requestOriginal();
+      Asset asset, String directoryPath, String uploadedImageFileName,{int quality =100}) async {
+    ByteData byteData = await asset.requestOriginal(quality: quality);
     List<int> imageData = byteData.buffer.asUint8List();
     StorageReference ref = FirebaseStorage.instance
         .ref()

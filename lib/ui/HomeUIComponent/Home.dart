@@ -1,8 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:haftaa/authentication/auth.dart';
 import 'package:haftaa/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:haftaa/ListItem/HomeGridItemRecomended.dart';
+import 'package:haftaa/product/auction-product.dart';
 import 'package:haftaa/product/product-provider.dart';
+import 'package:haftaa/product/request-product.dart';
+import 'package:haftaa/product/sale-product.dart';
+import 'package:haftaa/ui/pages/auction-product-details.dart';
+import 'package:haftaa/ui/pages/request-product-details.dart';
+import 'package:haftaa/ui/pages/sale-product-details.dart';
 import 'package:haftaa/ui/widgets/category/category-icons-grid/category-icons-grid.dart';
 import 'package:haftaa/ui/widgets/product/product-list-horizontal/product-list-horizontal.dart';
 import 'package:haftaa/ui/HomeUIComponent/AppbarGradient.dart';
@@ -70,13 +77,13 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
   /// To set duration initState auto start if FlashSale Layout open
   @override
   void initState() {
-    hours = new CountDown(new Duration(hours: 24));
-    minutes = new CountDown(new Duration(hours: 1));
-    seconds = new CountDown(new Duration(minutes: 1));
-
-    onStartStopPress();
-    listScrollController = new ScrollController();
-    listScrollController.addListener(_scrollListener);
+//    hours = new CountDown(new Duration(hours: 24));
+//    minutes = new CountDown(new Duration(hours: 1));
+//    seconds = new CountDown(new Duration(minutes: 1));
+//
+//    //onStartStopPress();
+//    listScrollController = new ScrollController();
+//    listScrollController.addListener(_scrollListener);
     // TODO: implement initState
     super.initState();
   }
@@ -94,87 +101,104 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
     listScrollController.removeListener(_scrollListener);
   }
 
+  onClickMenuIcon(context) {
+    Navigator.of(context).push(PageRouteBuilder(
+        pageBuilder: (_, __, ___) => new menuDetail(),
+        transitionDuration: Duration(milliseconds: 750),
+
+        /// Set animation with opacity
+        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+          return Opacity(
+            opacity: animation.value,
+            child: child,
+          );
+        }));
+  }
+
+  onClickWeekPromotion(context) {
+    Navigator.of(context).push(PageRouteBuilder(
+        pageBuilder: (_, __, ___) => new promoDetail(),
+        transitionDuration: Duration(milliseconds: 750),
+        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+          return Opacity(
+            opacity: animation.value,
+            child: child,
+          );
+        }));
+  }
+
+  onClickCategory(context) {
+    Navigator.of(context).push(PageRouteBuilder(
+        pageBuilder: (_, __, ___) => new categoryDetail(),
+        transitionDuration: Duration(milliseconds: 750),
+        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+          return Opacity(
+            opacity: animation.value,
+            child: child,
+          );
+        }));
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
-    double size = mediaQueryData.size.height;
+    var categoryIconGrid = CategoryIconsGrid();
+    var productGrid = ProductGrid();
 
-    /// Navigation to MenuDetail.dart if user Click icon in category Menu like a example camera
-    var onClickMenuIcon = () {
-      Navigator.of(context).push(PageRouteBuilder(
-          pageBuilder: (_, __, ___) => new menuDetail(),
-          transitionDuration: Duration(milliseconds: 750),
+    return Scaffold(
+      /// Use Stack to costume a appbar
+      body: Stack(
+        children: <Widget>[
+          SingleChildScrollView(
+            controller: listScrollController,
+            child: Column(
+              children: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(
+                        top: mediaQueryData.padding.top + 58.5)),
 
-          /// Set animation with opacity
-          transitionsBuilder:
-              (_, Animation<double> animation, __, Widget child) {
-            return Opacity(
-              opacity: animation.value,
-              child: child,
-            );
-          }));
-    };
+                /// Call var imageSlider
+                buildProductSlider(context),
+                categoryIconGrid,
 
-    /// Navigation to promoDetail.dart if user Click icon in Week Promotion
-    var onClickWeekPromotion = () {
-      Navigator.of(context).push(PageRouteBuilder(
-          pageBuilder: (_, __, ___) => new promoDetail(),
-          transitionDuration: Duration(milliseconds: 750),
-          transitionsBuilder:
-              (_, Animation<double> animation, __, Widget child) {
-            return Opacity(
-              opacity: animation.value,
-              child: child,
-            );
-          }));
-    };
+                /// Call var categoryIcon
+                //categoryIcon,
+                Padding(
+                  padding: EdgeInsets.only(top: 10.0),
+                ),
 
-    /// Navigation to categoryDetail.dart if user Click icon in Category
-    var onClickCategory = () {
-      Navigator.of(context).push(PageRouteBuilder(
-          pageBuilder: (_, __, ___) => new categoryDetail(),
-          transitionDuration: Duration(milliseconds: 750),
-          transitionsBuilder:
-              (_, Animation<double> animation, __, Widget child) {
-            return Opacity(
-              opacity: animation.value,
-              child: child,
-            );
-          }));
-    };
+                /// Call a Grid variable, this is item list in Recomended item
 
-    /// Declare device Size
-    var deviceSize = MediaQuery.of(context).size;
-    var sliderProducts = Provider.of<ProductProvider>(context)
-        .productList
-        .where((element) => element.displayInMobileHome == true)
-        .toList();
+                /// Call var PromoHorizontalList
+                //PromoHorizontalList,
 
-    var images = [
-      AssetImage("assets/img/bannerMan1.png"),
-    ];
-//    images.addAll(List.generate(sliderProducts.length,
-//        (index) => NetworkImage(sliderProducts[index].mainImage)));
+                //auctionList,
+                Padding(
+                  padding: EdgeInsets.only(top: 10.0),
+                ),
+                productGrid,
 
-    /// ImageSlider in header
-    var imageSlider = Container(
-      height: 182.0,
-      child: new Carousel(
-        boxFit: BoxFit.cover,
-        dotColor: Color(0xFF6991C7).withOpacity(0.8),
-        dotSize: 5.5,
-        dotSpacing: 16.0,
-        dotBgColor: Colors.transparent,
-        showIndicator: true,
-        overlayShadow: true,
-        overlayShadowColors: Colors.white.withOpacity(0.9),
-        overlayShadowSize: 0.9,
-        images: [
-          AssetImage("assets/img/bannerMan1.png"),
+                /// Call var a FlashSell, i am sorry Typo :v
+                //FlashSell,
+
+                // categoryImageBottom,
+                // Padding(
+                //   padding: EdgeInsets.only(bottom: 10.0),
+                // ),
+              ],
+            ),
+          ),
+
+          /// Get a class AppbarGradient
+          /// This is a Appbar in home activity
+
+          AppbarGradient(),
         ],
       ),
     );
-    var categoryIconGrid = CategoryIconsGrid();
+
+    /// Declare device Size
+    var deviceSize = MediaQuery.of(context).size;
 
     /// CategoryIcon Component
     var categoryIcon = Container(
@@ -198,47 +222,47 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 
           /// Get class CategoryIconValue
           CategoryIconValue(
-            tap1: onClickMenuIcon,
+            tap1: onClickMenuIcon(context),
             icon1: "assets/icon/camera.png",
             title1: "ماشية",
-            tap2: onClickMenuIcon,
+            tap2: onClickMenuIcon(context),
             icon2: "assets/icon/food.png",
             title2: "ماعز",
-            tap3: onClickMenuIcon,
+            tap3: onClickMenuIcon(context),
             icon3: "assets/icon/handphone.png",
             title3: "جمال",
-            tap4: onClickMenuIcon,
+            tap4: onClickMenuIcon(context),
             icon4: "assets/icon/game.png",
             title4: "سيارات",
           ),
           Padding(padding: EdgeInsets.only(top: 23.0)),
           CategoryIconValue(
             icon1: "assets/icon/fashion.png",
-            tap1: onClickMenuIcon,
+            tap1: onClickMenuIcon(context),
             title1: "أجهزة",
             icon2: "assets/icon/health.png",
-            tap2: onClickMenuIcon,
+            tap2: onClickMenuIcon(context),
             title2: "غسالات",
             icon3: "assets/icon/pc.png",
-            tap3: onClickMenuIcon,
+            tap3: onClickMenuIcon(context),
             title3: "لابتوب",
             icon4: "assets/icon/mesin.png",
-            tap4: onClickMenuIcon,
+            tap4: onClickMenuIcon(context),
             title4: "سماعات",
           ),
           Padding(padding: EdgeInsets.only(top: 23.0)),
           CategoryIconValue(
             icon1: "assets/icon/otomotif.png",
-            tap1: onClickMenuIcon,
+            tap1: onClickMenuIcon(context),
             title1: "كمبيوتر",
             icon2: "assets/icon/sport.png",
-            tap2: onClickMenuIcon,
+            tap2: onClickMenuIcon(context),
             title2: "ماوس",
             icon3: "assets/icon/ticket.png",
-            tap3: onClickMenuIcon,
+            tap3: onClickMenuIcon(context),
             title3: "تلفاز",
             icon4: "assets/icon/book.png",
-            tap4: onClickMenuIcon,
+            tap4: onClickMenuIcon(context),
             title4: "شاشات",
           ),
           Padding(padding: EdgeInsets.only(bottom: 30.0))
@@ -247,58 +271,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
     );
 
     /// ListView a WeekPromotion Component
-    var PromoHorizontalList = Container(
-      color: Colors.white,
-      height: 230.0,
-      padding: EdgeInsets.only(bottom: 40.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 20.0, top: 15.0, bottom: 3.0),
-              child: Text(
-                "مزادات مفتوحة",
-                style: TextStyle(
-                    fontSize: 15.0,
-                    fontFamily: "Sans",
-                    fontWeight: FontWeight.w700),
-              )),
-          Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              padding: EdgeInsets.only(top: 10.0),
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                Padding(padding: EdgeInsets.only(left: 20.0)),
-                InkWell(
-                    onTap: onClickWeekPromotion,
-                    child: Image.asset("assets/imgPromo/Discount1.png")),
-                Padding(padding: EdgeInsets.only(left: 10.0)),
-                InkWell(
-                    onTap: onClickWeekPromotion,
-                    child: Image.asset("assets/imgPromo/Discount3.png")),
-                Padding(padding: EdgeInsets.only(left: 10.0)),
-                InkWell(
-                    onTap: onClickWeekPromotion,
-                    child: Image.asset("assets/imgPromo/Discount2.png")),
-                Padding(padding: EdgeInsets.only(left: 10.0)),
-                InkWell(
-                    onTap: onClickWeekPromotion,
-                    child: Image.asset("assets/imgPromo/Discount4.png")),
-                Padding(padding: EdgeInsets.only(left: 10.0)),
-                InkWell(
-                    onTap: onClickWeekPromotion,
-                    child: Image.asset("assets/imgPromo/Discount5.png")),
-                Padding(padding: EdgeInsets.only(left: 10.0)),
-                InkWell(
-                    onTap: onClickWeekPromotion,
-                    child: Image.asset("assets/imgPromo/Discount6.png")),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+    var PromoHorizontalList = buildOriginalPromoListFromTheme(context);
 
     ProductSearchModel auctionSearh =
         ProductSearchModel.FromSearchParams(productTypeInArabic: 'مزاد');
@@ -309,7 +282,166 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
     );
 
     /// FlashSale component
-    var FlashSell = Container(
+    var FlashSell = buildFlashSellFromTheme(mediaQueryData, deviceSize);
+
+    /// Category Component in bottom of flash sale
+    var categoryImageBottom = buildCategoryImageBottomTheme(context);
+
+    ///  Grid item in bottom of Category
+    var gridOriginal = buildGridOriginalTheme();
+  }
+
+  SingleChildScrollView buildGridOriginalTheme() {
+    return SingleChildScrollView(
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, top: 20.0),
+              child: Text(
+                "Recomended",
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 17.0,
+                ),
+              ),
+            ),
+
+            /// To set GridView item
+            GridView.count(
+                shrinkWrap: true,
+                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 17.0,
+                childAspectRatio: 0.545,
+                crossAxisCount: 2,
+                primary: false,
+                children: List.generate(
+                  gridItemArray.length,
+                  (index) => ItemGrid(gridItemArray[index]),
+                ))
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container buildCategoryImageBottomTheme(BuildContext context) {
+    return Container(
+      height: 310.0,
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0, top: 20.0),
+            child: Text(
+              "Category",
+              style: TextStyle(
+                  fontSize: 17.0,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Sans"),
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(padding: EdgeInsets.only(top: 15.0)),
+                      CategoryItemValue(
+                        image: "assets/imgItem/category2.png",
+                        title: "Fashion Man",
+                        tap: onClickCategory(context),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 10.0),
+                      ),
+                      CategoryItemValue(
+                        image: "assets/imgItem/category4.png",
+                        title: "Computer",
+                        tap: onClickCategory(context),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(padding: EdgeInsets.only(left: 10.0)),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(padding: EdgeInsets.only(top: 15.0)),
+                    CategoryItemValue(
+                      image: "assets/imgItem/category3.png",
+                      title: "Smartphone",
+                      tap: onClickCategory(context),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10.0),
+                    ),
+                    CategoryItemValue(
+                      image: "assets/imgItem/category4.png",
+                      title: "Computer",
+                      tap: onClickCategory(context),
+                    ),
+                  ],
+                ),
+                Padding(padding: EdgeInsets.only(left: 10.0)),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(padding: EdgeInsets.only(top: 15.0)),
+                    CategoryItemValue(
+                      image: "assets/imgItem/category5.png",
+                      title: "Sport",
+                      tap: onClickCategory(context),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10.0),
+                    ),
+                    CategoryItemValue(
+                      image: "assets/imgItem/category6.png",
+                      title: "Fashion Kids",
+                      tap: onClickCategory(context),
+                    ),
+                  ],
+                ),
+                Padding(padding: EdgeInsets.only(left: 10.0)),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(padding: EdgeInsets.only(top: 15.0)),
+                    CategoryItemValue(
+                      image: "assets/imgItem/category7.png",
+                      title: "Health",
+                      tap: onClickCategory(context),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10.0),
+                    ),
+                    CategoryItemValue(
+                      image: "assets/imgItem/category8.png",
+                      title: "Makeup",
+                      tap: onClickCategory(context),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Container buildFlashSellFromTheme(
+      MediaQueryData mediaQueryData, Size deviceSize) {
+    return Container(
       height: 390.0,
       decoration: BoxDecoration(
         /// To set Gradient in flashSale background
@@ -463,229 +595,125 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
         ],
       ),
     );
+  }
 
-    /// Category Component in bottom of flash sale
-    var categoryImageBottom = Container(
-      height: 310.0,
+  Container buildOriginalPromoListFromTheme(BuildContext context) {
+    return Container(
       color: Colors.white,
+      height: 230.0,
+      padding: EdgeInsets.only(bottom: 40.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(right: 20.0, top: 20.0),
-            child: Text(
-              "Category",
-              style: TextStyle(
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "Sans"),
-            ),
-          ),
+              padding: EdgeInsets.only(right: 20.0, top: 15.0, bottom: 3.0),
+              child: Text(
+                "مزادات مفتوحة",
+                style: TextStyle(
+                    fontSize: 15.0,
+                    fontFamily: "Sans",
+                    fontWeight: FontWeight.w700),
+              )),
           Expanded(
             child: ListView(
+              shrinkWrap: true,
+              padding: EdgeInsets.only(top: 10.0),
               scrollDirection: Axis.horizontal,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: 20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(padding: EdgeInsets.only(top: 15.0)),
-                      CategoryItemValue(
-                        image: "assets/imgItem/category2.png",
-                        title: "Fashion Man",
-                        tap: onClickCategory,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.0),
-                      ),
-                      CategoryItemValue(
-                        image: "assets/imgItem/category4.png",
-                        title: "Computer",
-                        tap: onClickCategory,
-                      ),
-                    ],
-                  ),
-                ),
+                Padding(padding: EdgeInsets.only(left: 20.0)),
+                InkWell(
+                    onTap: onClickWeekPromotion(context),
+                    child: Image.asset("assets/imgPromo/Discount1.png")),
                 Padding(padding: EdgeInsets.only(left: 10.0)),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(padding: EdgeInsets.only(top: 15.0)),
-                    CategoryItemValue(
-                      image: "assets/imgItem/category3.png",
-                      title: "Smartphone",
-                      tap: onClickCategory,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10.0),
-                    ),
-                    CategoryItemValue(
-                      image: "assets/imgItem/category4.png",
-                      title: "Computer",
-                      tap: onClickCategory,
-                    ),
-                  ],
-                ),
+                InkWell(
+                    onTap: onClickWeekPromotion(context),
+                    child: Image.asset("assets/imgPromo/Discount3.png")),
                 Padding(padding: EdgeInsets.only(left: 10.0)),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(padding: EdgeInsets.only(top: 15.0)),
-                    CategoryItemValue(
-                      image: "assets/imgItem/category5.png",
-                      title: "Sport",
-                      tap: onClickCategory,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10.0),
-                    ),
-                    CategoryItemValue(
-                      image: "assets/imgItem/category6.png",
-                      title: "Fashion Kids",
-                      tap: onClickCategory,
-                    ),
-                  ],
-                ),
+                InkWell(
+                    onTap: onClickWeekPromotion(context),
+                    child: Image.asset("assets/imgPromo/Discount2.png")),
                 Padding(padding: EdgeInsets.only(left: 10.0)),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(padding: EdgeInsets.only(top: 15.0)),
-                    CategoryItemValue(
-                      image: "assets/imgItem/category7.png",
-                      title: "Health",
-                      tap: onClickCategory,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10.0),
-                    ),
-                    CategoryItemValue(
-                      image: "assets/imgItem/category8.png",
-                      title: "Makeup",
-                      tap: onClickCategory,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-
-    var productGrid = ProductGrid();
-    // var productGrid = StreamBuilder(
-    //   stream: Provider.of(context).productBloc.productStream,
-    //   builder: (context,AsyncSnapshot<List<BaseProduct>> snap){
-
-    //   },
-    // );
-    // var grid = StreamBuilder(
-    //     stream:
-    //         FirebaseDatabase.instance.reference().child("menuItems").onValue,
-    //     builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
-    //       if (snapshot.hasData) {
-    //         Map<dynamic, dynamic> map =
-    //             new Map<String, dynamic>.from(snapshot.data.snapshot.value);
-    //         //map.forEach((dynamic, v) => print(v["title"]));
-    //         return ListView.builder(
-    //           itemCount: map.values.length,
-    //           itemBuilder: (BuildContext context, int index) {
-    //             var dd;
-    //           },
-    //         );
-    //       } else {
-    //         return CircularProgressIndicator();
-    //       }
-    //     });
-
-    ///  Grid item in bottom of Category
-    var gridOriginal = SingleChildScrollView(
-      child: Container(
-        color: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, top: 20.0),
-              child: Text(
-                "Recomended",
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 17.0,
-                ),
-              ),
-            ),
-
-            /// To set GridView item
-            GridView.count(
-                shrinkWrap: true,
-                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-                crossAxisSpacing: 10.0,
-                mainAxisSpacing: 17.0,
-                childAspectRatio: 0.545,
-                crossAxisCount: 2,
-                primary: false,
-                children: List.generate(
-                  gridItemArray.length,
-                  (index) => ItemGrid(gridItemArray[index]),
-                ))
-          ],
-        ),
-      ),
-    );
-    return Scaffold(
-      /// Use Stack to costume a appbar
-      body: Stack(
-        children: <Widget>[
-          SingleChildScrollView(
-            controller: listScrollController,
-            child: Column(
-              children: <Widget>[
-                Padding(
-                    padding: EdgeInsets.only(
-                        top: mediaQueryData.padding.top + 58.5)),
-
-                /// Call var imageSlider
-                imageSlider,
-                categoryIconGrid,
-
-                /// Call var categoryIcon
-                //categoryIcon,
-                Padding(
-                  padding: EdgeInsets.only(top: 10.0),
-                ),
-
-                /// Call a Grid variable, this is item list in Recomended item
-
-                /// Call var PromoHorizontalList
-                //PromoHorizontalList,
-
-                //auctionList,
-                Padding(
-                  padding: EdgeInsets.only(top: 10.0),
-                ),
-                productGrid,
-
-                /// Call var a FlashSell, i am sorry Typo :v
-                //FlashSell,
-
-                // categoryImageBottom,
-                // Padding(
-                //   padding: EdgeInsets.only(bottom: 10.0),
-                // ),
+                InkWell(
+                    onTap: onClickWeekPromotion(context),
+                    child: Image.asset("assets/imgPromo/Discount4.png")),
+                Padding(padding: EdgeInsets.only(left: 10.0)),
+                InkWell(
+                    onTap: onClickWeekPromotion(context),
+                    child: Image.asset("assets/imgPromo/Discount5.png")),
+                Padding(padding: EdgeInsets.only(left: 10.0)),
+                InkWell(
+                    onTap: onClickWeekPromotion(context),
+                    child: Image.asset("assets/imgPromo/Discount6.png")),
               ],
             ),
           ),
-
-          /// Get a class AppbarGradient
-          /// This is a Appbar in home activity
-
-          AppbarGradient(),
         ],
       ),
     );
+  }
+
+  Container buildProductSlider(BuildContext context) {
+    var sliderProducts = Provider.of<ProductProvider>(context)
+        .productList
+        .where((element) => element.displayInMobileHome == true)
+        .toList();
+    var images = [];
+    images.addAll(List.generate(
+        sliderProducts.length,
+        (index) => Container(
+          child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: sliderProducts[index].mainImage,
+                placeholder: (context, url) =>
+                    Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => new Icon(Icons.error),
+              ),
+        )));
+
+    // NetworkImage(sliderProducts[index].mainImage)));
+
+    /// ImageSlider in header
+    var imageSlider = Container(
+      height: 182.0,
+      child: new Carousel(
+        onImageTap: (imageIndex) {
+          var detailsPage;
+
+          if (sliderProducts[imageIndex] is SaleProduct) {
+            detailsPage = new SaleProductDetails(
+                sliderProducts[imageIndex], sliderProducts[imageIndex].user);
+          } else if (sliderProducts[imageIndex] is AuctionProduct) {
+            detailsPage = new AuctionProductDetails(sliderProducts[imageIndex]);
+          } else if (sliderProducts[imageIndex] is RequestProduct) {
+            detailsPage = new RequestProductDetails(sliderProducts[imageIndex]);
+          }
+
+          Navigator.of(context).push(PageRouteBuilder(
+              pageBuilder: (_, __, ___) => detailsPage,
+              transitionDuration: Duration(milliseconds: 900),
+
+              /// Set animation Opacity in route to detailProduk layout
+              transitionsBuilder:
+                  (_, Animation<double> animation, __, Widget child) {
+                return Opacity(
+                  opacity: animation.value,
+                  child: child,
+                );
+              }));
+        },
+        boxFit: BoxFit.cover,
+        dotColor: Color(0xFF6991C7).withOpacity(0.8),
+        dotSize: 5.5,
+        dotSpacing: 16.0,
+        dotBgColor: Colors.transparent,
+        showIndicator: true,
+        overlayShadow: true,
+        overlayShadowColors: Colors.white.withOpacity(0.9),
+        overlayShadowSize: 0.9,
+        images: images,
+      ),
+    );
+    return imageSlider;
   }
 }
 

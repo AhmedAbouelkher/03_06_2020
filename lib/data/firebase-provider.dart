@@ -20,6 +20,12 @@ class FirebaseProvider implements DatabaseProvider {
         .limitToFirst(limit)
         .onChildAdded;
   }
+
+  Future<DataSnapshot> getItems(){
+    return FirebaseDatabase.instance
+        .reference()
+        .child('menuItems').once();
+  }
    Stream<Event> getProductsStreamChange(int limit, ProductSearchModel searchModel) {
     if (limit == null || limit < 0) {
       return FirebaseDatabase.instance

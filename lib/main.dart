@@ -45,14 +45,12 @@ class myApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => CountryProvider(),
-        ),
+
         ChangeNotifierProvider(
           create: (context) => PhoneAuthDataProvider()..currentuser(),
         ),
         ChangeNotifierProvider(
-          create: (context) => ProductProvider()..startLoading(-1),
+          create: (context) => ProductProvider(),
         ),
       ],
       child: MaterialApp(
@@ -190,7 +188,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
 
   /// Setting duration in splash screen
-  startTime() async {
+  startTime(context) async {
+    await Provider.of<ProductProvider>(context).loadItems();
+
     return new Timer(Duration(milliseconds: 2000), NavigatorPage);
   }
 
@@ -212,7 +212,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    startTime();
+  }
+
+  @override
+  void didChangeDependencies() {
+    startTime(context);
   }
 
   /// Code Create UI Splash Screen

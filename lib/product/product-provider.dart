@@ -14,9 +14,10 @@ import 'package:haftaa/settings/settings_controller.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ProductProvider extends ChangeNotifier {
-  final Future<Settings> settings=  SettingsController.getSettings();
+  final Future<Settings> settings = SettingsController.getSettings();
 
   List<BaseProduct> productList = List<BaseProduct>();
+
 //product list observable subject
   //BehaviorSubject<List<BaseProduct>> _subjectProducts;
 //  BehaviorSubject<List<BaseProduct>> get productsObservable =>
@@ -28,6 +29,7 @@ class ProductProvider extends ChangeNotifier {
 
   ProductSearchModel searchModel;
   int startLoadingWithCount;
+
   ProductProvider({this.searchModel, this.startLoadingWithCount}) {
     //products obervable subject
 //    _subjectProducts =
@@ -38,6 +40,7 @@ class ProductProvider extends ChangeNotifier {
 //start loading
     //startLoading(startLoadingWithCount ?? 1);
   }
+
   bool _isItemMatchedToSearch(BaseProduct product) {
     if (searchModel == null) {
       return true;
@@ -77,14 +80,51 @@ class ProductProvider extends ChangeNotifier {
     return true;
   }
 
+  Future<List<BaseProduct>> loadItems() async {
+    final Completer<List<BaseProduct>> completer =
+        Completer<List<BaseProduct>>();
+    List<BaseProduct> _productList = new List<BaseProduct>();
+    var produtcListFuture = await _productRepositoy.getItems();
+
+    Map values = produtcListFuture.value;
+    values.forEach((key, value) {
+      BaseProduct product;
+      if (value['type'] != null) {
+        switch (value['type']) {
+          case 'sale':
+            product = SaleProduct.fromMap(key, value);
+            break;
+          case 'request':
+            product = RequestProduct.fromMap(key, value);
+            break;
+          case 'auction':
+            product = AuctionProduct.fromMap(key, value);
+            break;
+          default:
+            product = BaseProduct.fromMap(key, value);
+            break;
+        }
+        _productList.add(product);
+      }
+
+
+    });
+
+    if (!completer.isCompleted) {
+      productList = _productList;
+      completer.complete(_productList);
+    }
+    return completer.future;
+  }
+
   Stream<Event> _onProductChildAddedStream;
   Stream<Event> _onProductChildUpdatedStream;
+
   startLoading(int limit) async {
 //    _subjectProducts =
 //    new BehaviorSubject<List<BaseProduct>>.seeded(productList);
     //product observable subject
     _subjectProduct.stream.listen(_onProductObjectAdded);
-
 
     _onProductChildAddedStream =
         _productRepositoy.getProducts(limit, searchModel);
@@ -108,6 +148,7 @@ class ProductProvider extends ChangeNotifier {
 
   bool gettingMorePorducts = false;
   BaseProduct _lastProduct;
+
   loadMoreProducts(int limit) async {
     gettingMorePorducts = true;
     _subjectProduct.close();
@@ -153,23 +194,23 @@ class ProductProvider extends ChangeNotifier {
 
   void _onProductUpdated(Event event) {
     var oldProductValue =
-    productList.singleWhere((product) => product.id == event.snapshot.key);
+        productList.singleWhere((product) => product.id == event.snapshot.key);
 
     //todo:make it dynamic enum switcher
     switch (event.snapshot.value['type']) {
       case 'sale':
         productList[productList.indexOf(oldProductValue)] =
-        new SaleProduct.fromSnapshot(event.snapshot);
+            new SaleProduct.fromSnapshot(event.snapshot);
 
         break;
       case 'request':
         productList[productList.indexOf(oldProductValue)] =
-        new RequestProduct.fromSnapshot(event.snapshot);
+            new RequestProduct.fromSnapshot(event.snapshot);
 
         break;
       case 'auction':
         productList[productList.indexOf(oldProductValue)] =
-        new AuctionProduct.fromSnapshot(event.snapshot);
+            new AuctionProduct.fromSnapshot(event.snapshot);
 
         break;
     }

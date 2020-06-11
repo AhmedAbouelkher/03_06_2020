@@ -7,6 +7,10 @@ class ProductRepository {
   Stream<Event> getProducts(int limit, ProductSearchModel serachModel) {
     return _firebaseProvider.getProducts(limit, serachModel);
   }
+  Future<DataSnapshot>  getItems(){
+    return _firebaseProvider.getItems();
+
+  }
    Stream<Event> getProductsStreamChange(int limit, ProductSearchModel serachModel) {
     return _firebaseProvider.getProductsStreamChange(limit, serachModel);
   }

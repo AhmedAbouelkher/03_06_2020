@@ -58,7 +58,8 @@ class _AddProductState extends State<AddProduct> {
     showSnackBar('لا تنسى تحديد الصورة الرئيسية', durationInSeconds: 1);
   }
 
-  BaseProduct product ;
+  BaseProduct product;
+
   final productStatusKey = GlobalKey();
   ProductController productController = new ProductController();
   Governorate selected_Governorate;
@@ -74,15 +75,13 @@ class _AddProductState extends State<AddProduct> {
   }
 
   BaseCategory selected_category;
-   void onCategorySelectChanged(BaseCategory cat) {
 
+  void onCategorySelectChanged(BaseCategory cat) {
     setState(() {
       product.categoryId = cat.id;
       selected_category = cat;
     });
-
   }
-
 
   bool productIsUsed;
   static Region selectedRegion;
@@ -116,7 +115,8 @@ class _AddProductState extends State<AddProduct> {
           ? imagefile.FileAsset
           : null;
       await UploadImageProvider.uploadImageAsset(imagedata,
-              'products/${productid}', '${DateTime.now().toString()}.png')
+              'products/${productid}', '${DateTime.now().toString()}.png',
+              quality: imagefile.isMainImage ? 50 : 90)
           .then((onValue) {
         imagefile.imageURL = onValue.toString();
         if (selectedImages
@@ -277,7 +277,6 @@ class _AddProductState extends State<AddProduct> {
   bool checkBoxValue = false;
   List<Map> defaultItemsList = [];
 
-
   loadProductDataForEdit() async {
     gettingProductdataForEditing = true;
     selected_category = await product.category;
@@ -358,7 +357,6 @@ class _AddProductState extends State<AddProduct> {
         ),
       );
     }
-
 
     var formContent = SingleChildScrollView(
       child: gettingProductdataForEditing
@@ -454,9 +452,9 @@ class _AddProductState extends State<AddProduct> {
                       },
                     ),
                     selected_category?.defaultItems != null &&
-                    ( product.type == ItemType.sale || product.type == ItemType.request)
-                   &&
-                  selected_category.defaultItems['price'] == true
+                            (product.type == ItemType.sale ||
+                                product.type == ItemType.request) &&
+                            selected_category.defaultItems['price'] == true
                         ? Container(
                             child: Column(
                               children: <Widget>[
@@ -478,33 +476,34 @@ class _AddProductState extends State<AddProduct> {
                           )
                         : new Container(),
 
-                  selected_category  != null && selected_category.defaultItems['used'] == true ?
-                    CustomDropdownWidget.Custom(
-                      items: productStatuses,
-                      selectedValue: productIsUsed,
-                      validator: (value) => Validators.notNullValue(value,
-                          customMessage: 'حدد الحالة من فضلك'),
-                      hintText: 'الحالة',
-                      title: 'حالة المنتج',
-                      selectionIsRequired: true,
-                      onChange: (value) {
-                        setState(() {
-                          productIsUsed = value;
-
-                        });
-                      },
-                    )
-                      : new Container(),
+                    selected_category != null &&
+                            selected_category.defaultItems['used'] == true
+                        ? CustomDropdownWidget.Custom(
+                            items: productStatuses,
+                            selectedValue: productIsUsed,
+                            validator: (value) => Validators.notNullValue(value,
+                                customMessage: 'حدد الحالة من فضلك'),
+                            hintText: 'الحالة',
+                            title: 'حالة المنتج',
+                            selectionIsRequired: true,
+                            onChange: (value) {
+                              setState(() {
+                                productIsUsed = value;
+                              });
+                            },
+                          )
+                        : new Container(),
 
                     CheckboxListTile(
                       title: Text("اظهار رقم جوال الخاص بك"),
                       value: checkBoxValue,
-                      onChanged: (bool newValue){
+                      onChanged: (bool newValue) {
                         setState(() {
                           checkBoxValue = newValue;
                         });
                       },
-                      controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+                      controlAffinity: ListTileControlAffinity
+                          .leading, //  <-- leading Checkbox
                     ),
 
                     Padding(padding: EdgeInsets.only(top: 80.0)),
@@ -598,7 +597,7 @@ class _AddProductState extends State<AddProduct> {
     var page;
     switch (product.type) {
       case ItemType.sale:
-        page = new SaleProductDetails(product,widget.product.user);
+        page = new SaleProductDetails(product, widget.product.user);
         break;
       case ItemType.request:
         page = new RequestProductDetails(product);
@@ -618,7 +617,8 @@ class _AddProductState extends State<AddProduct> {
 
   saveExsitedProduct(BuildContext context, GlobalKey formkey) async {
     //check if user loged in
-    if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn !=true) {
+    if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn !=
+        true) {
       showSnackBar('سجل دخول من فضلك');
       return;
     }
@@ -764,7 +764,8 @@ class _AddProductState extends State<AddProduct> {
         completer.complete(productMap);
         break;
       case ItemType.auction:
-        Settings settings = await Provider.of<ProductProvider>(context).settings;
+        Settings settings =
+            await Provider.of<ProductProvider>(context).settings;
         productMap['options'] = {
           'startPrice': double.parse(startPriceEditingController.value.text),
           'status': 'open',
@@ -784,7 +785,8 @@ class _AddProductState extends State<AddProduct> {
 
   saveNewProduct(BuildContext context, GlobalKey formkey) async {
     //set the user id
-    if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn != true) {
+    if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn !=
+        true) {
       showSnackBar('سجل دخول من فضلك');
       return;
     }
