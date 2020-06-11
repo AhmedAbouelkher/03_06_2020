@@ -228,7 +228,7 @@ class _ProfileState extends State<Profile> {
           category(
             txt: "إعلاناتي",
             padding: 35.0,
-            image: "assets/icon/notification.png",
+             icon: Icon(Icons.list,color: Color(0xff8985ab)),
             tap: () {
               if (Provider.of<PhoneAuthDataProvider>(context, listen: false)
                      .isLoggedIn) {
@@ -275,7 +275,7 @@ class _ProfileState extends State<Profile> {
           category(
             txt: "تصفح الإعلانات",
             padding: 35.0,
-            image: "assets/icon/notification.png",
+             icon:Icon(Icons.home,color: Color(0xff8985ab),) ,
             tap: () {
               if (widget.onMenuItemClick != null) {
                 widget.onMenuItemClick();
@@ -297,7 +297,7 @@ class _ProfileState extends State<Profile> {
             padding: 35.0,
             icon: Icon(
               Icons.favorite_border,
-              color: Colors.purpleAccent.shade100,
+              color: Color(0xff8985ab),
             ),
             tap: () {
               if (widget.onMenuItemClick != null) {
@@ -315,9 +315,10 @@ class _ProfileState extends State<Profile> {
             ),
           ),
           category(
-            txt: "الإشعارات",
+            txt: " الإشعارات",
             padding: 35.0,
             image: "assets/icon/notification.png",
+
             tap: () {
 
               if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true) {
@@ -432,7 +433,8 @@ class _ProfileState extends State<Profile> {
           category(
             padding: 38.0,
             txt: "عن التطبيق",
-            image: "assets/icon/aboutapp.png",
+             icon: Icon(Icons.title,color: Color(0xff8985ab)),
+
             tap: () {
               if (widget.onMenuItemClick != null) {
                 widget.onMenuItemClick();
