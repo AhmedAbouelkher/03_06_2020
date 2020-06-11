@@ -690,6 +690,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
           ],
         )));
 
+
     // NetworkImage(sliderProducts[index].mainImage)));
 
     /// ImageSlider in header

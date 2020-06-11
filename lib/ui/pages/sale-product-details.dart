@@ -194,9 +194,9 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                 Row(
                   children: <Widget>[
                     SystemShareButton(
-                        "ألق نظرة على ${widget.product.title} على سوق الهفتاء"),
+                        "ألق نظرة على ${widget.product.title} على سوق الهتفاء www.haftaa.com/${widget.product.id}"),
                     WhatsappShareButton(
-                        "ألق نظرة على ${widget.product.title} على سوق الهفتاء")
+                        "ألق نظرة على ${widget.product.title} على سوق الهتفاء www.haftaa.com/${widget.product.id}"),
                   ],
                 )
 

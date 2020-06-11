@@ -24,6 +24,8 @@ import 'package:haftaa/ui/colors/colors.dart';
 import 'package:haftaa/search/search.dart';
 import 'package:haftaa/user/user.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+
 
 //import 'package:haftaa/product/base-product.dart';
 
@@ -127,6 +129,8 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
       letterSpacing: 0.3,
       wordSpacing: 0.5);
 
+
+
   /// Component any widget for FlashSaleDetail
   Widget build(BuildContext context) {
     final ProductSearchModel _productSearchModel =
@@ -134,6 +138,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
       categoryId: product.categoryId,
       // productTypeInArabic: 'بيع'
     );
+
     var _suggestedItem = new ProductGridHorizontal(
         searchModel: _productSearchModel,
         expectedProduct: product,
@@ -154,9 +159,9 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                 Row(
                   children: <Widget>[
                     SystemShareButton(
-                        "ألق نظرة على ${product.title} على سوق الهفتاء"),
+                        "ألق نظرة على ${product.title} على سوق الهتفاء www.haftaa.com/${product.id}"),
                     WhatsappShareButton(
-                        "ألق نظرة على ${product.title} على سوق الهفتاء")
+                        "ألق نظرة على ${product.title} على سوق الهتفاء www.haftaa.com/${product.id}"),
                   ],
                 )
 
