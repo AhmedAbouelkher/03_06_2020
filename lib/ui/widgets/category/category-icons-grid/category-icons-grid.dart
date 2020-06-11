@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -128,10 +129,20 @@ class CategoryIconItem extends StatelessWidget {
       },
       child: Column(
         children: <Widget>[
-          Image.network(
-            category.icon ?? '',
+
+          CachedNetworkImage(
             height: 19.2,
+            fit: BoxFit.cover,
+            imageUrl: category.icon ?? '',
+            placeholder: (context, url) =>
+                Center(child: CircularProgressIndicator()),
+            errorWidget: (context, url, error) => new Icon(Icons.error),
           ),
+
+//          Image.network(
+//            category.icon ?? '',
+//            height: 19.2,
+//          ),
           Padding(padding: EdgeInsets.only(top: 7.0)),
           Text(
             getIconFormatedText(category.title ?? ''),
