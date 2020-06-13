@@ -5,6 +5,7 @@ import 'package:haftaa/constants.dart';
 import 'package:haftaa/product/base-product.dart';
 import 'package:haftaa/product/sale-product.dart';
 import 'package:haftaa/providers/phone_auth.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:haftaa/ui/HomeUIComponent/Chat/PrivateChatModel.dart';
 
@@ -44,18 +45,36 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
   String messageText;
   var _firestore;
 
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('${widget.title}'),
+          title: Text('${widget.title}',style: TextStyle(
+            fontSize: 18,
+           ),),
           backgroundColor: Colors.white,
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.menu),
+                onPressed: (){
+                  if(widget.product == null){
+                     // action come from notification screen
+
+                    var IdProduct = widget.productIdFromNotification;
+
+
+                  }
+                  else{
+                    // action come from details screen
+
+                    var IdProduct = widget.product.id;
+
+
+                  }
+                }
+            )
+          ],
         ),
         body: SafeArea(
           child: Column(
@@ -245,11 +264,14 @@ class MessagesStreamFireStore extends StatelessWidget {
 
           final messageText = message.data['message'];
           final messageSender = message.data['sender'];
-         // int messgaeTime = message.data['time'];
+          Timestamp messgaeTime = message.data['time'];
+          String timeCreation = DateFormat("HH:mm dd-MM-yyyy").format(messgaeTime.toDate());
+
 
           final messageBubble = MessageBubbleFireStore(
               text: messageText,
               isMe: messageSender == Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber,
+            sender:timeCreation ,
 
 
           );
@@ -271,9 +293,10 @@ class MessagesStreamFireStore extends StatelessWidget {
 }
 
 class MessageBubbleFireStore extends StatelessWidget {
-  MessageBubbleFireStore({this.text, this.isMe});
+  MessageBubbleFireStore({this.text, this.isMe, this.sender});
 
   final String text;
+  final String sender;
   final bool isMe;
 
   @override
@@ -284,7 +307,13 @@ class MessageBubbleFireStore extends StatelessWidget {
         crossAxisAlignment:
         isMe ? CrossAxisAlignment.start : CrossAxisAlignment.end,
         children: <Widget>[
-
+          Text(
+            sender,
+            style: TextStyle(
+              fontSize: 12.0,
+              color: Colors.black54,
+            ),
+          ),
           Material(
             borderRadius: isMe
                 ? BorderRadius.only(
@@ -300,7 +329,7 @@ class MessageBubbleFireStore extends StatelessWidget {
             color: isMe ? Colors.grey : Colors.white70,
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-              child: Text(
+              child: SelectableText(
                 text,
                 style: TextStyle(
                   color: isMe ? Colors.white : Colors.black,

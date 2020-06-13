@@ -25,7 +25,6 @@ import 'package:haftaa/search/search.dart';
 import 'package:haftaa/user/user.dart';
 import 'package:provider/provider.dart';
 
-
 //import 'package:haftaa/product/base-product.dart';
 
 /// Custom Text Header
@@ -128,8 +127,6 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
       letterSpacing: 0.3,
       wordSpacing: 0.5);
 
-
-
   /// Component any widget for FlashSaleDetail
   Widget build(BuildContext context) {
     final ProductSearchModel _productSearchModel =
@@ -143,7 +140,8 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
         expectedProduct: product,
         hideWidgetWhenEmpty: true);
     return Scaffold(
-      floatingActionButton: new ProductSpeeDial(product.user,product.showMobileNumber),
+      floatingActionButton:
+          new ProductSpeeDial(product.user, product.showMobileNumber),
       key: _key,
       appBar: AppBar(
         actions: <Widget>[
@@ -218,11 +216,10 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                         //   AssetImage(requestProduct.mainImage),
                         //   AssetImage(requestProduct.mainImage),
                         // ],
-                        images:
-                            List.generate(product.images.length, (index) {
+                        images: List.generate(product.images.length, (index) {
                           return new NetworkImage(product.images[index]);
                         })
-                              ..add(new NetworkImage(product.mainImage)),
+                          ..add(new NetworkImage(product.mainImage)),
                       ),
                     ),
                   )),
@@ -245,8 +242,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                         Padding(padding: EdgeInsets.only(right: 10.0)),
                         Text(
                           "مطلوب للشراء",
-                          style: _customTextStyle.copyWith(
-                              color: Colors.white),
+                          style: _customTextStyle.copyWith(color: Colors.white),
                         ),
                       ],
                     ),
@@ -299,8 +295,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                         height: 1.0,
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                        padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
                         child: Row(
                           children: <Widget>[
 //                            Container(
@@ -333,9 +328,9 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                             Padding(
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: (Provider.of<PhoneAuthDataProvider>(
-                                                    context,
-                                                    listen: false)
-                                                .isLoggedIn &&
+                                                context,
+                                                listen: false)
+                                            .isLoggedIn &&
                                         Provider.of<PhoneAuthDataProvider>(
                                                     context,
                                                     listen: false)
@@ -346,14 +341,13 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10)),
-                                            side: BorderSide(
-                                                color: Colors.teal)),
+                                            side:
+                                                BorderSide(color: Colors.teal)),
                                         color: Colors.blueAccent,
                                         onPressed: () {
                                           Navigator.of(context).push(
                                               PageRouteBuilder(
-                                                  pageBuilder: (_, __,
-                                                          ___) =>
+                                                  pageBuilder: (_, __, ___) =>
                                                       new AddProduct.edit(
                                                           product)));
                                         },
@@ -391,8 +385,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                 child: Container(
                   height: 250.0,
                   width: 600.0,
-                  decoration:
-                      BoxDecoration(color: Colors.white, boxShadow: [
+                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
                     BoxShadow(
                       color: Color(0xFF656565).withOpacity(0.15),
                       blurRadius: 1.0,
@@ -522,8 +515,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                 child: Container(
                   height: 205.0,
                   width: 600.0,
-                  decoration:
-                      BoxDecoration(color: Colors.white, boxShadow: [
+                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
                     BoxShadow(
                       color: Color(0xFF656565).withOpacity(0.15),
                       blurRadius: 1.0,
@@ -602,64 +594,65 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-
                     /// Icon Message in bottom layout with Flexible
                     Provider.of<PhoneAuthDataProvider>(context, listen: false)
-                        .isLoggedIn ==
-                        true &&
-                        Provider.of<PhoneAuthDataProvider>(context,
-                            listen: false)
-                            .user
-                            .uid !=
-                            product.userId
-                        ?
-                    InkWell(
-                      onTap: () {
+                                    .isLoggedIn ==
+                                true &&
+                            Provider.of<PhoneAuthDataProvider>(context,
+                                        listen: false)
+                                    .user
+                                    .uid !=
+                                product.userId
+                        ? InkWell(
+                            onTap: () {
+                              if (product.type == ItemType.request) {
+                                var myId = Provider.of<PhoneAuthDataProvider>(
+                                        context,
+                                        listen: false)
+                                    .user
+                                    .uid;
+                                var peerId = product.userId;
 
+                                var title = product.showMobileNumber ?
+                                ' شراء | ${product.title}\nمع ${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber}'
+                                    :
+                                Provider.of<PhoneAuthDataProvider>(context, listen: false).user.displayName == null ?
+                                         ' بيع | ${product.title}'
+                                        :
+                                ' بيع | ${product.title}\nمع ${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.displayName}';
 
+                                var ChatId = '';
 
-                        if (product.type == ItemType.request) {
-                          var myId = Provider.of<PhoneAuthDataProvider>(
-                              context,
-                              listen: false)
-                              .user
-                              .uid;
-                          var peerId = product.userId;
-                          var title = 'شراء | ${product.title}';
-                          var ChatId = '';
+                                if (myId.hashCode <= peerId.hashCode) {
+                                  ChatId = '$myId-$peerId';
+                                } else {
+                                  ChatId = '$peerId-$myId';
+                                }
 
-                          if (myId.hashCode <= peerId.hashCode) {
-                            ChatId = '$myId-$peerId';
-                          } else {
-                            ChatId = '$peerId-$myId';
-                          }
-
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PrivateChatscreen(
-                                    product: product,
-                                    chatId: ChatId,
-                                    title: title,
-                                    peerId: peerId,
-
-                                  )));
-                        } else {}
-
-
-                        },
-                      child: Container(
-                        height: 40.0,
-                        width: 60.0,
-                        decoration: BoxDecoration(
-                            color: Colors.white12.withOpacity(0.1),
-                            border: Border.all(color: Colors.black12)),
-                        child: Center(
-                          child: Image.asset("assets/icon/message.png",
-                              height: 20.0),
-                        ),
-                      ),
-                    ): Container(),
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => PrivateChatscreen(
+                                              product: product,
+                                              chatId: ChatId,
+                                              title: title,
+                                              peerId: peerId,
+                                            )));
+                              } else {}
+                            },
+                            child: Container(
+                              height: 40.0,
+                              width: 60.0,
+                              decoration: BoxDecoration(
+                                  color: Colors.white12.withOpacity(0.1),
+                                  border: Border.all(color: Colors.black12)),
+                              child: Center(
+                                child: Image.asset("assets/icon/message.png",
+                                    height: 20.0),
+                              ),
+                            ),
+                          )
+                        : Container(),
 
                     /// Button Pay
                     InkWell(
@@ -671,9 +664,9 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
 
                           Navigator.of(context).push(
                             PageRouteBuilder(
-                                pageBuilder: (_, __, ___) =>
-                                    new ProductList.Search(_searchModel,
-                                        'المستخدم (${product.showMobileNumber?user.name??user.mobile??user.email:'الحالى'})'),
+                                pageBuilder: (_, __, ___) => new ProductList
+                                        .Search(_searchModel,
+                                    'المستخدم (${product.showMobileNumber ? user.name ?? user.mobile ?? user.email : 'الحالى'})'),
                                 transitionDuration: Duration(milliseconds: 600),
                                 transitionsBuilder: (_,
                                     Animation<double> animation,

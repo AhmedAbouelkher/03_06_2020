@@ -633,7 +633,14 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                     .user
                                     .uid;
                                 var peerId = _user.id;
-                                var title = ' بيع | ${widget.product.title}';
+                                var title = widget.product.showMobileNumber?
+                                ' بيع | ${widget.product.title}\nمع ${_user.mobile}'
+                                    :
+                                _user.name == null?
+                                ' بيع | ${widget.product.title}'
+                                    :
+                                ' بيع | ${widget.product.title}\nمع ${_user.name}'
+                                ;
                                 var ChatId = '';
 
                                 if (myId.hashCode <= peerId.hashCode) {
