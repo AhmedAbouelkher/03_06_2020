@@ -617,9 +617,9 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                                 ' شراء | ${product.title}\nمع ${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber}'
                                     :
                                 Provider.of<PhoneAuthDataProvider>(context, listen: false).user.displayName == null ?
-                                         ' بيع | ${product.title}'
+                                         ' شراء | ${product.title}'
                                         :
-                                ' بيع | ${product.title}\nمع ${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.displayName}';
+                                ' شراء | ${product.title}\nمع ${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.displayName}';
 
                                 var ChatId = '';
 
