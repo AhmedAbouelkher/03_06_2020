@@ -9,7 +9,8 @@ import 'package:haftaa/user/user.dart';
 class ProductSpeeDial extends StatefulWidget {
   Future<User> _user;
   bool Shownumber;
-  ProductSpeeDial(this._user,this.Shownumber);
+
+  ProductSpeeDial(this._user, this.Shownumber);
 
   @override
   _ProductSpeeDialState createState() => _ProductSpeeDialState();
@@ -62,14 +63,22 @@ class _ProductSpeeDialState extends State<ProductSpeeDial> {
         SpeedDialChild(
             child: Icon(Icons.call),
             backgroundColor: Colors.green,
-            label: (_user == null
-                ? 'تحميل ..'
-                : (_user.mobile == null ? widget.Shownumber?'للأسف لا يوجد رقم' : 'اتصل ${_user.mobile}':'للأسف لا يوجد رقم')
-            ),
+            //label: (getCallText()),
+            labelWidget: Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    getCallText(),
+                    textDirection: TextDirection.ltr,
+                    textAlign: TextAlign.left,
+                  ),
+                )),
+            labelBackgroundColor: Colors.red,
             labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () => _user.mobile == null || widget.Shownumber == false
-                ? () {}
-                : _callAndMessageSerive.call(_user.mobile)),
+            onTap: () => widget.Shownumber != false
+                ? _callAndMessageSerive.call(_user.mobile)
+                : () {}),
         SpeedDialChild(
             child: Icon(Icons.message),
             backgroundColor: Colors.blueAccent,
@@ -103,6 +112,20 @@ class _ProductSpeeDialState extends State<ProductSpeeDial> {
         //     }),
       ],
     );
+  }
+
+  String getCallText() {
+    if (widget.Shownumber != false) {
+      return ' ${_user.mobile}';
+    } else {
+      return 'الجوال غير متاح لهذا الاعلان';
+    }
+
+//    return _user == null
+//        ? 'تحميل ..'
+//        : (_user.mobile == null
+//            ? widget.Shownumber ? 'للأسف لا يوجد رقم' : 'اتصل ${_user.mobile}'
+//            : 'للأسف لا يوجد رقم');
   }
 
   void addContact() {

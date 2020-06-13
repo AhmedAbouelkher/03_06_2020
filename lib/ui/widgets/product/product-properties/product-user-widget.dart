@@ -6,6 +6,7 @@ class ProductUserWidget extends StatefulWidget {
   Future<User> _user;
   TextStyle _textStyle;
   bool showMobile;
+
   ProductUserWidget(this._user, this._textStyle, this.showMobile);
 
   @override
@@ -13,13 +14,15 @@ class ProductUserWidget extends StatefulWidget {
 }
 
 class _ProductUserWidgetState extends State<ProductUserWidget> {
-   Future<User> _user;
-   @override
+  Future<User> _user;
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _user= widget._user;
+    _user = widget._user;
   }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -43,16 +46,26 @@ class _ProductUserWidgetState extends State<ProductUserWidget> {
               );
             } else {
               return Text(
-
-                widget.showMobile?snapshot.data.name?? snapshot.data.email??snapshot.data.mobile:'إعلانات المستخدم' ,
+                getButtonText(snapshot),
                 textAlign: TextAlign.right,
                 textDirection: TextDirection.ltr,
                 style: widget._textStyle,
-
               );
             }
         }
       },
     );
+  }
+
+  String getButtonText(AsyncSnapshot<User> snapshot) {
+    if (snapshot.data?.name != null) {
+      return snapshot.data.name;
+    }
+
+    if (widget.showMobile != false) {
+      return snapshot.data.mobile;
+    } else {
+      return 'إعلانات المستخدم';
+    }
   }
 }

@@ -68,9 +68,6 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
         _user = user;
       });
     });
-
-
-
   }
 
   /// Declaration List item HomeGridItemRe....dart Class
@@ -179,7 +176,8 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
         hideWidgetWhenEmpty: true);
 
     return Scaffold(
-      floatingActionButton: new ProductSpeeDial(widget.product.user,widget.product.showMobileNumber),
+      floatingActionButton: new ProductSpeeDial(
+          widget.product.user, widget.product.showMobileNumber),
       key: _key,
       appBar: AppBar(
         actions: <Widget>[
@@ -297,37 +295,37 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Container(
-                                  height: 30.0,
-                                  width: 75.0,
-                                  decoration: BoxDecoration(
-                                    color: Colors.lightGreen,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20.0)),
-                                  ),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text(
-                                        widget.product.used ? 'مستعمل' : 'جديد',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      Padding(
-                                          padding: EdgeInsets.only(right: 8.0)),
-                                      // Icon(
-                                      //   Icons.star,
-                                      //   color: Colors.white,
-                                      //   size: 19.0,
-                                      // ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+//                            Row(
+//                              children: <Widget>[
+//                                Container(
+//                                  height: 30.0,
+//                                  width: 75.0,
+//                                  decoration: BoxDecoration(
+//                                    color: Colors.lightGreen,
+//                                    borderRadius:
+//                                        BorderRadius.all(Radius.circular(20.0)),
+//                                  ),
+//                                  child: Row(
+//                                    crossAxisAlignment:
+//                                        CrossAxisAlignment.center,
+//                                    mainAxisAlignment: MainAxisAlignment.center,
+//                                    children: <Widget>[
+//                                      Text(
+//                                        widget.product.used ? 'مستعمل' : 'جديد',
+//                                        style: TextStyle(color: Colors.white),
+//                                      ),
+//                                      Padding(
+//                                          padding: EdgeInsets.only(right: 8.0)),
+//                                      // Icon(
+//                                      //   Icons.star,
+//                                      //   color: Colors.white,
+//                                      //   size: 19.0,
+//                                      // ),
+//                                    ],
+//                                  ),
+//                                ),
+//                              ],
+//                            ),
                             Padding(
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: (Provider.of<PhoneAuthDataProvider>(
@@ -635,7 +633,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                     .user
                                     .uid;
                                 var peerId = _user.id;
-                                var title = 'بيع ${widget.product.title}';
+                                var title = ' بيع | ${widget.product.title}';
                                 var ChatId = '';
 
                                 if (myId.hashCode <= peerId.hashCode) {
@@ -679,9 +677,9 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
 
                           Navigator.of(context).push(
                             PageRouteBuilder(
-                                pageBuilder: (_, __, ___) =>
-                                    new ProductList.Search(_searchModel,
-                                        'المستخدم (${widget.product.showMobileNumber?user.name??user.mobile??user.email:'الحالى'})'),
+                                pageBuilder: (_, __, ___) => new ProductList
+                                        .Search(_searchModel,
+                                    'المستخدم (${widget.product.showMobileNumber ? user.name ?? user.mobile ?? user.email : 'الحالى'})'),
                                 transitionDuration: Duration(milliseconds: 600),
                                 transitionsBuilder: (_,
                                     Animation<double> animation,
@@ -703,7 +701,6 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                         ),
                         child: Center(
                             child: ProductUserWidget(
-
                                 widget.product.user,
                                 TextStyle(
                                     color: Colors.white,

@@ -50,7 +50,7 @@ class myApp extends StatelessWidget {
           create: (context) => PhoneAuthDataProvider()..currentuser(),
         ),
         ChangeNotifierProvider(
-          create: (context) => ProductProvider(),
+          create: (context) => ProductProvider()..startLoading(-1),
         ),
       ],
       child: MaterialApp(
@@ -189,7 +189,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   /// Setting duration in splash screen
   startTime(context) async {
-    await Provider.of<ProductProvider>(context).loadItems();
+    //await Provider.of<ProductProvider>(context).loadItems();
 
     return new Timer(Duration(milliseconds: 2000), NavigatorPage);
   }

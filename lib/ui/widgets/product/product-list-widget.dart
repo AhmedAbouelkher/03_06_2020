@@ -37,8 +37,8 @@ class ProductListWidget extends StatefulWidget {
 
   ProductListWidget.Search(this.searchModel, this.pageTitle,
       {this.showCategoriesSlider}) {
-    _productBloc =
-        new ProductBloc(searchModel: searchModel, startLoadingWithCount: -1);
+//    _productBloc =
+//        new ProductBloc(searchModel: searchModel, startLoadingWithCount: -1);
   }
 
   @override
@@ -172,7 +172,8 @@ class _ProductListWidgetState extends State<ProductListWidget> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
-    var list = Provider.of<ProductProvider>(context).productList;
+    var list =  Provider.of<ProductProvider>(context).productList;
+    var productList = Provider.of<ProductProvider>(context).filterList(list,widget.searchModel);
 
     var column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,13 +253,13 @@ class _ProductListWidgetState extends State<ProductListWidget> {
                   childAspectRatio: 0.545,
                   crossAxisCount: 2,
                   primary: false,
-                  children: List.generate(list.length, (index) {
-                    if (list[index] is SaleProduct) {
-                      return SaleProductItemGrid(list[index]);
-                    } else if (list[index] is AuctionProduct) {
-                      return AuctionProductItemGrid(list[index]);
-                    } else if (list[index] is RequestProduct) {
-                      return RequestProductItemGrid(list[index]);
+                  children: List.generate(productList.length, (index) {
+                    if (productList[index] is SaleProduct) {
+                      return SaleProductItemGrid(productList[index]);
+                    } else if (productList[index] is AuctionProduct) {
+                      return AuctionProductItemGrid(productList[index]);
+                    } else if (productList[index] is RequestProduct) {
+                      return RequestProductItemGrid(productList[index]);
                     } else {
                       return Center(child: Text('يوجد عنصر غير متطابق'));
                     }

@@ -174,22 +174,24 @@ class _ChoseLoginState extends State<ChoseLogin> with TickerProviderStateMixin {
                             children: <Widget>[
                               tapSignup == 0
                                   ? Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  splashColor: Colors.white,
-                                  onTap: () {
-                                    setState(() {
-                                      tapSignup = 1;
-                                    });
-                                    _Playanimation();
-                                    return tapSignup;
-                                  },
-                                  child: ButtonCustom(txt: "تسجيل دخول"),
-                                ),
-                              )
+                                      color: Colors.transparent,
+                                      child: InkWell(
+                                        splashColor: Colors.white,
+                                        onTap: () {
+                                          setState(() {
+                                            tapSignup = 1;
+                                          });
+                                          _Playanimation();
+                                          return tapSignup;
+                                        },
+                                        child: ButtonCustom(txt: "تسجيل دخول"),
+                                      ),
+                                    )
                                   : AnimationSplashLogin(
-                                animationController: animationController.view,
-                              ),
+                                      animationController:
+                                          animationController.view,
+                                    ),
+
                               /// To create animation if user tap == animation play (Click to open code)
 //                              tapLogin == 0
 //                                  ? Material(
@@ -258,7 +260,6 @@ class _ChoseLoginState extends State<ChoseLogin> with TickerProviderStateMixin {
                           ),
 
                           /// To create animation if user tap == animation play (Click to open code)
-
                         ],
                       ),
                     ],

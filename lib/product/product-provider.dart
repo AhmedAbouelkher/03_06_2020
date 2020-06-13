@@ -19,9 +19,11 @@ class ProductProvider extends ChangeNotifier {
   List<BaseProduct> productList = List<BaseProduct>();
 
 //product list observable subject
-  //BehaviorSubject<List<BaseProduct>> _subjectProducts;
-//  BehaviorSubject<List<BaseProduct>> get productsObservable =>
-//      _subjectProducts.stream;
+  BehaviorSubject<List<BaseProduct>> _subjectProducts;
+
+  BehaviorSubject<List<BaseProduct>> get productsObservable =>
+      _subjectProducts.stream;
+
 //product observable subject
   BehaviorSubject<BaseProduct> _subjectProduct = BehaviorSubject<BaseProduct>();
 
@@ -32,10 +34,10 @@ class ProductProvider extends ChangeNotifier {
 
   ProductProvider({this.searchModel, this.startLoadingWithCount}) {
     //products obervable subject
-//    _subjectProducts =
-//    new BehaviorSubject<List<BaseProduct>>.seeded(productList);
-//    //product observable subject
-//    _subjectProduct.stream.listen(_onProductObjectAdded);
+    _subjectProducts =
+        new BehaviorSubject<List<BaseProduct>>.seeded(productList);
+    //product observable subject
+    _subjectProduct.stream.listen(_onProductObjectAdded);
 
 //start loading
     //startLoading(startLoadingWithCount ?? 1);
@@ -106,8 +108,6 @@ class ProductProvider extends ChangeNotifier {
         }
         _productList.add(product);
       }
-
-
     });
 
     if (!completer.isCompleted) {
@@ -121,14 +121,10 @@ class ProductProvider extends ChangeNotifier {
   Stream<Event> _onProductChildUpdatedStream;
 
   startLoading(int limit) async {
-//    _subjectProducts =
-//    new BehaviorSubject<List<BaseProduct>>.seeded(productList);
-    //product observable subject
-    _subjectProduct.stream.listen(_onProductObjectAdded);
-
     _onProductChildAddedStream =
         _productRepositoy.getProducts(limit, searchModel);
-    //_onProductChildUpdatedStream = searchQuery.onChildChanged;
+    _onProductChildUpdatedStream =
+        _productRepositoy.getProductsStreamChange(limit, searchModel);
 
     _onProductChildAddedStream.listen(_onProductChildAdded);
     _onProductChildUpdatedStream.listen(_onProductUpdated);
@@ -192,6 +188,40 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<BaseProduct> filterList(
+      List<BaseProduct> list, ProductSearchModel productSearchModel) {
+    return list.where((product) {
+      return ((productSearchModel.title?.toLowerCase() == null
+              ? true
+              : product.title
+                  .toLowerCase()
+                  .contains(productSearchModel.title.toLowerCase())) &&
+          (productSearchModel.title?.toLowerCase() == null
+              ? true
+              : product.description
+                  .toLowerCase()
+                  .contains(productSearchModel.title.toLowerCase())) &&
+          (productSearchModel.categoryID == null
+              ? true
+              : product.categoryId == productSearchModel.categoryID) &&
+          (productSearchModel.governorateID == null
+              ? true
+              : product.governorateId == productSearchModel.governorateID) &&
+          (productSearchModel.productType == null
+              ? true
+              : product.type == productSearchModel.productType) &&
+          (productSearchModel.usedProducts == null
+              ? true
+              : product.used == productSearchModel.usedProducts) &&
+          (productSearchModel.userID == null
+              ? true
+              : product.userId == productSearchModel.userID) &&
+          (productSearchModel.userIDWhoMakesFavorite == null
+              ? true
+              : product.favUsers.containsKey(product.userId)));
+    }).toList();
+  }
+
   void _onProductUpdated(Event event) {
     var oldProductValue =
         productList.singleWhere((product) => product.id == event.snapshot.key);
@@ -214,7 +244,7 @@ class ProductProvider extends ChangeNotifier {
 
         break;
     }
-    //notifyListeners();
+    notifyListeners();
 
     //productList.add(product);
   }

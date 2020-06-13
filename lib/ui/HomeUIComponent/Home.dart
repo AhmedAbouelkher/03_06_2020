@@ -694,7 +694,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
     // NetworkImage(sliderProducts[index].mainImage)));
 
     /// ImageSlider in header
-    var imageSlider = Container(
+    return images.length == 0 ? Container(): Container(
       height: 182.0,
       child: new Carousel(
         onImageTap: (imageIndex) {
@@ -734,7 +734,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
         images: images,
       ),
     );
-    return imageSlider;
+
   }
 }
 

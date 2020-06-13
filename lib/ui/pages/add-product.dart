@@ -274,7 +274,7 @@ class _AddProductState extends State<AddProduct> {
   final _scaffoldkey = GlobalKey<ScaffoldState>();
   bool isSaving = false;
   bool gettingProductdataForEditing = false;
-  bool checkBoxValue = false;
+  bool checkBoxValue = true;
   List<Map> defaultItemsList = [];
 
   loadProductDataForEdit() async {
@@ -355,6 +355,17 @@ class _AddProductState extends State<AddProduct> {
         body: CannotEdit(
           title: 'لا يمكن التعديل حيث بدأت المزايدات بالفعل على هذا المزاد.',
         ),
+//        floatingActionButton: FloatingActionButton(
+//          elevation: 0.0,
+//          backgroundColor: Colors.blueAccent,
+//          foregroundColor: Colors.white,
+//
+//          child: Icon(Icons.save),
+//          onPressed: () => product.id == null
+//              ? saveNewProduct(context, _addProductFormkey)
+//              : saveExsitedProduct(context, _addProductFormkey),
+//
+//        ),
       );
     }
 
@@ -390,31 +401,7 @@ class _AddProductState extends State<AddProduct> {
                       selectedSliderImages: this.selectedImages,
                     ),
                     Padding(padding: EdgeInsets.only(top: 3.0)),
-                    TextFormField(
-                      controller: titleTextController,
-                      // onChanged: (value) {
-                      //   setState(() {
-                      //   product.title = value;
-                      //   });
 
-                      // },
-                      decoration: InputDecoration(
-                          labelText: "إسم الإعلان",
-                          hintText: "إسم الإعلان",
-                          hintStyle: TextStyle(color: Colors.black54)),
-                      validator: (d) => Validators.notEmptyText(d,
-                          customMessage: 'أدخل عنوان الإعلان'),
-                    ),
-                    Padding(padding: EdgeInsets.only(top: 20.0)),
-                    TextFormField(
-                      controller: descTextController,
-                      keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration(
-                          labelText: "الوصف",
-                          hintText: "الوصف",
-                          hintStyle: TextStyle(color: Colors.black54)),
-                      validator: (value) => Validators.notEmptyText(value),
-                    ),
                     CategoriesDropdownWidget.Custom(
                       selectedCategory: selected_category,
                       selectionIsRequired: true,
@@ -451,51 +438,51 @@ class _AddProductState extends State<AddProduct> {
                         });
                       },
                     ),
-                    selected_category?.defaultItems != null &&
-                            (product.type == ItemType.sale ||
-                                product.type == ItemType.request) &&
-                            selected_category.defaultItems['price'] == true
-                        ? Container(
-                            child: Column(
-                              children: <Widget>[
-                                Padding(padding: EdgeInsets.only(top: 3.0)),
-                                TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  controller: priceEditingController,
-                                  decoration: InputDecoration(
-                                      labelText: "السعر",
-                                      hintText: "السعر",
-                                      hintStyle:
-                                          TextStyle(color: Colors.black54)),
-                                  validator: (d) => Validators.valueNotLessZero(
-                                    d,
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        : new Container(),
+//                    selected_category?.defaultItems != null &&
+//                            (product.type == ItemType.sale ||
+//                                product.type == ItemType.request) &&
+//                            selected_category.defaultItems['price'] == true
+//                        ? Container(
+//                            child: Column(
+//                              children: <Widget>[
+//                                Padding(padding: EdgeInsets.only(top: 3.0)),
+//                                TextFormField(
+//                                  keyboardType: TextInputType.number,
+//                                  controller: priceEditingController,
+//                                  decoration: InputDecoration(
+//                                      labelText: "السعر",
+//                                      hintText: "السعر",
+//                                      hintStyle:
+//                                          TextStyle(color: Colors.black54)),
+//                                  validator: (d) => Validators.valueNotLessZero(
+//                                    d,
+//                                  ),
+//                                )
+//                              ],
+//                            ),
+//                          )
+//                        : new Container(),
 
-                    selected_category != null &&
-                            selected_category.defaultItems['used'] == true
-                        ? CustomDropdownWidget.Custom(
-                            items: productStatuses,
-                            selectedValue: productIsUsed,
-                            validator: (value) => Validators.notNullValue(value,
-                                customMessage: 'حدد الحالة من فضلك'),
-                            hintText: 'الحالة',
-                            title: 'حالة المنتج',
-                            selectionIsRequired: true,
-                            onChange: (value) {
-                              setState(() {
-                                productIsUsed = value;
-                              });
-                            },
-                          )
-                        : new Container(),
+//                    selected_category != null &&
+//                            selected_category.defaultItems['used'] == true
+//                        ? CustomDropdownWidget.Custom(
+//                            items: productStatuses,
+//                            selectedValue: productIsUsed,
+//                            validator: (value) => Validators.notNullValue(value,
+//                                customMessage: 'حدد الحالة من فضلك'),
+//                            hintText: 'الحالة',
+//                            title: 'حالة المنتج',
+//                            selectionIsRequired: true,
+//                            onChange: (value) {
+//                              setState(() {
+//                                productIsUsed = value;
+//                              });
+//                            },
+//                          )
+//                        : new Container(),
 
                     CheckboxListTile(
-                      title: Text("اظهار رقم جوال الخاص بك"),
+                      title: Text("أظهر رقم جوالي بصفحة هذا الإعلان"),
                       value: checkBoxValue,
                       onChanged: (bool newValue) {
                         setState(() {
@@ -506,7 +493,34 @@ class _AddProductState extends State<AddProduct> {
                           .leading, //  <-- leading Checkbox
                     ),
 
-                    Padding(padding: EdgeInsets.only(top: 80.0)),
+                    Padding(padding: EdgeInsets.only(top: 10.0)),
+                    TextFormField(
+                      controller: titleTextController,
+                      // onChanged: (value) {
+                      //   setState(() {
+                      //   product.title = value;
+                      //   });
+
+                      // },
+                      decoration: InputDecoration(
+                          labelText: "عنوان الإعلان",
+                          hintText: "إسم الإعلان",
+                          hintStyle: TextStyle(color: Colors.black54)),
+                      validator: (d) => Validators.notEmptyText(d,
+                          customMessage: 'أدخل عنوان الإعلان'),
+                    ),
+                    Padding(padding: EdgeInsets.only(top: 20.0)),
+                    TextFormField(
+                      controller: descTextController,
+                      keyboardType: TextInputType.multiline,
+                      decoration: InputDecoration(
+                          labelText: "الوصف",
+                          hintText: "الوصف",
+                          hintStyle: TextStyle(color: Colors.black54)),
+                      validator: (value) => Validators.notEmptyText(value),
+                    ),
+                    Padding(padding: EdgeInsets.only(top: 10.0)),
+
                     InkWell(
                       onTap: () => product.id == null
                           ? saveNewProduct(context, _addProductFormkey)
@@ -751,7 +765,8 @@ class _AddProductState extends State<AddProduct> {
     switch (product.type) {
       case ItemType.sale:
         productMap['options'] = {
-          'price': double.parse(priceEditingController.text)
+          'price': 0
+         //'price': double.parse(priceEditingController.text)
         };
         productMap['type'] = 'sale';
         completer.complete(productMap);

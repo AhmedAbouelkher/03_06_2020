@@ -24,7 +24,6 @@ import 'package:haftaa/ui/colors/colors.dart';
 import 'package:haftaa/search/search.dart';
 import 'package:haftaa/user/user.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 
 //import 'package:haftaa/product/base-product.dart';
@@ -304,33 +303,33 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                             const EdgeInsets.only(top: 10.0, bottom: 10.0),
                         child: Row(
                           children: <Widget>[
-                            Container(
-                              height: 30.0,
-                              width: 75.0,
-                              decoration: BoxDecoration(
-                                color: Colors.lightGreen,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20.0)),
-                              ),
-                              child: Row(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    product.used ? 'مستعمل' : 'جديد',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  // Padding(
-                                  //     padding: EdgeInsets.only(right: 8.0)),
-                                  // Icon(
-                                  //   Icons.star,
-                                  //   color: Colors.white,
-                                  //   size: 19.0,
-                                  // ),
-                                ],
-                              ),
-                            ),
+//                            Container(
+//                              height: 30.0,
+//                              width: 75.0,
+//                              decoration: BoxDecoration(
+//                                color: Colors.lightGreen,
+//                                borderRadius:
+//                                    BorderRadius.all(Radius.circular(20.0)),
+//                              ),
+//                              child: Row(
+//                                crossAxisAlignment:
+//                                    CrossAxisAlignment.center,
+//                                mainAxisAlignment: MainAxisAlignment.center,
+//                                children: <Widget>[
+//                                  Text(
+//                                    product.used ? 'مستعمل' : 'جديد',
+//                                    style: TextStyle(color: Colors.white),
+//                                  ),
+//                                  // Padding(
+//                                  //     padding: EdgeInsets.only(right: 8.0)),
+//                                  // Icon(
+//                                  //   Icons.star,
+//                                  //   color: Colors.white,
+//                                  //   size: 19.0,
+//                                  // ),
+//                                ],
+//                              ),
+//                            ),
                             Padding(
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: (Provider.of<PhoneAuthDataProvider>(
@@ -626,7 +625,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                               .user
                               .uid;
                           var peerId = product.userId;
-                          var title = 'شراء ${product.title}';
+                          var title = 'شراء | ${product.title}';
                           var ChatId = '';
 
                           if (myId.hashCode <= peerId.hashCode) {

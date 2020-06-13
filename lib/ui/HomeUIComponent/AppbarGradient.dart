@@ -54,6 +54,10 @@ class _AppbarGradientState extends State<AppbarGradient> {
               tileMode: TileMode.clamp)),
       child: Row(
         children: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(
+                right: 17.0,
+              )),
           /// if user click shape white in appbar navigate to search layout
           InkWell(
             onTap: () {
@@ -119,6 +123,7 @@ class _AppbarGradientState extends State<AppbarGradient> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+
                   Padding(padding: EdgeInsets.only(left: 5.0)),
                   Image.asset(
                     "assets/img/search2.png",
@@ -149,7 +154,7 @@ class _AppbarGradientState extends State<AppbarGradient> {
             child: Row(
               children: <Widget>[
                 Text(
-                  'إضافة',
+                  'إضافة إعلان',
                   style: TextStyle(color: Colors.white),
                 ),
                 IconButton(

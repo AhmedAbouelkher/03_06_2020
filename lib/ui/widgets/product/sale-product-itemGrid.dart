@@ -64,14 +64,14 @@ class _ProductItemGridState extends State<SaleProductItemGrid> {
                             Center(child: CircularProgressIndicator()),
                         errorWidget: (context, url, error) => new Icon(Icons.error),
                       ),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(7.0),
-                              topRight: Radius.circular(7.0)),
-                          image: DecorationImage(
-                              image: new NetworkImage(
-                                  widget.productItem.mainImage),
-                              fit: BoxFit.cover)),
+//                      decoration: BoxDecoration(
+//                          borderRadius: BorderRadius.only(
+//                              topLeft: Radius.circular(7.0),
+//                              topRight: Radius.circular(7.0)),
+//                          image: DecorationImage(
+//                              image: new NetworkImage(
+//                                  widget.productItem.mainImage),
+//                              fit: BoxFit.cover)),
                     ),
                   ),
                 ),

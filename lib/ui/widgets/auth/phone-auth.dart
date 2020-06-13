@@ -455,7 +455,6 @@ class _PhoneAuthState extends State<PhoneAuth> {
     final phoneAuthDataProvider =
         Provider.of<PhoneAuthDataProvider>(context, listen: false);
     phoneAuthDataProvider.loading = true;
-    var countryProvider = Provider.of<CountryProvider>(context, listen: false);
     bool validPhone = await phoneAuthDataProvider.instantiate(
         dialCode: countryCode,
         onCodeSent: () {
@@ -550,7 +549,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
     _fixedPadding = _height * 0.025;
 
 
-    final countriesProvider = Provider.of<CountryProvider>(context);
+//    final countriesProvider = Provider.of<CountryProvider>(context);
     final loader = Provider.of<PhoneAuthDataProvider>(context).loading;
 
     var phoneTextbox = Padding(
