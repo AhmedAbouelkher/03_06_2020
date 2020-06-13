@@ -56,7 +56,7 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
           backgroundColor: Colors.white,
           actions: <Widget>[
             IconButton(
-                icon: Icon(Icons.menu),
+                icon: Icon(Icons.report),
                 onPressed: (){
                   if(widget.product == null){
                      // action come from notification screen
