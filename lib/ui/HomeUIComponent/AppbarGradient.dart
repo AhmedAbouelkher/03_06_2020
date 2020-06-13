@@ -26,15 +26,23 @@ class _AppbarGradientState extends State<AppbarGradient> {
   /// Build Appbar in layout home
   @override
   Widget build(BuildContext context) {
-    if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn ==
+    if (Provider
+        .of<PhoneAuthDataProvider>(context, listen: false)
+        .isLoggedIn ==
         true) {
       dbRef = FirebaseDatabase.instance.reference().child("Notification").child(
-          "${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid}");
+          "${Provider
+              .of<PhoneAuthDataProvider>(context, listen: false)
+              .user
+              .uid}");
     }
 
     /// Create responsive height and padding
     final MediaQueryData media = MediaQuery.of(context);
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    final double statusBarHeight = MediaQuery
+        .of(context)
+        .padding
+        .top;
 
     /// Create component in appbar
     return Container(
@@ -42,7 +50,7 @@ class _AppbarGradientState extends State<AppbarGradient> {
       height: 58.0 + statusBarHeight,
       decoration: BoxDecoration(
 
-          /// gradient in appbar
+        /// gradient in appbar
           gradient: LinearGradient(
               colors: [
                 const Color(0xFFA3BDED),
@@ -58,6 +66,7 @@ class _AppbarGradientState extends State<AppbarGradient> {
               padding: EdgeInsets.only(
                 right: 17.0,
               )),
+
           /// if user click shape white in appbar navigate to search layout
           InkWell(
             onTap: () {
@@ -69,7 +78,7 @@ class _AppbarGradientState extends State<AppbarGradient> {
                 if (product != null) {
                   switch (product.type) {
                     case ItemType.sale:
-                      //page = new SaleProductDetails(product);
+                    //page = new SaleProductDetails(product);
                       break;
                     case ItemType.request:
                       page = new RequestProductDetails(product);
@@ -131,8 +140,8 @@ class _AppbarGradientState extends State<AppbarGradient> {
                   ),
                   Padding(
                       padding: EdgeInsets.only(
-                    left: 17.0,
-                  )),
+                        left: 17.0,
+                      )),
                   Padding(
                     padding: EdgeInsets.only(top: 3.0),
                     child: Text(
@@ -163,13 +172,14 @@ class _AppbarGradientState extends State<AppbarGradient> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    if (Provider.of<PhoneAuthDataProvider>(context,
-                                listen: false)
-                            .isLoggedIn ==
+                    if (Provider
+                        .of<PhoneAuthDataProvider>(context,
+                        listen: false)
+                        .isLoggedIn ==
                         true) {
                       Navigator.of(context).push(PageRouteBuilder(
                           pageBuilder: (_, __, ___) =>
-                              new AddProduct.newOne()));
+                          new AddProduct.newOne()));
                     } else {
                       Navigator.pushNamed(context, 'choose-login');
                     }
@@ -178,8 +188,9 @@ class _AppbarGradientState extends State<AppbarGradient> {
               ],
             ),
             onPressed: () {
-              if (Provider.of<PhoneAuthDataProvider>(context, listen: false)
-                      .isLoggedIn ==
+              if (Provider
+                  .of<PhoneAuthDataProvider>(context, listen: false)
+                  .isLoggedIn ==
                   true) {
                 Navigator.of(context).push(PageRouteBuilder(
                     pageBuilder: (_, __, ___) => new AddProduct.newOne()));
@@ -203,22 +214,26 @@ class _AppbarGradientState extends State<AppbarGradient> {
           /// Icon notification (if user click navigate to notification layout)
           InkWell(
             onTap: () {
-              if (Provider.of<PhoneAuthDataProvider>(context, listen: false)
-                      .isLoggedIn ==
+              if (Provider
+                  .of<PhoneAuthDataProvider>(context, listen: false)
+                  .isLoggedIn ==
                   true) {
-                showDialog(context: context, child:
-                new AlertDialog(
-                   content:notification(),
-                )
+                Scaffold.of(context).showBottomSheet<void>(
+                      (BuildContext context) {
+                    return Container(
+                      height:  MediaQuery
+                          .of(context)
+                          .size
+                          .height,
+                      color: Colors.amber,
+                      child: notification(),
+                    );
+                  },
                 );
 
 
-//                Navigator.of(context).push(PageRouteBuilder(
-//                    pageBuilder: (_, __, ___) => new notification()));
-
-
               } else {
-                Navigator.pushNamed(context, 'choose-login');
+              Navigator.pushNamed(context, 'choose-login');
               }
 
 //              Navigator.of(context).push(PageRouteBuilder(
@@ -231,44 +246,45 @@ class _AppbarGradientState extends State<AppbarGradient> {
                   "assets/img/notifications-button.png",
                   height: 24.0,
                 ),
-                Provider.of<PhoneAuthDataProvider>(context, listen: false)
-                        .isLoggedIn ==true
-                    ? dbRef == null?
-                        Image.asset(
+                Provider
+                    .of<PhoneAuthDataProvider>(context, listen: false)
+                    .isLoggedIn == true
+                    ? dbRef == null ?
+                Image.asset(
+                  "assets/img/notifications-button.png",
+                  height: 24.0,
+                )
+                    : StreamBuilder(
+                  stream: dbRef.onValue,
+                  builder: (context, snap) {
+                    if (snap.data?.snapshot?.value == null) {
+                      return Image.asset(
                         "assets/img/notifications-button.png",
                         height: 24.0,
-                        )
-                        : StreamBuilder(
-                            stream: dbRef.onValue,
-                            builder: (context, snap) {
-                        if (snap.data?.snapshot?.value == null) {
-                                return Image.asset(
-                                  "assets/img/notifications-button.png",
-                                  height: 24.0,
-                                );
-                              }
-                              Map data = snap.data.snapshot.value;
-                              List<NotificationModel> notificationItems = [];
+                      );
+                    }
+                    Map data = snap.data.snapshot.value;
+                    List<NotificationModel> notificationItems = [];
 
-                              for (var i in data.values) {
-                                notificationItems
-                                    .add(NotificationModel.fromJson(i));
-                              }
+                    for (var i in data.values) {
+                      notificationItems
+                          .add(NotificationModel.fromJson(i));
+                    }
 
 
-                              return CircleAvatar(
-                                radius: 8.6,
-                                backgroundColor: Colors.redAccent,
-                                child: Text(
-                                  notificationItems.length.toString(),
-                                  style: TextStyle(
-                                      fontSize: 13.0, color: Colors.white),
-                                ),
-                              );
-                            },
-                          )
+                    return CircleAvatar(
+                      radius: 8.6,
+                      backgroundColor: Colors.redAccent,
+                      child: Text(
+                        notificationItems.length.toString(),
+                        style: TextStyle(
+                            fontSize: 13.0, color: Colors.white),
+                      ),
+                    );
+                  },
+                )
                     : SizedBox(),
-               ],
+              ],
             ),
           ),
         ],

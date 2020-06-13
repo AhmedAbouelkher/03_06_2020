@@ -14,11 +14,11 @@ var dbRef;
 class PrivateChatscreen extends StatefulWidget {
   String title = '';
   String chatId = '';
-  var phone = '';
+
   BaseProduct product;
   var peerId;
 
-  PrivateChatscreen({this.product, this.title, this.chatId, this.peerId, this.phone});
+  PrivateChatscreen({this.product, this.title, this.chatId, this.peerId});
 
   String productTitleFromNotification;
   String productIdFromNotification;
@@ -192,8 +192,6 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                               "productTitle": widget.product.title,
                               "title": widget.title,
                               "peerId": widget.peerId,
-                              "showNumber" : widget.product.showMobileNumber,
-                              "phone" : widget.phone
                             });
                           }
                         },
@@ -267,7 +265,7 @@ class MessagesStreamFireStore extends StatelessWidget {
           final messageText = message.data['message'];
           final messageSender = message.data['sender'];
           Timestamp messgaeTime = message.data['time'];
-          String timeCreation = DateFormat("HH:mm dd-MM-yyyy")?.format(messgaeTime??.toDate());
+          String timeCreation = DateFormat("HH:mm dd-MM-yyyy").format(messgaeTime.toDate());
 
 
           final messageBubble = MessageBubbleFireStore(

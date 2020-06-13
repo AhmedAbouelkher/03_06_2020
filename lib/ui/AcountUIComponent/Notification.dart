@@ -25,8 +25,7 @@ class _notificationState extends State<notification> {
         title: Text(
           "إشعارات",
           style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 18.0,
+              fontSize: 14.0,
               color: Colors.black54,
               fontFamily: "Gotik"),
         ),
@@ -59,11 +58,13 @@ class NotificationsStream extends StatelessWidget {
             notificationItems.sort((a, b) => b.time.compareTo(a.time));
 
             return ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+              //padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
               itemCount: notificationItems.length,
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () {
+                    Navigator.of(context).pop();
+
                     Navigator.push(
                         context,
                         MaterialPageRoute(
