@@ -14,17 +14,19 @@ var dbRef;
 class PrivateChatscreen extends StatefulWidget {
   String title = '';
   String chatId = '';
-
+  var Phone = '';
   BaseProduct product;
   var peerId;
 
-  PrivateChatscreen({this.product, this.title, this.chatId, this.peerId});
+  PrivateChatscreen({this.product, this.title, this.chatId, this.peerId, this.Phone});
 
   String productTitleFromNotification;
   String productIdFromNotification;
   String userpProductIDFromNotification;
   String myIDFromNotification;
   String peerIdFromNotification;
+  bool showNumberFromNotification;
+  String phoneFromNotification;
 
   PrivateChatscreen.FromNotification(
       {this.title,
@@ -33,7 +35,11 @@ class PrivateChatscreen extends StatefulWidget {
       this.productIdFromNotification,
       this.userpProductIDFromNotification,
       this.peerIdFromNotification,
-      this.myIDFromNotification});
+      this.myIDFromNotification,
+        this.showNumberFromNotification,
+        this.phoneFromNotification,
+
+      });
 
   @override
   _PrivateChatscreen createState() => _PrivateChatscreen();
@@ -50,9 +56,15 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('${widget.title}',style: TextStyle(
-            fontSize: 18,
-           ),),
+          title:widget.product == null?
+              widget.showNumberFromNotification == true?
+          Text('${widget.productTitleFromNotification}\nمع ${widget.phoneFromNotification}',style: TextStyle(fontSize: 18,),):
+          Text('${widget.productTitleFromNotification}',style: TextStyle(fontSize: 18,),)
+              :
+          widget.product.showMobileNumber == true?
+          Text('${widget.title}\nمع ${widget.Phone}',style: TextStyle(fontSize: 18,),)
+              :
+          Text('${widget.title}',style: TextStyle(fontSize: 18,),),
           backgroundColor: Colors.white,
           actions: <Widget>[
             IconButton(
@@ -139,6 +151,7 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
 
                           // notification
 
+
                           if (widget.product == null) {
                             FirebaseDatabase.instance
                                 .reference()
@@ -166,6 +179,8 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                                   widget.userpProductIDFromNotification,
                               "title": widget.title ,
                               "peerId": widget.peerIdFromNotification,
+                              "showNumber":widget.showNumberFromNotification,
+                              "phone":Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber,
                             });
                           } else {
                             FirebaseDatabase.instance
@@ -192,6 +207,8 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                               "productTitle": widget.product.title,
                               "title": widget.title,
                               "peerId": widget.peerId,
+                              "showNumber":widget.product.showMobileNumber,
+                              "phone":Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber,
                             });
                           }
                         },
@@ -264,14 +281,13 @@ class MessagesStreamFireStore extends StatelessWidget {
 
           final messageText = message.data['message'];
           final messageSender = message.data['sender'];
-          Timestamp messgaeTime = message.data['time'];
-          String timeCreation = DateFormat("HH:mm dd-MM-yyyy").format(messgaeTime.toDate());
+          var messgaeTime = message.data['time'];
 
 
           final messageBubble = MessageBubbleFireStore(
               text: messageText,
               isMe: messageSender == Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber,
-            sender:timeCreation ,
+            sender:messgaeTime ,
 
 
           );
@@ -296,11 +312,15 @@ class MessageBubbleFireStore extends StatelessWidget {
   MessageBubbleFireStore({this.text, this.isMe, this.sender});
 
   final String text;
-  final String sender;
+  final Timestamp sender;
   final bool isMe;
+
+
 
   @override
   Widget build(BuildContext context) {
+
+
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column(
@@ -308,7 +328,7 @@ class MessageBubbleFireStore extends StatelessWidget {
         isMe ? CrossAxisAlignment.start : CrossAxisAlignment.end,
         children: <Widget>[
           Text(
-            sender,
+            '${sender?.toDate()?.day}-${sender?.toDate()?.month}-${sender?.toDate()?.year} ${sender?.toDate()?.hour}:${sender?.toDate()?.minute}',
             style: TextStyle(
               fontSize: 12.0,
               color: Colors.black54,

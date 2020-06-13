@@ -11,6 +11,8 @@ class NotificationModel {
   String userpProductID;
   String myID;
   String peerId;
+  bool showNumber;
+  String phone;
 
 
   NotificationModel(
@@ -23,7 +25,10 @@ class NotificationModel {
       this.title,
       this.userpProductID,
       this.myID,
-      this.peerId);
+      this.peerId,
+      this.showNumber,
+      this.phone
+      );
 
   factory NotificationModel.fromJson(Map<dynamic, dynamic> json) {
     return NotificationModel(
@@ -37,6 +42,8 @@ class NotificationModel {
       json['userpProductID'].toString(),
       json['myID'].toString(),
       json['peerId'].toString(),
+      json['showNumber'],
+      json['phone'].toString(),
 
     );
   }

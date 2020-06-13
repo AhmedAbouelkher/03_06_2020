@@ -613,13 +613,10 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                                     .uid;
                                 var peerId = product.userId;
 
-                                var title = product.showMobileNumber ?
-                                ' شراء | ${product.title}\nمع ${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber}'
-                                    :
-                                Provider.of<PhoneAuthDataProvider>(context, listen: false).user.displayName == null ?
-                                         ' شراء | ${product.title}'
-                                        :
-                                ' شراء | ${product.title}\nمع ${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.displayName}';
+                                var title =' شراء | ${product.title}';
+                                var Phone =  Provider.of<PhoneAuthDataProvider>(context,
+                                    listen: false)
+                                    .user?.phoneNumber;
 
                                 var ChatId = '';
 

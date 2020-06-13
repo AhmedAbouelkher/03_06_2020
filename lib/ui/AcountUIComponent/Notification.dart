@@ -79,6 +79,8 @@ class NotificationsStream extends StatelessWidget {
                                   userpProductIDFromNotification:notificationItems[index].userpProductID,
                                   peerIdFromNotification: notificationItems[index].peerId,
                                   myIDFromNotification:notificationItems[index].myID ,
+                                  showNumberFromNotification: notificationItems[index].showNumber,
+                                  phoneFromNotification:notificationItems[index].phone ,
 
 
                                 ))
@@ -95,6 +97,8 @@ class NotificationsStream extends StatelessWidget {
                     notificationItems[index].userpProductID,
                     notificationItems[index].myID,
                     notificationItems[index].peerId,
+                    notificationItems[index].showNumber,
+                    notificationItems[index].phone,
 
                   ),
                 );
@@ -118,10 +122,12 @@ class PostCard extends StatelessWidget {
   String userpProductID;
   String myID;
   String peerId;
+  bool showNumber;
+  String phone;
 
 
   PostCard(this.sender, this.text, this.time, this.ChatID, this.ProID,
-      this.ProTitle, this.Title, this.userpProductID , this.myID , this.peerId);
+      this.ProTitle, this.Title, this.userpProductID , this.myID , this.peerId, this.showNumber , this.phone);
 
 
 
