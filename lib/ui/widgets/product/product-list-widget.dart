@@ -94,6 +94,8 @@ class _ProductListWidgetState extends State<ProductListWidget> {
       fontWeight: FontWeight.w400,
       fontSize: 16.0);
 
+  var recent = true;
+
   /// Create Modal BottomSheet (SortBy)
   void _modalBottomSheetSort() {
     showModalBottomSheet(
@@ -116,51 +118,34 @@ class _ProductListWidgetState extends State<ProductListWidget> {
                     height: 0.5,
                   ),
                   Padding(padding: EdgeInsets.only(top: 25.0)),
-                  InkWell(
-                      onTap: () {
+                  FlatButton(
+                      onPressed: () {
 
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (BuildContext context) => new Menu()));
-                      setState(() {
-                        Provider.of<ProductProvider>(context).productList.sort((a,b)
-                        => a.creationDate.compareTo(b.creationDate));
-                      });
+                        setState(() {
+                          recent = true;
+                        });
+
+                        Navigator.pop(context);
                       },
                       child: Text(
                         "الأحدث",
                         style: _fontCostumSheetBotom,
                       )),
                   Padding(padding: EdgeInsets.only(top: 25.0)),
-                  InkWell(
-                    onTap: () {
+                  FlatButton(
+                    onPressed: () {
 
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (BuildContext context) => new Menu()));
-//                      setState(() {
-//                        Provider.of<ProductProvider>(context).productList.sort((a,b)
-//                        => a.new.compareTo(b.creationDate));
-//                      });
+                      setState(() {
+                        recent = false;
+                      });
+
+                      Navigator.pop(context);
                     },
                     child: Text(
-                      "الأقل سعرا",
+                      "الاقدم",
                       style: _fontCostumSheetBotom,
                     ),
                   ),
-                  Padding(padding: EdgeInsets.only(top: 25.0)),
-                  Text(
-                    "الأعلى سعرا",
-                    style: _fontCostumSheetBotom,
-                  ),
-                  // Padding(padding: EdgeInsets.only(top: 25.0)),
-                  // Text(
-                  //   "Price: High-Low",
-                  //   style: _fontCostumSheetBotom,
-                  // ),
-                  // Padding(padding: EdgeInsets.only(top: 25.0)),
-                  // Text(
-                  //   "Price: Log-High",
-                  //   style: _fontCostumSheetBotom,
-                  // ),
                   Padding(padding: EdgeInsets.only(top: 25.0)),
                 ],
               ),
@@ -172,8 +157,24 @@ class _ProductListWidgetState extends State<ProductListWidget> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
-    var list =  Provider.of<ProductProvider>(context).productList;
-    var productList = Provider.of<ProductProvider>(context).filterList(list,widget.searchModel);
+    var productList;
+    if(recent){
+      setState(() {
+        List<BaseProduct> list =  Provider.of<ProductProvider>(context).productList;
+        list.sort((a,b)=> b.creationDate.compareTo(a.creationDate));
+         productList = Provider.of<ProductProvider>(context).filterList(list,widget.searchModel);
+      });
+    }
+    else
+      {
+        setState(() {
+          List<BaseProduct> list =  Provider.of<ProductProvider>(context).productList;
+          list.sort((a,b)=> a.creationDate.compareTo(b.creationDate));
+           productList = Provider.of<ProductProvider>(context).filterList(list,widget.searchModel);
+        });
+      }
+
+
 
     var column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
