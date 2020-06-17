@@ -107,21 +107,21 @@ class _ProductItemGridState extends State<SaleProductItemGrid> {
                         fontSize: 13.0),
                   ),
                 ),
-                Padding(padding: EdgeInsets.only(top: 1.0)),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                  child: Text(
-                    widget.productItem.price == null
-                        ? '0'
-                        : widget.productItem.price.toString(),
-                    //'productItem.price',
-
-                    style: TextStyle(
-                        fontFamily: "Sans",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14.0),
-                  ),
-                ),
+//                Padding(padding: EdgeInsets.only(top: 1.0)),
+//                Padding(
+//                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+//                  child: Text(
+//                    widget.productItem.price == null
+//                        ? '0'
+//                        : widget.productItem.price.toString(),
+//                    //'productItem.price',
+//
+//                    style: TextStyle(
+//                        fontFamily: "Sans",
+//                        fontWeight: FontWeight.w500,
+//                        fontSize: 14.0),
+//                  ),
+//                ),
                 Padding(
                   padding:
                   const EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0),

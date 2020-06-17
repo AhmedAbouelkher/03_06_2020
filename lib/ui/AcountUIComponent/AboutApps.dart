@@ -53,7 +53,7 @@ class _aboutAppsState extends State<aboutApps> {
                 child: Row(
                   children: <Widget>[
                     Image.asset(
-                      "assets/img/Logo.png",
+                      "assets/launcher/rsz_icon_hourse.png",
                       height: 50.0,
                     ),
                     Padding(

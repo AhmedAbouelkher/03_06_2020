@@ -482,7 +482,7 @@ class _AddProductState extends State<AddProduct> {
 //                        : new Container(),
 
                     CheckboxListTile(
-                      title: Text("أظهر رقم جوالي بصفحة هذا الإعلان"),
+                      title: Text("أظهر جوالي بصفحة هذا الإعلان"),
                       value: checkBoxValue,
                       onChanged: (bool newValue) {
                         setState(() {

@@ -103,7 +103,7 @@ class _ProductListWidgetState extends State<ProductListWidget> {
         builder: (builder) {
           return SingleChildScrollView(
             child: new Container(
-              height: 320.0,
+              height: 250.0,
               color: Colors.white,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -146,7 +146,7 @@ class _ProductListWidgetState extends State<ProductListWidget> {
                       style: _fontCostumSheetBotom,
                     ),
                   ),
-                  Padding(padding: EdgeInsets.only(top: 25.0)),
+                  //Padding(padding: EdgeInsets.only(top: 25.0)),
                 ],
               ),
             ),
