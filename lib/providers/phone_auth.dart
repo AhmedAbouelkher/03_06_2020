@@ -167,7 +167,7 @@ class PhoneAuthDataProvider with ChangeNotifier {
         .then((AuthResult result) async {
       _setFirebaseUser(result.user);
 
-      _addStatusMessage('Authentication successful');
+      _addStatusMessage('نجحت المصادقة');
       _addStatus(PhoneAuthState.Verified);
       if (onVerified != null) onVerified();
     }).catchError((error) {
