@@ -95,7 +95,7 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
                     size: 24.0,
                   ),
                   title: Text(
-                    "حسابي",
+                    "القائمة",
                     style: TextStyle(fontFamily: "Berlin", letterSpacing: 0.5),
                   )),
             ],
