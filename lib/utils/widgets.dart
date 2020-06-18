@@ -54,7 +54,7 @@ class PhoneNumberField extends StatelessWidget {
             child: TextFormField(
               textDirection: TextDirection.ltr,
               controller: controller,
-              autofocus: false,
+              autofocus: true,
               keyboardType: TextInputType.phone,
               key: Key('EnterPhone-TextFormField'),
               decoration: InputDecoration(

@@ -417,7 +417,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                 child: Text(
                   'إرسال الكود',
                   style: TextStyle(
-                      color: Colors.white,
+                      color: !checkBoxValue?Colors.white30:Colors.white,
                       letterSpacing: 0.2,
                       fontFamily: "Sans",
                       fontSize: 18.0,
@@ -430,7 +430,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                     ],
                     borderRadius: BorderRadius.circular(30.0),
                     gradient: LinearGradient(
-                        colors: <Color>[Color(0xFF121940), Color(0xFF6E48AA)])),
+                        colors: !checkBoxValue? <Color>[Color(0xFF5d5c7b),Color(0xFF5d5c7b)]:<Color>[Color(0xFF121940), Color(0xFF6E48AA)])),
               ),
             ),
           ),
