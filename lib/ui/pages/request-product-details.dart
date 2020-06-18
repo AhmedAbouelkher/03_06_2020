@@ -38,7 +38,7 @@ var _txtCustomHead = TextStyle(
 /// Custom Text Detail
 var _txtCustomSub = TextStyle(
   color: Colors.black38,
-  fontSize: 13.5,
+  fontSize: 25,
   fontWeight: FontWeight.w500,
   fontFamily: "Gotik",
 );
@@ -284,11 +284,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                             fontSize: 14.0, color: Colors.black26),
                       ),
                       Padding(padding: EdgeInsets.only(top: 5.0)),
-                      Text(
-                        "${product.price.toString()} ريال",
-                        style: _customTextStyle.copyWith(
-                            color: Colors.redAccent, fontSize: 20.0),
-                      ),
+
                       Padding(padding: EdgeInsets.only(top: 10.0)),
                       Divider(
                         color: Colors.black12,
@@ -361,6 +357,16 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                                     : Container()),
 
                             ProductFavoriteButton(product),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 5.0),
+                              child: Text(
+                                product.formatedCreateDate,
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
                             // Padding(
                             //   padding: const EdgeInsets.only(right: 10.0),
                             //   child: Text(
@@ -400,9 +406,14 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(
-                              "القسم",
-                              style: _txtCustomSub,
+                            Row(
+                              children: <Widget>[
+                                Icon(Icons.loyalty),
+                                Text(
+                                  "القسم",
+                                  style: _txtCustomSub,
+                                ),
+                              ],
                             ),
                             ProductCategoryWidget(
                                 product.category,
@@ -418,9 +429,14 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(
-                              "المدينة",
-                              style: _txtCustomSub,
+                            Row(
+                              children: <Widget>[
+                                Icon(Icons.location_city),
+                                Text(
+                                  "المدينة",
+                                  style: _txtCustomSub,
+                                ),
+                              ],
                             ),
                             ProductGovernorateWidget(
                                 product.governorate,
@@ -683,13 +699,22 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                         decoration: BoxDecoration(
                           color: Colors.indigoAccent,
                         ),
-                        child: Center(
-                          child: ProductUserWidget(
-                              product.user,
-                              TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700),
-                              product.showMobileNumber),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.person,color: Colors.white,),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Center(
+                              child: ProductUserWidget(
+                                  product.user,
+                                  TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700),
+                                  product.showMobileNumber),
+                            ),
+                          ],
                         ),
                       ),
                     ),

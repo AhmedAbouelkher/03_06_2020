@@ -281,10 +281,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                         style: _customTextStyle,
                       ),
                       Padding(padding: EdgeInsets.only(top: 5.0)),
-                      Text(
-                        " ريال",
-                        style: _customTextStyle,
-                      ),
+
                       Padding(padding: EdgeInsets.only(top: 10.0)),
                       Divider(
                         color: Colors.black12,
@@ -386,7 +383,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
               Padding(
                 padding: const EdgeInsets.only(top: 10.0),
                 child: Container(
-                  height: 150.0,
+                  height: 200.0,
                   width: 600.0,
                   decoration: BoxDecoration(color: Colors.white, boxShadow: [
                     BoxShadow(
@@ -403,10 +400,15 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(
-                              "القسم",
-                              style: _txtCustomSub,
-                            ),
+                           Row(
+                             children: <Widget>[
+                               Icon(Icons.loyalty),
+                               Text(
+                                 "القسم",
+                                 style: _txtCustomSub,
+                               ),
+                             ],
+                           ),
                             ProductCategoryWidget(
                                 widget.product.category,
                                 _txtCustomHead.copyWith(
@@ -415,15 +417,22 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                           ],
                         ),
                       ),
+                      Divider(),
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 20.0, right: 20.0, left: 60.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(
-                              "المدينة",
-                              style: _txtCustomSub,
+
+                            Row(
+                              children: <Widget>[
+                                Icon(Icons.location_city),
+                                Text(
+                                  "المدينة",
+                                  style: _txtCustomSub,
+                                ),
+                              ],
                             ),
                             ProductGovernorateWidget(
                                 widget.product.governorate,
@@ -472,7 +481,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
               Padding(
                 padding: const EdgeInsets.only(top: 10.0),
                 child: Container(
-                  height: 205.0,
+                  height: 300.0,
                   width: 600.0,
                   decoration: BoxDecoration(color: Colors.white, boxShadow: [
                     BoxShadow(
@@ -509,7 +518,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                             onTap: () {
                               _bottomSheet();
                             },
-                            child: Text(
+                          child: Text(
                               "قراءة المزيد",
                               style: TextStyle(
                                 color: Colors.indigoAccent,
@@ -703,20 +712,29 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                         decoration: BoxDecoration(
                           color: Colors.indigoAccent,
                         ),
-                        child: Center(
-                            child: ProductUserWidget(
-                                widget.product.user,
-                                TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700),
-                                widget.product.showMobileNumber)
-                            // Text(
-                            //   "Pay",
-                            //   style: TextStyle(
-                            //       color: Colors.white,
-                            //       fontWeight: FontWeight.w700),
-                            // ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.person,color: Colors.white,),
+                            SizedBox(
+                              width: 10,
                             ),
+                            Center(
+                                child: ProductUserWidget(
+                                    widget.product.user,
+                                    TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700),
+                                    widget.product.showMobileNumber)
+                                // Text(
+                                //   "Pay",
+                                //   style: TextStyle(
+                                //       color: Colors.white,
+                                //       fontWeight: FontWeight.w700),
+                                // ),
+                                ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
