@@ -20,7 +20,7 @@ class PrivateChatscreen extends StatefulWidget {
 
   PrivateChatscreen({this.product, this.title, this.chatId, this.peerId, this.Phone});
 
-  String productTitleFromNotification;
+  String TitleFromNotification;
   String productIdFromNotification;
   String userpProductIDFromNotification;
   String myIDFromNotification;
@@ -29,9 +29,9 @@ class PrivateChatscreen extends StatefulWidget {
   String phoneFromNotification;
 
   PrivateChatscreen.FromNotification(
-      {this.title,
+      {
+        this.TitleFromNotification,
       this.chatId,
-      this.productTitleFromNotification,
       this.productIdFromNotification,
       this.userpProductIDFromNotification,
       this.peerIdFromNotification,
@@ -58,11 +58,20 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
         appBar: AppBar(
           title:widget.product == null?
               widget.showNumberFromNotification == true?
-          Text('${widget.productTitleFromNotification}\nمع ${widget.phoneFromNotification}',style: TextStyle(fontSize: 18,),):
-          Text('${widget.productTitleFromNotification}',style: TextStyle(fontSize: 18,),)
+                  Column(
+                    children: <Widget>[
+                    Text('${widget.TitleFromNotification}',style: TextStyle(fontSize: 18,color: Colors.black54),),
+                    Text('مع ${widget.phoneFromNotification}',style: TextStyle(fontSize: 18,),)
+                  ],)
+          :
+          Text('${widget.TitleFromNotification}',style: TextStyle(fontSize: 18,),)
               :
           widget.product.showMobileNumber == true?
-          Text('${widget.title}\nمع ${widget.Phone}',style: TextStyle(fontSize: 18,),)
+          Column(
+            children: <Widget>[
+              Text('${widget.title}',style: TextStyle(fontSize: 18,color: Colors.black54),),
+              Text('مع ${widget.Phone}',style: TextStyle(fontSize: 18,),)
+            ],)
               :
           Text('${widget.title}',style: TextStyle(fontSize: 18,),),
           backgroundColor: Colors.white,
@@ -174,7 +183,7 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                               "chatID": widget.chatId,
                               "productID": widget.productIdFromNotification,
                               "productTitle":
-                                  widget.productTitleFromNotification,
+                                  widget.TitleFromNotification,
                               "userpProductID":
                                   widget.userpProductIDFromNotification,
                               "title": widget.title ,

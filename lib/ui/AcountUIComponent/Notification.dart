@@ -70,10 +70,8 @@ class NotificationsStream extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) =>
                                 PrivateChatscreen.FromNotification(
-                                  title: notificationItems[index].title,
+                                  TitleFromNotification: notificationItems[index].title,
                                   chatId: notificationItems[index].chatID,
-                                  productTitleFromNotification:
-                                      notificationItems[index].productTitle,
                                   productIdFromNotification:
                                       notificationItems[index].productID,
                                   userpProductIDFromNotification:notificationItems[index].userpProductID,
