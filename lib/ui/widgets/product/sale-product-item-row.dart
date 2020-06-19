@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:haftaa/product/base-product.dart';
+import 'package:haftaa/product/sale-product.dart';
 import 'package:haftaa/provider/provider.dart';
 import 'package:haftaa/providers/phone_auth.dart';
 import 'package:haftaa/ui/CartUIComponent/Delivery.dart';
@@ -10,7 +11,7 @@ import 'package:provider/provider.dart';
 
 class SaleProductItemRow extends StatelessWidget {
   UserController _userController = UserController();
-  BaseProduct product;
+  SaleProduct product;
   VoidCallback onDeleteFromFavourite;
 
   SaleProductItemRow({this.product, this.onDeleteFromFavourite});
@@ -141,6 +142,16 @@ class SaleProductItemRow extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            Text(
+                              'f${product.formatedCreateDate}',
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12.0,
+                              ),
+                            ),
+
+
                             Padding(padding: EdgeInsets.only(top: 0.0)),
                             Text(product.arabicTypeName),
                             // Padding(

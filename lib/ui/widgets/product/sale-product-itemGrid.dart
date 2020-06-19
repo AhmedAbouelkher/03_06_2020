@@ -126,8 +126,7 @@ class _ProductItemGridState extends State<SaleProductItemGrid> {
                   padding:
                   const EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                     children: <Widget>[
                       Row(
                         children: <Widget>[

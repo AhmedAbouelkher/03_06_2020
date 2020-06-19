@@ -123,7 +123,7 @@ class PhoneAuthDataProvider with ChangeNotifier {
 
       FireBase.auth.signInWithCredential(auth).then((AuthResult value) {
         if (value.user != null) {
-          _addStatusMessage('Authentication successful');
+          _addStatusMessage('نجحت المصادقة');
           _addStatus(PhoneAuthState.Verified);
           if (onVerified != null) onVerified();
         } else {
@@ -167,7 +167,7 @@ class PhoneAuthDataProvider with ChangeNotifier {
         .then((AuthResult result) async {
       _setFirebaseUser(result.user);
 
-      _addStatusMessage('Authentication successful');
+      _addStatusMessage('نجحت المصادقة');
       _addStatus(PhoneAuthState.Verified);
       if (onVerified != null) onVerified();
     }).catchError((error) {
