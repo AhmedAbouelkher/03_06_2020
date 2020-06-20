@@ -45,6 +45,7 @@ class SaleProductDetails extends StatefulWidget {
   Future<User> _user;
 
   SaleProductDetails(this.product, this._user);
+
   @override
   _SaleProductDetailsState createState() => _SaleProductDetailsState();
 }
@@ -191,9 +192,11 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                 Row(
                   children: <Widget>[
                     SystemShareButton(
-                        "ألق نظرة على ${widget.product.title} على سوق الهتفاء www.haftaa.com/${widget.product.id}"),
+                        "ألق نظرة على ${widget.product.title} على سوق الهفتاء" +
+                            "https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${widget.product.id}&apn=emo.apps.haftaa"),
                     WhatsappShareButton(
-                        "ألق نظرة على ${widget.product.title} على سوق الهتفاء www.haftaa.com/${widget.product.id}"),
+                        "ألق نظرة على ${widget.product.title} على سوق الهفتاء" +
+                            "https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${widget.product.id}&apn=emo.apps.haftaa")
                   ],
                 )
 
@@ -280,7 +283,6 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                         style: _customTextStyle,
                       ),
                       Padding(padding: EdgeInsets.only(top: 5.0)),
-
                       Padding(padding: EdgeInsets.only(top: 10.0)),
                       Divider(
                         color: Colors.black12,
@@ -399,15 +401,15 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                           Row(
-                             children: <Widget>[
-                               Icon(Icons.loyalty),
-                               Text(
-                                 "القسم",
-                                 style: _txtCustomSub,
-                               ),
-                             ],
-                           ),
+                            Row(
+                              children: <Widget>[
+                                Icon(Icons.loyalty),
+                                Text(
+                                  "القسم",
+                                  style: _txtCustomSub,
+                                ),
+                              ],
+                            ),
                             ProductCategoryWidget(
                                 widget.product.category,
                                 _txtCustomHead.copyWith(
@@ -423,7 +425,6 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-
                             Row(
                               children: <Widget>[
                                 Icon(Icons.location_city),
@@ -517,7 +518,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                             onTap: () {
                               _bottomSheet();
                             },
-                          child: Text(
+                            child: Text(
                               "قراءة المزيد",
                               style: TextStyle(
                                 color: Colors.indigoAccent,
@@ -642,7 +643,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                     .uid;
                                 var peerId = _user.id;
 
-                                var title =' بيع | ${widget.product.title}';
+                                var title = ' بيع | ${widget.product.title}';
                                 var Phone = _user?.mobile;
 
                                 var ChatId = '';
@@ -661,7 +662,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                               chatId: ChatId,
                                               title: title,
                                               peerId: peerId,
-                                              Phone:Phone ,
+                                              Phone: Phone,
                                             )));
                               } else {}
                             },
@@ -714,7 +715,10 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Icon(Icons.person,color: Colors.white,),
+                            Icon(
+                              Icons.person,
+                              color: Colors.white,
+                            ),
                             SizedBox(
                               width: 10,
                             ),

@@ -137,7 +137,8 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
         expectedProduct: product,
         hideWidgetWhenEmpty: true);
     return Scaffold(
-      floatingActionButton: new ProductSpeeDial(product.user,product.showMobileNumber),
+      floatingActionButton:
+          new ProductSpeeDial(product.user, product.showMobileNumber),
       key: _key,
       appBar: AppBar(
         actions: <Widget>[
@@ -152,9 +153,11 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                 Row(
                   children: <Widget>[
                     SystemShareButton(
-                        "ألق نظرة على ${product.title} على سوق الهفتاء"),
+                        "ألق نظرة على ${product.title} على سوق الهفتاء" +
+                            "https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${product.id}&apn=emo.apps.haftaa"),
                     WhatsappShareButton(
-                        "ألق نظرة على ${product.title} على سوق الهفتاء")
+                        "ألق نظرة على ${product.title} على سوق الهفتاء" +
+                            "https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${product.id}&apn=emo.apps.haftaa")
                   ],
                 )
 
@@ -328,9 +331,9 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                                 Padding(
                                     padding: const EdgeInsets.only(right: 8.0),
                                     child: (Provider.of<PhoneAuthDataProvider>(
-                                                        context,
-                                                        listen: false)
-                                                   .isLoggedIn&&
+                                                    context,
+                                                    listen: false)
+                                                .isLoggedIn &&
                                             Provider.of<PhoneAuthDataProvider>(
                                                         context,
                                                         listen: false)

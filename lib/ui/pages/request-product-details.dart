@@ -156,9 +156,11 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                 Row(
                   children: <Widget>[
                     SystemShareButton(
-                        "ألق نظرة على ${product.title} على سوق الهتفاء www.haftaa.com/${product.id}"),
+                        "ألق نظرة على ${product.title} على سوق الهفتاء" +
+                            "https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${product.id}&apn=emo.apps.haftaa"),
                     WhatsappShareButton(
-                        "ألق نظرة على ${product.title} على سوق الهتفاء www.haftaa.com/${product.id}"),
+                        "ألق نظرة على ${product.title} على سوق الهفتاء" +
+                            "https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${product.id}&apn=emo.apps.haftaa")
                   ],
                 )
 
@@ -284,7 +286,6 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                             fontSize: 14.0, color: Colors.black26),
                       ),
                       Padding(padding: EdgeInsets.only(top: 5.0)),
-
                       Padding(padding: EdgeInsets.only(top: 10.0)),
                       Divider(
                         color: Colors.black12,
@@ -629,10 +630,12 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                                     .uid;
                                 var peerId = product.userId;
 
-                                var title =' شراء | ${product.title}';
-                                var Phone =  Provider.of<PhoneAuthDataProvider>(context,
-                                    listen: false)
-                                    .user?.phoneNumber;
+                                var title = ' شراء | ${product.title}';
+                                var Phone = Provider.of<PhoneAuthDataProvider>(
+                                        context,
+                                        listen: false)
+                                    .user
+                                    ?.phoneNumber;
 
                                 var ChatId = '';
 
@@ -702,7 +705,10 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Icon(Icons.person,color: Colors.white,),
+                            Icon(
+                              Icons.person,
+                              color: Colors.white,
+                            ),
                             SizedBox(
                               width: 10,
                             ),

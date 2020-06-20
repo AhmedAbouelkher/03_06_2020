@@ -152,9 +152,11 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
                 Row(
                   children: <Widget>[
                     SystemShareButton(
-                        "ألق نظرة على ${product.title} على سوق الهفتاء"),
+                        "ألق نظرة على ${product.title} على سوق الهفتاء" +
+                            "https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${product.id}&apn=emo.apps.haftaa"),
                     WhatsappShareButton(
-                        "ألق نظرة على ${product.title} على سوق الهفتاء")
+                        "ألق نظرة على ${product.title} على سوق الهفتاء" +
+                            "https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${product.id}&apn=emo.apps.haftaa")
                   ],
                 )
 
