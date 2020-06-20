@@ -10,7 +10,7 @@ class NavigationService {
   GlobalKey<NavigatorState> get navigationKey => _navigationKey;
 
   void pop() {
-    return _navigationKey.currentState.pop();
+     _navigationKey.currentState.pop();
   }
 
   Future<dynamic> navigateTo(String routeName, {dynamic arguments}) {
