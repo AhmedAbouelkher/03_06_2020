@@ -14,6 +14,8 @@ import 'package:haftaa/ui/pages/sale-product-details.dart';
 import 'package:provider/provider.dart';
 
 import '../locator.dart';
+import 'AcountUIComponent/AboutApps.dart';
+import 'AcountUIComponent/Notification.dart';
 
 class bottomNavigationBar extends StatefulWidget {
   @override
@@ -109,6 +111,144 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
 
     //Provider.of(context).productBloc = productBloc;
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/img/headerProfile.png"),
+                      fit: BoxFit.cover)),
+              child: null,
+            ),
+            ListTile(
+              title: Text("إعلاناتي"),
+              leading: Icon(Icons.list, color: Color(0xff8985ab)),
+              onTap: () {
+
+
+
+
+
+                setState(() {});
+                Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
+              title: Text("تصفح الإعلانات"),
+              leading: Icon(
+                Icons.home,
+                color: Color(0xff8985ab),
+              ),
+              onTap: () {
+                Navigator.of(context).push(PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => new bottomNavigationBar()));
+                setState(() {});
+                Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
+              title: Text(
+                "الإعلانات المفضلة",
+              ),
+              leading: Icon(
+                Icons.favorite_border,
+                color: Color(0xff8985ab),
+              ),
+              onTap: () {
+                Navigator.of(context).push(PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => new FavouritList()));
+                Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
+              title: Text(
+                " الإشعارات",
+              ),
+              leading: SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: Image.asset(
+                    "assets/icon/notification.png",
+                  )),
+              onTap: () {
+                setState(() {
+                  if (Provider.of<PhoneAuthDataProvider>(context, listen: false)
+                      .isLoggedIn ==
+                      true) {
+                    Navigator.of(context).push(PageRouteBuilder(
+                        pageBuilder: (_, __, ___) => new notification()));
+                  } else {
+                    Navigator.pushNamed(context, 'choose-login');
+                  }
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
+              title: Text("عن التطبيق"),
+              leading: Icon(Icons.title, color: Color(0xff8985ab)),
+              onTap: () {
+
+                setState(() {
+                  Navigator.of(context).push(PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => new aboutApps()));
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+            Provider.of<PhoneAuthDataProvider>(context, listen: true)
+                .isLoggedIn
+                ? ListTile(
+              title: Text(
+                "تسجيل خروج",
+              ),
+              leading: SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: Image.asset(
+                    "assets/icon/aboutapp.png",
+                  )),
+              onTap: () async{
+                await Provider.of<PhoneAuthDataProvider>(context,
+                    listen: false)
+                    .signOut()
+                    .then((onValue) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            bottomNavigationBar()),
+                    ModalRoute.withName('/'),
+                  );
+                });
+                setState(() {});
+                Navigator.of(context).pop();
+              },
+            )
+                : Container(),
+          ],
+        ),
+      ),
+      appBar: AppBar(
+        title: Center(
+            child: Text(
+              'سوق الهفتاء',
+              style: TextStyle(color: Colors.white),
+            )),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [
+                    const Color(0xFFA3BDED),
+                    const Color(0xFF6991C7),
+                  ],
+                  begin: const FractionalOffset(0.0, 0.0),
+                  end: const FractionalOffset(1.0, 0.0),
+                  stops: [0.0, 1.0],
+                  tileMode: TileMode.clamp)),
+        ),
+      ),
       body: callPage(currentIndex, context),
       bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(
