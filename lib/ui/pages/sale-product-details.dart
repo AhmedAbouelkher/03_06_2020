@@ -193,10 +193,10 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                   children: <Widget>[
                     SystemShareButton(
                         "ألق نظرة على ${widget.product.title} على سوق الهفتاء" +
-                            "https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${widget.product.id}&apn=emo.apps.haftaa"),
+                            " https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${widget.product.id}&apn=emo.apps.haftaa"),
                     WhatsappShareButton(
                         "ألق نظرة على ${widget.product.title} على سوق الهفتاء" +
-                            "https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${widget.product.id}&apn=emo.apps.haftaa")
+                            " https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${widget.product.id}&apn=emo.apps.haftaa")
                   ],
                 )
 
