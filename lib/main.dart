@@ -186,7 +186,7 @@ class SplashScreen extends StatefulWidget {
 
 /// Component UI
 class _SplashScreenState extends State<SplashScreen> {
-  final DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
+ // final DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
 
   @override
 
@@ -221,20 +221,20 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void didChangeDependencies() {
-    _dynamicLinkService.handleDynamicLinks((title) {
-      if (title == null || title == '') {
-        startTime(context);
-      } else {
-        //get product
-        adIdFromExtrenalLink = title;
-
-        //check type
-
-        //redirect to details
-      }
-    }, (error) {
+//    _dynamicLinkService.handleDynamicLinks((title) {
+//      if (title == null || title == '') {
       startTime(context);
-    });
+//      } else {
+//        //get product
+//        adIdFromExtrenalLink = title;
+//
+//        //check type
+//
+//        //redirect to details
+//      }
+//    }, (error) {
+//      startTime(context);
+//    });
   }
 
   /// Code Create UI Splash Screen
