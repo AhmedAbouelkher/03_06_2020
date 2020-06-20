@@ -144,10 +144,11 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     var categoryIconGrid = CategoryIconsGrid();
     var productGrid = ProductGrid();
+    var productList = Provider.of<ProductProvider>(context).productList;
 
     return Scaffold(
       /// Use Stack to costume a appbar
-      body: Stack(
+      body:productList.length!=0? Stack(
         children: <Widget>[
           SingleChildScrollView(
             controller: listScrollController,
@@ -194,6 +195,45 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 
           AppbarGradient(),
         ],
+      ):Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment:CrossAxisAlignment.stretch ,
+          children: <Widget>[
+            SizedBox(
+              height: 300,
+              width: 300,
+              child: Image.asset(
+                "assets/img/notfound.png",
+               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Center(child: Text('NoThing Found')),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30 ,vertical: 15),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Color(0xFF6991C7),),
+                child: FlatButton(
+                    onPressed: (){
+                         setState(() {
+                            productList = Provider.of<ProductProvider>(context).productList;
+                         });
+                    },
+                    child: Text(
+                      'إعادة تحميل',
+                      style: TextStyle(
+                          color: const Color(0xffffffff),
+                          fontSize: 20
+                      ),
+                    )),
+              ),
+            )
+          ],
+        ),
       ),
     );
 
@@ -737,6 +777,12 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 
   }
 }
+
+
+
+
+
+
 
 /// ItemGrid in bottom item "Recomended" item
 class ItemGrid extends StatelessWidget {
