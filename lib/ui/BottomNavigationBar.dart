@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:haftaa/Enums/enums.dart';
+import 'package:haftaa/product/product-provider.dart';
 import 'package:haftaa/provider/provider.dart';
 import 'package:haftaa/providers/phone_auth.dart';
+import 'package:haftaa/services/dynamic_link_service.dart';
 import 'package:haftaa/ui/BrandUIComponent/BrandLayout.dart';
 import 'package:haftaa/ui/HomeUIComponent/Home.dart';
 import 'package:haftaa/ui/AcountUIComponent/Profile.dart';
+import 'package:haftaa/ui/pages/auction-product-details.dart';
 import 'package:haftaa/ui/pages/favourit-list.dart';
+import 'package:haftaa/ui/pages/request-product-details.dart';
+import 'package:haftaa/ui/pages/sale-product-details.dart';
 import 'package:provider/provider.dart';
+
+import '../locator.dart';
 
 class bottomNavigationBar extends StatefulWidget {
   @override
@@ -34,6 +42,58 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
     }
   }
 
+  final DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
+  static ProductProvider productProvider;
+  static NavigatorState navigator;
+
+  @override
+  void didChangeDependencies() {
+    _dynamicLinkService.handleDynamicLinks((title) {
+      if (title == null || title == '') {
+      } else {
+        //get product
+        var ddd;
+
+        redirectToProduct(title);
+
+        //check type
+
+        //redirect to details
+      }
+    }, (error) {
+      var ff;
+    });
+  }
+
+  redirectToProduct(String id) async {
+    var product = await productProvider.getProductById(id);
+    var page;
+    switch (product.type) {
+      case ItemType.sale:
+        page = new SaleProductDetails(product, product.user);
+        break;
+      case ItemType.request:
+        page = new RequestProductDetails(product);
+
+        break;
+      case ItemType.auction:
+        page = new AuctionProductDetails(product);
+
+        break;
+    }
+    navigator.push(PageRouteBuilder(
+        pageBuilder: (_, __, ___) => page,
+        transitionDuration: Duration(milliseconds: 900),
+
+        /// Set animation Opacity in route to detailProduk layout
+        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+          return Opacity(
+            opacity: animation.value,
+            child: child,
+          );
+        }));
+  }
+
   //ProductBloc productBloc = new ProductBloc();
 // @override
 // void dispose(){
@@ -43,6 +103,8 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
   /// Build BottomNavigationBar Widget
   @override
   Widget build(BuildContext context) {
+    productProvider = Provider.of<ProductProvider>(context);
+    navigator = Navigator.of(context);
     Provider.of<PhoneAuthDataProvider>(context, listen: true).currentuser();
 
     //Provider.of(context).productBloc = productBloc;

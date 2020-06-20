@@ -249,6 +249,35 @@ class ProductProvider extends ChangeNotifier {
     //productList.add(product);
   }
 
+  Future<BaseProduct> getProductById(String id) async {
+    Completer<BaseProduct> completer = Completer<BaseProduct>();
+
+    try {
+      var snapshot = await _productRepositoy.getProduct(id);
+      var product;
+      var dd;
+      switch (snapshot.value['type']) {
+        case 'sale':
+          product = SaleProduct.fromMap(snapshot.key, snapshot.value);
+          break;
+        case 'request':
+          product = RequestProduct.fromMap(snapshot.key, snapshot.value);
+          break;
+        case 'auction':
+          product = AuctionProduct.fromMap(snapshot.key, snapshot.value);
+          break;
+        default:
+          product = BaseProduct.fromMap(snapshot.key, snapshot.value);
+          break;
+      }
+      completer.complete(product);
+    } catch (error) {
+      completer.completeError(error);
+    }
+
+    return completer.future;
+  }
+
   @override
   dispose() {
 //    _subjectProducts.drain();

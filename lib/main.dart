@@ -6,6 +6,7 @@ import 'package:haftaa/bloc/product-bloc.dart';
 import 'package:haftaa/product/product-provider.dart';
 import 'package:haftaa/providers/countries.dart';
 import 'package:haftaa/providers/phone_auth.dart';
+import 'package:haftaa/services/dynamic_link_service.dart';
 import 'package:haftaa/settings/settings_controller.dart';
 import 'package:haftaa/ui/BottomNavigationBar.dart';
 import 'package:haftaa/ui/LoginOrSignup/ChoseLoginOrSignup.dart';
@@ -16,11 +17,12 @@ import 'dart:async';
 //import 'package:haftaa/Authentication/auth.dart';
 import 'package:haftaa/provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:haftaa/services/service-locator.dart';
+import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'firebase/auth/phone_auth/get_phone.dart';
+import 'locator.dart';
 
 /// Run first apps open
 void main() {
@@ -45,7 +47,6 @@ class myApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-
         ChangeNotifierProvider(
           create: (context) => PhoneAuthDataProvider()..currentuser(),
         ),
@@ -185,6 +186,8 @@ class SplashScreen extends StatefulWidget {
 
 /// Component UI
 class _SplashScreenState extends State<SplashScreen> {
+  final DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
+
   @override
 
   /// Setting duration in splash screen
@@ -214,13 +217,30 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
+  var adIdFromExtrenalLink;
+
   @override
   void didChangeDependencies() {
-    startTime(context);
+    _dynamicLinkService.handleDynamicLinks((title) {
+      if (title == null || title == '') {
+        startTime(context);
+      } else {
+        //get product
+        adIdFromExtrenalLink = title;
+
+        //check type
+
+        //redirect to details
+      }
+    }, (error) {
+      startTime(context);
+    });
   }
 
   /// Code Create UI Splash Screen
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(

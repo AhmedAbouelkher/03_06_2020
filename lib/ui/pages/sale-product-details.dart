@@ -45,7 +45,6 @@ class SaleProductDetails extends StatefulWidget {
   Future<User> _user;
 
   SaleProductDetails(this.product, this._user);
-
   @override
   _SaleProductDetailsState createState() => _SaleProductDetailsState();
 }

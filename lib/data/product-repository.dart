@@ -4,14 +4,17 @@ import 'package:haftaa/search/search.dart';
 
 class ProductRepository {
   final _firebaseProvider = FirebaseProvider();
+
   Stream<Event> getProducts(int limit, ProductSearchModel serachModel) {
     return _firebaseProvider.getProducts(limit, serachModel);
   }
-  Future<DataSnapshot>  getItems(){
-    return _firebaseProvider.getItems();
 
+  Future<DataSnapshot> getItems() {
+    return _firebaseProvider.getItems();
   }
-   Stream<Event> getProductsStreamChange(int limit, ProductSearchModel serachModel) {
+
+  Stream<Event> getProductsStreamChange(
+      int limit, ProductSearchModel serachModel) {
     return _firebaseProvider.getProductsStreamChange(limit, serachModel);
   }
 
@@ -22,5 +25,9 @@ class ProductRepository {
 
   Future<DataSnapshot> getHomeSliderProducts() {
     return _firebaseProvider.getHomeSliderProducts();
+  }
+
+  Future<DataSnapshot>  getProduct(String id) {
+    return _firebaseProvider.getItem('menuItems/$id');
   }
 }
