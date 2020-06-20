@@ -11,6 +11,7 @@ import 'package:haftaa/settings/settings_controller.dart';
 import 'package:haftaa/ui/BottomNavigationBar.dart';
 import 'package:haftaa/ui/LoginOrSignup/ChoseLoginOrSignup.dart';
 import 'package:haftaa/ui/HomeUIComponent/Home.dart';
+import 'package:haftaa/ui/LoginOrSignup/Login.dart';
 import 'package:haftaa/ui/OnBoarding.dart';
 import 'dart:async';
 
@@ -79,6 +80,8 @@ class myApp extends StatelessWidget {
           "home": (BuildContext context) => new bottomNavigationBar(),
           // "root": (BuildContext context) => new BottomNavigationBar(items: <BottomNavigationBarItem>[],),
           "choose-login": (BuildContext context) => new ChoseLogin(),
+          "login": (BuildContext context) => new loginScreen(),
+
         },
       ),
 //      child: MaterialApp(

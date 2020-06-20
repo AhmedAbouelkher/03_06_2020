@@ -60,7 +60,7 @@ class _ProductFavoriteButtonState extends State<ProductFavoriteButton> {
                       .isLoggedIn) {
                 productInUserFav ? removeFromFav(context) : addToFav(context);
               } else {
-                Navigator.pushNamed(context, 'choose-login');
+                Navigator.pushNamed(context, 'login');
               }
             },
           ),

@@ -62,6 +62,7 @@ class _AppbarGradientState extends State<AppbarGradient> {
               tileMode: TileMode.clamp)),
       child: Row(
         children: <Widget>[
+
           Padding(
               padding: EdgeInsets.only(
                 right: 17.0,
@@ -181,7 +182,7 @@ class _AppbarGradientState extends State<AppbarGradient> {
                           pageBuilder: (_, __, ___) =>
                           new AddProduct.newOne()));
                     } else {
-                      Navigator.pushNamed(context, 'choose-login');
+                      Navigator.pushNamed(context, 'login');
                     }
                   },
                 )
@@ -195,7 +196,7 @@ class _AppbarGradientState extends State<AppbarGradient> {
                 Navigator.of(context).push(PageRouteBuilder(
                     pageBuilder: (_, __, ___) => new AddProduct.newOne()));
               } else {
-                Navigator.pushNamed(context, 'choose-login');
+                Navigator.pushNamed(context, 'login');
               }
             },
           ),
@@ -233,7 +234,7 @@ class _AppbarGradientState extends State<AppbarGradient> {
 
 
               } else {
-              Navigator.pushNamed(context, 'choose-login');
+              Navigator.pushNamed(context, 'login');
               }
 
 //              Navigator.of(context).push(PageRouteBuilder(

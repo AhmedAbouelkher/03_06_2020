@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:haftaa/ui/BottomNavigationBar.dart';
 import 'package:haftaa/ui/LoginOrSignup/ChoseLoginOrSignup.dart';
+import 'package:haftaa/ui/LoginOrSignup/Login.dart';
 import 'package:haftaa/ui/OnBoarding.dart';
 
 class NavigationService {
@@ -19,6 +20,6 @@ class NavigationService {
 
   Future<dynamic> navigateToPageRoute(String routeName, {dynamic arguments}) {
     return _navigationKey.currentState
-        .push(PageRouteBuilder(pageBuilder: (_, __, ___) => new ChoseLogin()));
+        .push(PageRouteBuilder(pageBuilder: (_, __, ___) => new loginScreen()));
   }
 }

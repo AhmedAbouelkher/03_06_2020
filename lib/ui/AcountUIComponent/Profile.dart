@@ -8,6 +8,7 @@ import 'package:haftaa/ui/AcountUIComponent/AboutApps.dart';
 import 'package:haftaa/ui/BottomNavigationBar.dart';
 import 'package:haftaa/ui/LoginOrSignup/ChoseLoginOrSignup.dart';
 import 'package:haftaa/ui/AcountUIComponent/Notification.dart';
+import 'package:haftaa/ui/LoginOrSignup/Login.dart';
 import 'package:haftaa/ui/pages/edit-profile.dart';
 import 'package:haftaa/ui/pages/favourit-list.dart';
 import 'package:haftaa/provider/provider.dart';
@@ -112,7 +113,7 @@ class _ProfileState extends State<Profile> {
                             }),
                       );
                     } else {
-                      Navigator.pushNamed(context, 'choose-login');
+                      Navigator.pushNamed(context, 'login');
                     }
                   },
                   child: Padding(
@@ -153,7 +154,7 @@ class _ProfileState extends State<Profile> {
         RawMaterialButton(
           onPressed: () async {
             Navigator.of(context).push(PageRouteBuilder(
-                pageBuilder: (_, __, ___) => new ChoseLogin(),
+                pageBuilder: (_, __, ___) => new loginScreen(),
                 transitionDuration: Duration(milliseconds: 900),
 
                 /// Set animation Opacity in route to detailProduk layout
@@ -258,7 +259,7 @@ class _ProfileState extends State<Profile> {
                       }),
                 );
               } else {
-                Navigator.pushNamed(context, 'choose-login');
+                Navigator.pushNamed(context, 'login');
               }
 
               // Navigator.of(context).push(PageRouteBuilder(
@@ -330,7 +331,7 @@ class _ProfileState extends State<Profile> {
                     pageBuilder: (_, __, ___) => new notification()));
 
               } else {
-                Navigator.pushNamed(context, 'choose-login');
+                Navigator.pushNamed(context, 'login');
               }
 
 

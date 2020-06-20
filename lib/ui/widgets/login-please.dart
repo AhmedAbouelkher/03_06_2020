@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:haftaa/ui/LoginOrSignup/ChoseLoginOrSignup.dart';
+import 'package:haftaa/ui/LoginOrSignup/Login.dart';
 
 class LoginPlease extends StatelessWidget {
   String title;
   double imagePaddingTop = 50.0;
   double imageHeight = 300.0;
+
   LoginPlease({this.title, this.imagePaddingTop, this.imageHeight});
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
@@ -35,7 +38,7 @@ class LoginPlease extends StatelessWidget {
             RawMaterialButton(
               onPressed: () async {
                 Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => new ChoseLogin(),
+                    pageBuilder: (_, __, ___) => new loginScreen(),
                     transitionDuration: Duration(milliseconds: 900),
 
                     /// Set animation Opacity in route to detailProduk layout
