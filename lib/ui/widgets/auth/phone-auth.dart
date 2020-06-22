@@ -231,7 +231,6 @@ class _PhoneAuthState extends State<PhoneAuth> {
 
   Widget _getColumnBody() =>
       Column(
-
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           //  Logo: scaling to occupy 2 parts of 10 in the whole height of device
@@ -406,34 +405,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
            */
 
           SizedBox(height: _fixedPadding * 1.5),
-          InkWell(
-            onTap:checkBoxValue?startPhoneAuth:null,
-            // onTap: () => submit(context),
-            child: Padding(
-              padding: EdgeInsets.all(30.0),
-              child: Container(
-                height: 55.0,
-                width: 600.0,
-                child: Text(
-                  'إرسال الكود',
-                  style: TextStyle(
-                      color: !checkBoxValue?Colors.white30:Colors.white,
-                      letterSpacing: 0.2,
-                      fontFamily: "Sans",
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w800),
-                ),
-                alignment: FractionalOffset.center,
-                decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(color: Colors.black38, blurRadius: 15.0)
-                    ],
-                    borderRadius: BorderRadius.circular(30.0),
-                    gradient: LinearGradient(
-                        colors: !checkBoxValue? <Color>[Color(0xFF5d5c7b),Color(0xFF5d5c7b)]:<Color>[Color(0xFF121940), Color(0xFF6E48AA)])),
-              ),
-            ),
-          ),
+
 //          RaisedButton(
 //            elevation: 16.0,
 //            onPressed: startPhoneAuth,
@@ -633,10 +605,94 @@ class _PhoneAuthState extends State<PhoneAuth> {
       ),
     );
 
-    return Column(
-      children: <Widget>[
-        _getColumnBody(),
-        //getPinField(),
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+               image: DecorationImage(
+                image: AssetImage("assets/img/desert.jpg"),
+                fit: BoxFit.cover,
+              )
+          ),
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image(
+                    image: AssetImage(
+                      "assets/launcher/rsz_icon_hourse.png",
+                    ),
+                    height: 70.0,
+                  ),
+//                                ClipRRect(
+//                                  borderRadius:
+//                                      BorderRadius.all(Radius.circular(40)),
+//                                  child: Image(
+//                                    image: AssetImage(
+//                                      "assets/launcher/rsz_icon_hourse.png",
+//                                    ),
+//                                    height: 70.0,
+//                                  ),
+//                                ),
+                  Padding(
+                      padding:
+                      EdgeInsets.symmetric(horizontal: 10.0)),
+
+                  /// Animation text treva shop accept from signup layout (Click to open code)
+                  Hero(
+                    tag: "Treva",
+                    child: Text(
+                      "سوق الهفتاء",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 0.6,
+                          color: Colors.white,
+                          fontFamily: "Sans",
+                          fontSize: 20.0),
+                    ),
+                  ),
+                ],
+              ),
+              _getColumnBody(),
+              InkWell(
+
+                onTap: (){
+
+                  // checkBoxValue?startPhoneAuth:null;
+                  Scaffold.of(context).showSnackBar(SnackBar(content: new Text('test message')));
+
+                 }
+
+                ,
+                // onTap: () => submit(context),
+                child: Padding(
+                  padding: EdgeInsets.all(30.0),
+                  child: Container(
+                    height: 55.0,
+                    width: 600.0,
+                    child: Text(
+                      'إرسال الكود',
+                      style: TextStyle(
+                          color: !checkBoxValue?Colors.white30:Colors.white,
+                          letterSpacing: 0.2,
+                          fontFamily: "Sans",
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w800),
+                    ),
+                    alignment: FractionalOffset.center,
+                    decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(color: Colors.black38, blurRadius: 15.0)
+                        ],
+                        borderRadius: BorderRadius.circular(30.0),
+                        gradient: LinearGradient(
+                            colors: !checkBoxValue? <Color>[Color(0xFF5d5c7b),Color(0xFF5d5c7b)]:<Color>[Color(0xFF121940), Color(0xFF6E48AA)])),
+                  ),
+                ),
+              ),
+              //getPinField(),
 //        (Provider.of<PhoneAuthDataProvider>(context, listen: false).status !=
 //                    PhoneAuthState.CodeSent ||
 //                Provider.of<PhoneAuthDataProvider>(context, listen: false)
@@ -661,7 +717,10 @@ class _PhoneAuthState extends State<PhoneAuth> {
 //              fontSize: 17.0),
 //        ),
 
-      ],
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

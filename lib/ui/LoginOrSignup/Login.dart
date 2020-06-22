@@ -240,84 +240,27 @@ class _loginScreenState extends State<loginScreen>
         ),
       ],
     );
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-        /// Set Background image in layout (Click to open code)
-        decoration: BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage("assets/img/desert.jpg"),
-          fit: BoxFit.cover,
-        )),
-        child: Container(
-          /// Set gradient color in image (Click to open code)
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromRGBO(0, 0, 0, 0.0),
-                Color.fromRGBO(0, 0, 0, 0.3)
-              ],
-              begin: FractionalOffset.topCenter,
-              end: FractionalOffset.bottomCenter,
-            ),
-          ),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Color.fromRGBO(110, 184, 231, 6),
+        body: ListView(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          children: <Widget>[
+            Stack(
+              alignment: AlignmentDirectional.bottomCenter,
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Container(
+                      alignment: AlignmentDirectional.topCenter,
+                      child: Column(
+                        children: <Widget>[
+                          /// padding logo
 
-          /// Set component layout
-          child: ListView(
-            children: <Widget>[
-              Stack(
-                alignment: AlignmentDirectional.bottomCenter,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        alignment: AlignmentDirectional.topCenter,
-                        child: Column(
-                          children: <Widget>[
-                            /// padding logo
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    top: mediaQueryData.padding.top + 10.0)),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Image(
-                                  image: AssetImage(
-                                    "assets/launcher/rsz_icon_hourse.png",
-                                  ),
-                                  height: 70.0,
-                                ),
-//                                ClipRRect(
-//                                  borderRadius:
-//                                      BorderRadius.all(Radius.circular(40)),
-//                                  child: Image(
-//                                    image: AssetImage(
-//                                      "assets/launcher/rsz_icon_hourse.png",
-//                                    ),
-//                                    height: 70.0,
-//                                  ),
-//                                ),
-                                Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10.0)),
 
-                                /// Animation text treva shop accept from signup layout (Click to open code)
-                                Hero(
-                                  tag: "Treva",
-                                  child: Text(
-                                    "سوق الهفتاء",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w900,
-                                        letterSpacing: 0.6,
-                                        color: Colors.white,
-                                        fontFamily: "Sans",
-                                        fontSize: 20.0),
-                                  ),
-                                ),
-                              ],
-                            ),
 
-                            /// ButtonCustomFacebook
+                          /// ButtonCustomFacebook
 //                            Padding(
 //                                padding: EdgeInsets.symmetric(vertical: 30.0)),
 //                            //buttonCustomFacebook(),
@@ -339,81 +282,80 @@ class _loginScreenState extends State<loginScreen>
 //                                  fontFamily: 'Sans',
 //                                  fontSize: 17.0),
 //                            ),
-                            Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10.0)),
-                            loginWithPhone
-                                ?
-                                // LoginWithMobile(
-                                //     title: 'asdsds asd',
-                                //   )
-                                PhoneAuth()
-                                : loginWithEmail2,
+                          Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10.0)),
+                          loginWithPhone
+                              ?
+                              // LoginWithMobile(
+                              //     title: 'asdsds asd',
+                              //   )
+                              PhoneAuth()
+                              : loginWithEmail2,
 
-                            /// Set Animaion after user click buttonLogin
-                            // tap == 0
-                            //     ? InkWell(
-                            //         splashColor: Colors.yellow,
-                            //         onTap: submit,
-                            //         child: buttonBlackBottom(_isLoging
-                            //             ? "جاري الدخول..."
-                            //             : "تسجيل الدخول"),
-                            //       )
-                            //     : new LoginAnimation(
-                            //         animationController:
-                            //             sanimationController.view,
-                            //       ),
-                          ],
-                        ),
+                          /// Set Animaion after user click buttonLogin
+                          // tap == 0
+                          //     ? InkWell(
+                          //         splashColor: Colors.yellow,
+                          //         onTap: submit,
+                          //         child: buttonBlackBottom(_isLoging
+                          //             ? "جاري الدخول..."
+                          //             : "تسجيل الدخول"),
+                          //       )
+                          //     : new LoginAnimation(
+                          //         animationController:
+                          //             sanimationController.view,
+                          //       ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
 
-                  // Column(
-                  //   children: <Widget>[
-                  //     StreamBuilder(
-                  //         stream: tickerController.tickerStream,
-                  //         builder: (context, AsyncSnapshot<int> snapshot) {
-                  //           if (snapshot.hasError) {
-                  //             return Text('Error');
-                  //           } else {
-                  //             return Center(
-                  //               child: Column(
-                  //                 mainAxisAlignment: MainAxisAlignment.center,
-                  //                 children: <Widget>[
-                  //                   Text(
-                  //                     snapshot.data.toString() +
-                  //                         " Not Have Acount? Sign Up123",
-                  //                     style: TextStyle(
-                  //                         color: Colors.white,
-                  //                         fontSize: 13.0,
-                  //                         fontWeight: FontWeight.w600,
-                  //                         fontFamily: "Sans"),
-                  //                   ),
-                  //                   RaisedButton(
-                  //                     child: Text('+'),
-                  //                     onPressed: () {
-                  //                       tickerController.incrementSink
-                  //                           .add(snapshot.data);
-                  //                     },
-                  //                   ),
-                  //                   RaisedButton(
-                  //                     child: Text('-'),
-                  //                     onPressed: () {
-                  //                       tickerController.decrementSink
-                  //                           .add(snapshot.data);
-                  //                     },
-                  //                   )
-                  //                 ],
-                  //               ),
-                  //             );
-                  //           }
-                  //         })
-                  //   ],
-                  // )
-                ],
-              ),
-            ],
-          ),
+                // Column(
+                //   children: <Widget>[
+                //     StreamBuilder(
+                //         stream: tickerController.tickerStream,
+                //         builder: (context, AsyncSnapshot<int> snapshot) {
+                //           if (snapshot.hasError) {
+                //             return Text('Error');
+                //           } else {
+                //             return Center(
+                //               child: Column(
+                //                 mainAxisAlignment: MainAxisAlignment.center,
+                //                 children: <Widget>[
+                //                   Text(
+                //                     snapshot.data.toString() +
+                //                         " Not Have Acount? Sign Up123",
+                //                     style: TextStyle(
+                //                         color: Colors.white,
+                //                         fontSize: 13.0,
+                //                         fontWeight: FontWeight.w600,
+                //                         fontFamily: "Sans"),
+                //                   ),
+                //                   RaisedButton(
+                //                     child: Text('+'),
+                //                     onPressed: () {
+                //                       tickerController.incrementSink
+                //                           .add(snapshot.data);
+                //                     },
+                //                   ),
+                //                   RaisedButton(
+                //                     child: Text('-'),
+                //                     onPressed: () {
+                //                       tickerController.decrementSink
+                //                           .add(snapshot.data);
+                //                     },
+                //                   )
+                //                 ],
+                //               ),
+                //             );
+                //           }
+                //         })
+                //   ],
+                // )
+              ],
+            ),
+          ],
         ),
       ),
     );
