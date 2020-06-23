@@ -418,14 +418,14 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                                     "القسم",
                                     style: _txtCustomSub,
                                   ),
-                                ), ProductCategoryWidget(
+                                ),
+                                ProductCategoryWidget(
                                     product.category,
                                     _txtCustomHead.copyWith(
                                         fontSize: 17.0,
                                         fontWeight: FontWeight.w600)),
                               ],
                             ),
-
                           ],
                         ),
                       ),
@@ -444,14 +444,14 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                                     "المدينة",
                                     style: _txtCustomSub,
                                   ),
-                                ),ProductGovernorateWidget(
+                                ),
+                                ProductGovernorateWidget(
                                     product.governorate,
                                     _txtCustomHead.copyWith(
                                         fontSize: 17.0,
                                         fontWeight: FontWeight.w600))
                               ],
                             ),
-
                           ],
                         ),
                       ),
@@ -535,48 +535,35 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
               // ),
 
               /// Description
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: Container(
-                  height: 205.0,
-                  width: 600.0,
-                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                    BoxShadow(
-                      color: Color(0xFF656565).withOpacity(0.15),
-                      blurRadius: 1.0,
-                      spreadRadius: 0.2,
-                    )
-                  ]),
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(right: 20.0),
-                          child: Text(
+              Container(
+                height: 300.0,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                  BoxShadow(
+                    color: Color(0xFF656565).withOpacity(0.15),
+                    blurRadius: 1.0,
+                    spreadRadius: 0.2,
+                  )
+                ]),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 20.0),
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Text(
                             "تفاصيل",
                             style: _subHeaderCustomStyle,
                           ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 15.0,
-                                right: 20.0,
-                                bottom: 10.0,
-                                left: 20.0),
-                            child:
-                                Text(product.description, style: _detailText),
-                          ),
-                        ),
+                          Text(product.description, style: _detailText),
 //                        Center(
 //                          child: InkWell(
 //                            onTap: () {
 //                              _bottomSheet();
 //                            },
 //                            child: Text(
-//                              "تفاصيل",
+//                              "قراءة المزيد",
 //                              style: TextStyle(
 //                                color: Colors.indigoAccent,
 //                                fontSize: 15.0,
@@ -586,8 +573,9 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
 //                            ),
 //                          ),
 //                        )
-                      ],
-                    ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -620,16 +608,12 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     /// Icon Message in bottom layout with Flexible
-                    Provider.of<PhoneAuthDataProvider>(context, listen: false)
-                                    .isLoggedIn ==
-                                true &&
-                            Provider.of<PhoneAuthDataProvider>(context,
-                                        listen: false)
-                                    .user
-                                    .uid !=
-                                product.userId
-                        ? InkWell(
+                     InkWell(
                             onTap: () {
+                              if (Provider.of<PhoneAuthDataProvider>(context,
+                                  listen: false)
+                                  .isLoggedIn ==
+                                  true) {
                               if (product.type == ItemType.request) {
                                 var myId = Provider.of<PhoneAuthDataProvider>(
                                         context,
@@ -653,16 +637,21 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                                   ChatId = '$peerId-$myId';
                                 }
 
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => PrivateChatscreen(
-                                              product: product,
-                                              chatId: ChatId,
-                                              title: title,
-                                              peerId: peerId,
-                                            )));
-                              } else {}
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              PrivateChatscreen(
+                                                product: product,
+                                                chatId: ChatId,
+                                                title: title,
+                                                peerId: peerId,
+                                              )));
+                                } else {}
+                              } else {
+                                Navigator.pushNamed(context, 'login');
+
+                              }
                             },
                             child: Container(
                               height: 40.0,
@@ -676,7 +665,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                               ),
                             ),
                           )
-                        : Container(),
+                        ,
 
                     /// Button Pay
                     InkWell(
@@ -690,7 +679,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                             PageRouteBuilder(
                                 pageBuilder: (_, __, ___) => new ProductList
                                         .Search(_searchModel,
-                                    'المستخدم (${product.showMobileNumber ? user.name ?? user.mobile ?? user.email : 'الحالى'})'),
+                                    'المستخدم (${product.showMobileNumber ? user.name ?? user?.mobile ?? user.email : 'الحالى'})'),
                                 transitionDuration: Duration(milliseconds: 600),
                                 transitionsBuilder: (_,
                                     Animation<double> animation,

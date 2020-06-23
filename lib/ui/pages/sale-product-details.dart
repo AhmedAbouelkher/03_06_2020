@@ -486,41 +486,28 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
               ),
 
               /// Background white for description
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: Container(
-                  height: 300.0,
-                  width: 600.0,
-                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                    BoxShadow(
-                      color: Color(0xFF656565).withOpacity(0.15),
-                      blurRadius: 1.0,
-                      spreadRadius: 0.2,
-                    )
-                  ]),
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(right: 20.0),
-                          child: Text(
+              Container(
+                height: 300.0,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                  BoxShadow(
+                    color: Color(0xFF656565).withOpacity(0.15),
+                    blurRadius: 1.0,
+                    spreadRadius: 0.2,
+                  )
+                ]),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 20.0),
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: <Widget>[
+                      Column(
+                         children: <Widget>[
+                          Text(
                             "تفاصيل",
                             style: _subHeaderCustomStyle,
                           ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 15.0,
-                                right: 20.0,
-                                bottom: 10.0,
-                                left: 20.0),
-                            child: Text(widget.product.description,
-                                style: _detailText),
-                          ),
-                        ),
+                          Text(widget.product.description, style: _detailText),
 //                        Center(
 //                          child: InkWell(
 //                            onTap: () {
@@ -537,8 +524,9 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
 //                            ),
 //                          ),
 //                        )
-                      ],
-                    ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -633,16 +621,9 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     /// Chat Icon
-                    Provider.of<PhoneAuthDataProvider>(context, listen: false)
-                                    .isLoggedIn ==
-                                true &&
-                            Provider.of<PhoneAuthDataProvider>(context,
-                                        listen: false)
-                                    .user
-                                    .uid !=
-                                widget.product.userId
-                        ? InkWell(
+                   InkWell(
                             onTap: () {
+                              if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true) {
                               if (widget.product.type == ItemType.sale) {
                                 var myId = Provider.of<PhoneAuthDataProvider>(
                                         context,
@@ -662,17 +643,21 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                   ChatId = '$peerId-$myId';
                                 }
 
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => PrivateChatscreen(
-                                              product: widget.product,
-                                              chatId: ChatId,
-                                              title: title,
-                                              peerId: peerId,
-                                              Phone: Phone,
-                                            )));
-                              } else {}
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              PrivateChatscreen(
+                                                product: widget.product,
+                                                chatId: ChatId,
+                                                title: title,
+                                                peerId: peerId,
+                                                Phone: Phone,
+                                              )));
+                                } else {}
+                              }  else {
+                                Navigator.pushNamed(context, 'login');
+                              }
                             },
                             child: Container(
                               height: 40.0,
@@ -686,7 +671,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                               ),
                             ),
                           )
-                        : Container(),
+                       ,
 
                     /// Button Pay
                     InkWell(
@@ -700,7 +685,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                             PageRouteBuilder(
                                 pageBuilder: (_, __, ___) => new ProductList
                                         .Search(_searchModel,
-                                    'المستخدم (${widget.product.showMobileNumber ? user.name ?? user.mobile ?? user.email : 'الحالى'})'),
+                                    'المستخدم (${widget.product.showMobileNumber ? user.name ?? user?.mobile ?? user.email : 'الحالى'})'),
                                 transitionDuration: Duration(milliseconds: 600),
                                 transitionsBuilder: (_,
                                     Animation<double> animation,

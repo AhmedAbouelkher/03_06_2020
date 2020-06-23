@@ -203,7 +203,7 @@ class BaseProduct {
 
   String get formatedCreateDate => creationDate == null
       ? ''
-      : new DateFormat('HH:mm yyyy-MMMM-dd').format(creationDate);
+      : new DateFormat('yyyy-M-dd a HH:mm').format(creationDate);
 
   Future<Governorate> get governorate {
     Completer<Governorate> completer = new Completer<Governorate>();
