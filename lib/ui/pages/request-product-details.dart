@@ -605,119 +605,125 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
               child: Container(
                 color: Colors.white,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     /// Icon Message in bottom layout with Flexible
-                     InkWell(
-                            onTap: () {
-                              if (Provider.of<PhoneAuthDataProvider>(context,
-                                  listen: false)
-                                  .isLoggedIn ==
-                                  true) {
-                              if (product.type == ItemType.request) {
-                                var myId = Provider.of<PhoneAuthDataProvider>(
+                     Padding(
+                       padding: const EdgeInsets.only(left: 10),
+                       child: InkWell(
+                              onTap: () {
+                                if (Provider.of<PhoneAuthDataProvider>(context,
+                                    listen: false)
+                                    .isLoggedIn ==
+                                    true) {
+                                if (product.type == ItemType.request) {
+                                  var myId = Provider.of<PhoneAuthDataProvider>(
+                                          context,
+                                          listen: false)
+                                      .user
+                                      .uid;
+                                  var peerId = product.userId;
+
+                                  var title = ' شراء | ${product.title}';
+                                  var Phone = Provider.of<PhoneAuthDataProvider>(
+                                          context,
+                                          listen: false)
+                                      .user
+                                      ?.phoneNumber;
+
+                                  var ChatId = '';
+
+                                  if (myId.hashCode <= peerId.hashCode) {
+                                    ChatId = '$myId-$peerId';
+                                  } else {
+                                    ChatId = '$peerId-$myId';
+                                  }
+
+                                    Navigator.push(
                                         context,
-                                        listen: false)
-                                    .user
-                                    .uid;
-                                var peerId = product.userId;
-
-                                var title = ' شراء | ${product.title}';
-                                var Phone = Provider.of<PhoneAuthDataProvider>(
-                                        context,
-                                        listen: false)
-                                    .user
-                                    ?.phoneNumber;
-
-                                var ChatId = '';
-
-                                if (myId.hashCode <= peerId.hashCode) {
-                                  ChatId = '$myId-$peerId';
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PrivateChatscreen(
+                                                  product: product,
+                                                  chatId: ChatId,
+                                                  title: title,
+                                                  peerId: peerId,
+                                                )));
+                                  } else {}
                                 } else {
-                                  ChatId = '$peerId-$myId';
+                                  Navigator.pushNamed(context, 'login');
+
                                 }
+                              },
+                              child: Container(
+                                height: 40.0,
+                                width: 60.0,
+                                decoration: BoxDecoration(
+                                    color: Colors.white12.withOpacity(0.1),
+                                    border: Border.all(color: Colors.black12)),
+                                child: Center(
+                                 child: Icon(Icons.chat,color: Colors.green,),
 
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              PrivateChatscreen(
-                                                product: product,
-                                                chatId: ChatId,
-                                                title: title,
-                                                peerId: peerId,
-                                              )));
-                                } else {}
-                              } else {
-                                Navigator.pushNamed(context, 'login');
-
-                              }
-                            },
-                            child: Container(
-                              height: 40.0,
-                              width: 60.0,
-                              decoration: BoxDecoration(
-                                  color: Colors.white12.withOpacity(0.1),
-                                  border: Border.all(color: Colors.black12)),
-                              child: Center(
-                                child: Image.asset("assets/icon/message.png",
-                                    height: 20.0),
+                              ),
                               ),
                             ),
-                          )
+                     )
                         ,
 
                     /// Button Pay
-                    InkWell(
-                      onTap: () {
-                        product.user.then((user) {
-                          ProductSearchModel _searchModel =
-                              ProductSearchModel.FromSearchParams(
-                                  userID: user.id);
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: InkWell(
+                        onTap: () {
+                          product.user.then((user) {
+                            ProductSearchModel _searchModel =
+                                ProductSearchModel.FromSearchParams(
+                                    userID: user.id);
 
-                          Navigator.of(context).push(
-                            PageRouteBuilder(
-                                pageBuilder: (_, __, ___) => new ProductList
-                                        .Search(_searchModel,
-                                    'المستخدم (${product.showMobileNumber ? user.name ?? user?.mobile ?? user.email : 'الحالى'})'),
-                                transitionDuration: Duration(milliseconds: 600),
-                                transitionsBuilder: (_,
-                                    Animation<double> animation,
-                                    __,
-                                    Widget child) {
-                                  return Opacity(
-                                    opacity: animation.value,
-                                    child: child,
-                                  );
-                                }),
-                          );
-                        });
-                      },
-                      child: Container(
-                        height: 45.0,
-                        width: 200.0,
-                        decoration: BoxDecoration(
-                          color: Colors.indigoAccent,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.person,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Center(
-                              child: ProductUserWidget(
-                                  product.user,
-                                  TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700),
-                                  product.showMobileNumber),
-                            ),
-                          ],
+                            Navigator.of(context).push(
+                              PageRouteBuilder(
+                                  pageBuilder: (_, __, ___) => new ProductList
+                                          .Search(_searchModel,
+                                      'المستخدم (${product.showMobileNumber ? user.name ?? user?.mobile ?? user.email : 'الحالى'})'),
+                                  transitionDuration: Duration(milliseconds: 600),
+                                  transitionsBuilder: (_,
+                                      Animation<double> animation,
+                                      __,
+                                      Widget child) {
+                                    return Opacity(
+                                      opacity: animation.value,
+                                      child: child,
+                                    );
+                                  }),
+                            );
+                          });
+                        },
+                        child: Container(
+                          height: 45.0,
+                          width: 200.0,
+                          decoration: BoxDecoration(
+                            color: Colors.indigoAccent,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.person,
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Center(
+                                child: ProductUserWidget(
+                                    product.user,
+                                    TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700),
+                                    product.showMobileNumber),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
