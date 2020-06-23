@@ -272,15 +272,15 @@ class CategoryCard extends StatelessWidget {
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontFamily: "Berlin",
-                                          fontSize: 10.0,
+                                          fontSize: 15,
                                           fontWeight: FontWeight.w900),
                                     ),
                                     Text(
                                       (category.itemsCount == null
                                               ? '0'
                                               : category.itemsCount
-                                                  .toString()) +
-                                          ' عنصر',
+                                                  .toString()) ,
+
                                       style: TextStyle(
                                           fontFamily: "Sans",
                                           color: Colors.white,
