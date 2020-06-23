@@ -507,7 +507,10 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                             "تفاصيل",
                             style: _subHeaderCustomStyle,
                           ),
-                          Text(widget.product.description, style: _detailText),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Text(widget.product.description, style: _detailText),
+                          ),
 //                        Center(
 //                          child: InkWell(
 //                            onTap: () {
