@@ -25,7 +25,6 @@ class _PhoneAuthState extends State<PhoneAuth> {
   var verificationId;
   bool codeSent = false;
 
-
   double _height, _width, _fixedPadding;
 
   FocusNode focusNode1 = FocusNode();
@@ -159,6 +158,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
 
   String errorMessage = '';
   String countryCode = '';
+
   _showSnackBar(String text) {
     final snackBar = SnackBar(
       content: Text('$text'),
@@ -177,45 +177,45 @@ class _PhoneAuthState extends State<PhoneAuth> {
 
   // This will return pin field - it accepts only single char
   Widget getPinField({String key, FocusNode focusNode}) => SizedBox(
-    height: 40.0,
-    width: 35.0,
-    child: TextField(
-      key: Key(key),
-      expands: false,
+        height: 40.0,
+        width: 35.0,
+        child: TextField(
+          key: Key(key),
+          expands: false,
 //          autofocus: key.contains("1") ? true : false,
-      autofocus: false,
-      focusNode: focusNode,
-      onChanged: (String value) {
-        if (value.length == 1) {
-          code += value;
-          switch (code.length) {
-            case 1:
-              FocusScope.of(context).requestFocus(focusNode2);
-              break;
-            case 2:
-              FocusScope.of(context).requestFocus(focusNode3);
-              break;
-            case 3:
-              FocusScope.of(context).requestFocus(focusNode4);
-              break;
-            case 4:
-              FocusScope.of(context).requestFocus(focusNode5);
-              break;
-            case 5:
-              FocusScope.of(context).requestFocus(focusNode6);
-              break;
-            default:
-              FocusScope.of(context).requestFocus(FocusNode());
-              break;
-          }
-        }
-      },
-      maxLengthEnforced: false,
-      textAlign: TextAlign.center,
-      cursorColor: Colors.white,
-      keyboardType: TextInputType.number,
-      style: TextStyle(
-          fontSize: 20.0, fontWeight: FontWeight.w600, color: Colors.white),
+          autofocus: false,
+          focusNode: focusNode,
+          onChanged: (String value) {
+            if (value.length == 1) {
+              code += value;
+              switch (code.length) {
+                case 1:
+                  FocusScope.of(context).requestFocus(focusNode2);
+                  break;
+                case 2:
+                  FocusScope.of(context).requestFocus(focusNode3);
+                  break;
+                case 3:
+                  FocusScope.of(context).requestFocus(focusNode4);
+                  break;
+                case 4:
+                  FocusScope.of(context).requestFocus(focusNode5);
+                  break;
+                case 5:
+                  FocusScope.of(context).requestFocus(focusNode6);
+                  break;
+                default:
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  break;
+              }
+            }
+          },
+          maxLengthEnforced: false,
+          textAlign: TextAlign.center,
+          cursorColor: Colors.white,
+          keyboardType: TextInputType.number,
+          style: TextStyle(
+              fontSize: 20.0, fontWeight: FontWeight.w600, color: Colors.white),
 //          decoration: InputDecoration(
 //              contentPadding: const EdgeInsets.only(
 //                  bottom: 10.0, top: 10.0, left: 4.0, right: 4.0),
@@ -226,21 +226,18 @@ class _PhoneAuthState extends State<PhoneAuth> {
 //              border: OutlineInputBorder(
 //                  borderRadius: BorderRadius.circular(5.0),
 //                  borderSide: BorderSide(color: Colors.white))),
-    ),
-  );
+        ),
+      );
 
-  Widget _getColumnBody() =>
-      Column(
+  Widget _getColumnBody() => Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           //  Logo: scaling to occupy 2 parts of 10 in the whole height of device
           Padding(
             padding: EdgeInsets.all(_fixedPadding),
-
           ),
 
           // AppName:
-
 
           Padding(
             padding: EdgeInsets.only(top: _fixedPadding, left: _fixedPadding),
@@ -248,13 +245,24 @@ class _PhoneAuthState extends State<PhoneAuth> {
           ),
           CountryCodePicker(
             initialSelection: "sa",
-            onInit: (code){
+            onInit: (code) {
               countryCode = code.toString();
             },
-            onChanged: (val){
+            onChanged: (val) {
               countryCode = val.toString();
             },
-            favorite: ['KW','SA','AE','QA','BH','OM','JO','EG','SD','PK'],
+            favorite: [
+              'KW',
+              'SA',
+              'AE',
+              'QA',
+              'BH',
+              'OM',
+              'JO',
+              'EG',
+              'SD',
+              'PK'
+            ],
 
             // optional. Shows only country name and flag
             showCountryOnly: false,
@@ -294,10 +302,9 @@ class _PhoneAuthState extends State<PhoneAuth> {
                 bottom: _fixedPadding),
             child: PhoneNumberField(
               controller:
-              Provider
-                  .of<PhoneAuthDataProvider>(context, listen: false)
-                  .phoneNumberController,
-              prefix: countryCode?? "+966",
+                  Provider.of<PhoneAuthDataProvider>(context, listen: false)
+                      .phoneNumberController,
+              prefix: countryCode ?? "+966",
             ),
           ),
 
@@ -313,89 +320,82 @@ class _PhoneAuthState extends State<PhoneAuth> {
               Expanded(
                 child: RichText(
                     text: TextSpan(children: [
-                      TextSpan(
-                          text: ' سيتم إرسال',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w400)),
-                      TextSpan(
-                          text: ' كلمة سر لمرة واحدة ',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w700)),
-                      TextSpan(
-                          text: ' لرقم الجوال هذا',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w400)),
-                    ])),
+                  TextSpan(
+                      text: ' سيتم إرسال',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w400)),
+                  TextSpan(
+                      text: ' كلمة سر لمرة واحدة ',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w700)),
+                  TextSpan(
+                      text: ' لرقم الجوال هذا',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w400)),
+                ])),
               ),
               SizedBox(width: _fixedPadding),
-
-
             ],
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               SizedBox(width: _fixedPadding),
-
-              Checkbox(value: checkBoxValue,
+              Checkbox(
+                  value: checkBoxValue,
                   activeColor: Colors.green,
-                  onChanged:(bool newValue){
+                  onChanged: (bool newValue) {
                     setState(() {
                       checkBoxValue = newValue;
                     });
                   }),
-
               Expanded(
                 child: GestureDetector(
-                    onTap: (){
-
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          // return object of type Dialog
-                          return AlertDialog(
-                            title: new Text("شروط استخدام التطبيق"),
-                            content: ListView(
-                              scrollDirection: Axis.vertical,
-                              children: <Widget>[
-                                Text("لالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاه"),
-                              ],
-                            ),
-                            actions: <Widget>[
-                              // usually buttons at the bottom of the dialog
-                              new FlatButton(
-                                child: new Text("إغلاق"),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        // return object of type Dialog
+                        return AlertDialog(
+                          title: new Text("شروط استخدام التطبيق"),
+                          content: ListView(
+                            scrollDirection: Axis.vertical,
+                            children: <Widget>[
+                              Text(
+                                  "لالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاهلالالالافايسئبخلبعراسخلرعلااقبعخببيخهلاتىيخبلاهيلاه"),
                             ],
-                          );
-                        },
-                      );
-
-                    }
-                  ,child: RichText(
+                          ),
+                          actions: <Widget>[
+                            // usually buttons at the bottom of the dialog
+                            new FlatButton(
+                              child: new Text("إغلاق"),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: RichText(
                       text: TextSpan(children: [
-                        TextSpan(
-                            text: 'موافق على ',
-                            style: TextStyle(
-                                color: Colors.white, fontWeight: FontWeight.w400)),
-                        TextSpan(
-                            text: 'شروط استخدام التطبيق',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w700)),
-
-                      ])),
+                    TextSpan(
+                        text: 'موافق على ',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.w400)),
+                    TextSpan(
+                        text: 'شروط استخدام التطبيق',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w700)),
+                  ])),
                 ),
               ),
               SizedBox(width: _fixedPadding),
-
-
             ],
           ),
           /*
@@ -423,7 +423,8 @@ class _PhoneAuthState extends State<PhoneAuth> {
 //          ),
         ],
       );
-  startPhoneAuth() async {
+
+  startPhoneAuth(context) async {
     final phoneAuthDataProvider =
         Provider.of<PhoneAuthDataProvider>(context, listen: false);
     phoneAuthDataProvider.loading = true;
@@ -445,6 +446,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
       return;
     }
   }
+
   onStarted() {
     _showSnackBar("بدء التسجيل");
 //    _showSnackBar(phoneAuthDataProvider.message);
@@ -462,16 +464,14 @@ class _PhoneAuthState extends State<PhoneAuth> {
 
   onVerified() async {
     _showSnackBar(
-        "${Provider
-            .of<PhoneAuthDataProvider>(context, listen: false)
-            .message}");
+        "${Provider.of<PhoneAuthDataProvider>(context, listen: false).message}");
     await Future.delayed(Duration(seconds: 1));
-          Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => bottomNavigationBar()),
-        ModalRoute.withName('/'),
-      );
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+          builder: (BuildContext context) => bottomNavigationBar()),
+      ModalRoute.withName('/'),
+    );
 //
 //    Navigator.of(context)
 //        .push(MaterialPageRoute(builder: (BuildContext context) => LetsChat()));
@@ -485,9 +485,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
   onError() {
 //    _showSnackBar(phoneAuthDataProvider.message);
     _showSnackBar(
-        "خطأ دخول ${Provider
-            .of<PhoneAuthDataProvider>(context, listen: false)
-            .message}");
+        "خطأ دخول ${Provider.of<PhoneAuthDataProvider>(context, listen: false).message}");
   }
 
   onAutoRetrievalTimeOut() {
@@ -496,6 +494,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
     //_showSnackBar("PhoneAuth autoretrieval timeout");
 //    _showSnackBar(phoneAuthDataProvider.message);
   }
+
   @override
   Widget build(BuildContext context) {
     _height = MediaQuery.of(context).size.height;
@@ -503,7 +502,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
     _fixedPadding = _height * 0.025;
 
     final phoneAuthDataProvider =
-    Provider.of<PhoneAuthDataProvider>(context, listen: false);
+        Provider.of<PhoneAuthDataProvider>(context, listen: false);
 
     phoneAuthDataProvider.setMethods(
       onStarted: onStarted,
@@ -515,11 +514,9 @@ class _PhoneAuthState extends State<PhoneAuth> {
       onAutoRetrievalTimeout: onAutoRetrievalTimeOut,
     );
 
-
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
     _fixedPadding = _height * 0.025;
-
 
 //    final countriesProvider = Provider.of<CountryProvider>(context);
     final loader = Provider.of<PhoneAuthDataProvider>(context).loading;
@@ -528,15 +525,15 @@ class _PhoneAuthState extends State<PhoneAuth> {
       padding: EdgeInsets.symmetric(horizontal: 30.0),
       child: Column(
         children: <Widget>[
-
-
           Container(
             height: 60.0,
             alignment: AlignmentDirectional.center,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14.0),
                 color: Colors.white,
-                boxShadow: [BoxShadow(blurRadius: 10.0, color: Colors.black12)]),
+                boxShadow: [
+                  BoxShadow(blurRadius: 10.0, color: Colors.black12)
+                ]),
             padding:
                 EdgeInsets.only(left: 20.0, right: 30.0, top: 0.0, bottom: 0.0),
             child: Theme(
@@ -610,11 +607,10 @@ class _PhoneAuthState extends State<PhoneAuth> {
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(
-               image: DecorationImage(
-                image: AssetImage("assets/img/desert.jpg"),
-                fit: BoxFit.cover,
-              )
-          ),
+              image: DecorationImage(
+            image: AssetImage("assets/img/desert.jpg"),
+            fit: BoxFit.cover,
+          )),
           child: Column(
             children: <Widget>[
               Row(
@@ -636,9 +632,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
 //                                    height: 70.0,
 //                                  ),
 //                                ),
-                  Padding(
-                      padding:
-                      EdgeInsets.symmetric(horizontal: 10.0)),
+                  Padding(padding: EdgeInsets.symmetric(horizontal: 10.0)),
 
                   /// Animation text treva shop accept from signup layout (Click to open code)
                   Hero(
@@ -657,15 +651,11 @@ class _PhoneAuthState extends State<PhoneAuth> {
               ),
               _getColumnBody(),
               InkWell(
-
-                onTap: (){
-
-                  // checkBoxValue?startPhoneAuth:null;
-                  Scaffold.of(context).showSnackBar(SnackBar(content: new Text('test message')));
-
-                 }
-
-                ,
+                onTap: () {
+                   checkBoxValue?startPhoneAuth(context):null;
+//                  Scaffold.of(context).showSnackBar(
+//                      SnackBar(content: new Text('test message')));
+                },
                 // onTap: () => submit(context),
                 child: Padding(
                   padding: EdgeInsets.all(30.0),
@@ -675,7 +665,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                     child: Text(
                       'إرسال الكود',
                       style: TextStyle(
-                          color: !checkBoxValue?Colors.white30:Colors.white,
+                          color: !checkBoxValue ? Colors.white30 : Colors.white,
                           letterSpacing: 0.2,
                           fontFamily: "Sans",
                           fontSize: 18.0,
@@ -688,7 +678,12 @@ class _PhoneAuthState extends State<PhoneAuth> {
                         ],
                         borderRadius: BorderRadius.circular(30.0),
                         gradient: LinearGradient(
-                            colors: !checkBoxValue? <Color>[Color(0xFF5d5c7b),Color(0xFF5d5c7b)]:<Color>[Color(0xFF121940), Color(0xFF6E48AA)])),
+                            colors: !checkBoxValue
+                                ? <Color>[Color(0xFF5d5c7b), Color(0xFF5d5c7b)]
+                                : <Color>[
+                                    Color(0xFF121940),
+                                    Color(0xFF6E48AA)
+                                  ])),
                   ),
                 ),
               ),
@@ -716,7 +711,6 @@ class _PhoneAuthState extends State<PhoneAuth> {
 //              fontFamily: 'Sans',
 //              fontSize: 17.0),
 //        ),
-
             ],
           ),
         ),

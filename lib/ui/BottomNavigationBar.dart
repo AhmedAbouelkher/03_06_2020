@@ -112,123 +112,7 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
     //Provider.of(context).productBloc = productBloc;
     return Scaffold(
       drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/img/headerProfile.png"),
-                      fit: BoxFit.cover)),
-              child: null,
-            ),
-            ListTile(
-              title: Text("إعلاناتي"),
-              leading: Icon(Icons.list, color: Color(0xff8985ab)),
-              onTap: () {
-
-
-
-
-
-                setState(() {});
-                Navigator.of(context).pop();
-              },
-            ),
-            ListTile(
-              title: Text("تصفح الإعلانات"),
-              leading: Icon(
-                Icons.home,
-                color: Color(0xff8985ab),
-              ),
-              onTap: () {
-                Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => new bottomNavigationBar()));
-                setState(() {});
-                Navigator.of(context).pop();
-              },
-            ),
-            ListTile(
-              title: Text(
-                "الإعلانات المفضلة",
-              ),
-              leading: Icon(
-                Icons.favorite_border,
-                color: Color(0xff8985ab),
-              ),
-              onTap: () {
-                Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => new FavouritList()));
-                Navigator.of(context).pop();
-              },
-            ),
-            ListTile(
-              title: Text(
-                " الإشعارات",
-              ),
-              leading: SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: Image.asset(
-                    "assets/icon/notification.png",
-                  )),
-              onTap: () {
-                setState(() {
-                  if (Provider.of<PhoneAuthDataProvider>(context, listen: false)
-                      .isLoggedIn ==
-                      true) {
-                    Navigator.of(context).push(PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => new notification()));
-                  } else {
-                    Navigator.pushNamed(context, 'choose-login');
-                  }
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-            ListTile(
-              title: Text("عن التطبيق"),
-              leading: Icon(Icons.title, color: Color(0xff8985ab)),
-              onTap: () {
-
-                setState(() {
-                  Navigator.of(context).push(PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => new aboutApps()));
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-            Provider.of<PhoneAuthDataProvider>(context, listen: true)
-                .isLoggedIn
-                ? ListTile(
-              title: Text(
-                "تسجيل خروج",
-              ),
-              leading: SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: Image.asset(
-                    "assets/icon/aboutapp.png",
-                  )),
-              onTap: () async{
-                await Provider.of<PhoneAuthDataProvider>(context,
-                    listen: false)
-                    .signOut()
-                    .then((onValue) {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            bottomNavigationBar()),
-                    ModalRoute.withName('/'),
-                  );
-                });
-                setState(() {});
-                Navigator.of(context).pop();
-              },
-            )
-                : Container(),
-          ],
-        ),
+        child: Profile(),
       ),
       appBar: AppBar(
         title: Center(
@@ -254,7 +138,7 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
           data: Theme.of(context).copyWith(
               canvasColor: Colors.white,
               textTheme: Theme.of(context).textTheme.copyWith(
-                  caption: TextStyle(color: Colors.black26.withOpacity(0.15)))),
+                  caption: TextStyle(color: Colors.black26.withOpacity(0.5)))),
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             currentIndex: currentIndex,

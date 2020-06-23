@@ -70,27 +70,27 @@ final pages = [
         width: 285.0,
         alignment: Alignment.center,
       )),
-  new PageViewModel(
-      pageColor: Colors.white,
-      iconColor: Colors.black,
-      bubbleBackgroundColor: Colors.black,
-      title: Text(
-        'أيضاً المزادات!',
-        style: _fontHeaderStyle,
-      ),
-      body: Container(
-        height: 250.0,
-        child: Text(
-            'تسطيع أيضاً بعرض ما تريد بيعه للمزاد العلني حيث يتفاعل معك المستخدمين المزايدين حتى ينتهي المزاد لأحدهم',
-            textAlign: TextAlign.center,
-            style: _fontDescriptionStyle),
-      ),
-      mainImage: Image.asset(
-        'assets/imgIllustration/biddings.png',
-        height: 285.0,
-        width: 285.0,
-        alignment: Alignment.center,
-      )),
+//  new PageViewModel(
+//      pageColor: Colors.white,
+//      iconColor: Colors.black,
+//      bubbleBackgroundColor: Colors.black,
+//      title: Text(
+//        'أيضاً المزادات!',
+//        style: _fontHeaderStyle,
+//      ),
+//      body: Container(
+//        height: 250.0,
+//        child: Text(
+//            'تسطيع أيضاً بعرض ما تريد بيعه للمزاد العلني حيث يتفاعل معك المستخدمين المزايدين حتى ينتهي المزاد لأحدهم',
+//            textAlign: TextAlign.center,
+//            style: _fontDescriptionStyle),
+//      ),
+//      mainImage: Image.asset(
+//        'assets/imgIllustration/biddings.png',
+//        height: 285.0,
+//        width: 285.0,
+//        alignment: Alignment.center,
+//      )),
 ];
 
 class _onBoardingState extends State<onBoarding> {

@@ -278,9 +278,11 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        widget.product.title,
-                        style: _customTextStyle,
+                      Center(
+                        child: Text(
+                          widget.product.title,
+                          style: _customTextStyle,
+                        ),
                       ),
                       Padding(padding: EdgeInsets.only(top: 5.0)),
                       Padding(padding: EdgeInsets.only(top: 10.0)),
@@ -404,17 +406,20 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                             Row(
                               children: <Widget>[
                                 Icon(Icons.loyalty),
-                                Text(
-                                  "القسم",
-                                  style: _txtCustomSub,
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "القسم",
+                                    style: _txtCustomSub,
+                                  ),
                                 ),
+                                ProductCategoryWidget(
+                                    widget.product.category,
+                                    _txtCustomHead.copyWith(
+                                        fontSize: 17.0,
+                                        fontWeight: FontWeight.w600))
                               ],
                             ),
-                            ProductCategoryWidget(
-                                widget.product.category,
-                                _txtCustomHead.copyWith(
-                                    fontSize: 17.0,
-                                    fontWeight: FontWeight.w600)),
                           ],
                         ),
                       ),
@@ -428,17 +433,20 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                             Row(
                               children: <Widget>[
                                 Icon(Icons.location_city),
-                                Text(
-                                  "المدينة",
-                                  style: _txtCustomSub,
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "المدينة",
+                                    style: _txtCustomSub,
+                                  ),
                                 ),
+                                ProductGovernorateWidget(
+                                    widget.product.governorate,
+                                    _txtCustomHead.copyWith(
+                                        fontSize: 17.0,
+                                        fontWeight: FontWeight.w600))
                               ],
                             ),
-                            ProductGovernorateWidget(
-                                widget.product.governorate,
-                                _txtCustomHead.copyWith(
-                                    fontSize: 17.0,
-                                    fontWeight: FontWeight.w600))
                           ],
                         ),
                       ),
@@ -498,7 +506,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                         Padding(
                           padding: const EdgeInsets.only(right: 20.0),
                           child: Text(
-                            "نبذة",
+                            "تفاصيل",
                             style: _subHeaderCustomStyle,
                           ),
                         ),
@@ -513,22 +521,22 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                 style: _detailText),
                           ),
                         ),
-                        Center(
-                          child: InkWell(
-                            onTap: () {
-                              _bottomSheet();
-                            },
-                            child: Text(
-                              "قراءة المزيد",
-                              style: TextStyle(
-                                color: Colors.indigoAccent,
-                                fontSize: 15.0,
-                                fontFamily: "Gotik",
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        )
+//                        Center(
+//                          child: InkWell(
+//                            onTap: () {
+//                              _bottomSheet();
+//                            },
+//                            child: Text(
+//                              "قراءة المزيد",
+//                              style: TextStyle(
+//                                color: Colors.indigoAccent,
+//                                fontSize: 15.0,
+//                                fontFamily: "Gotik",
+//                                fontWeight: FontWeight.w700,
+//                              ),
+//                            ),
+//                          ),
+//                        )
                       ],
                     ),
                   ),

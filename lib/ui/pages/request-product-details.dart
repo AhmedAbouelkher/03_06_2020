@@ -273,10 +273,12 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        product.title,
-                        style: _customTextStyle,
-                        overflow: TextOverflow.ellipsis,
+                      Center(
+                        child: Text(
+                          product.title,
+                          style: _customTextStyle,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       Padding(padding: EdgeInsets.only(top: 5.0)),
                       Text(
@@ -410,17 +412,20 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                             Row(
                               children: <Widget>[
                                 Icon(Icons.loyalty),
-                                Text(
-                                  "القسم",
-                                  style: _txtCustomSub,
-                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "القسم",
+                                    style: _txtCustomSub,
+                                  ),
+                                ), ProductCategoryWidget(
+                                    product.category,
+                                    _txtCustomHead.copyWith(
+                                        fontSize: 17.0,
+                                        fontWeight: FontWeight.w600)),
                               ],
                             ),
-                            ProductCategoryWidget(
-                                product.category,
-                                _txtCustomHead.copyWith(
-                                    fontSize: 17.0,
-                                    fontWeight: FontWeight.w600)),
+
                           ],
                         ),
                       ),
@@ -433,17 +438,20 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                             Row(
                               children: <Widget>[
                                 Icon(Icons.location_city),
-                                Text(
-                                  "المدينة",
-                                  style: _txtCustomSub,
-                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "المدينة",
+                                    style: _txtCustomSub,
+                                  ),
+                                ),ProductGovernorateWidget(
+                                    product.governorate,
+                                    _txtCustomHead.copyWith(
+                                        fontSize: 17.0,
+                                        fontWeight: FontWeight.w600))
                               ],
                             ),
-                            ProductGovernorateWidget(
-                                product.governorate,
-                                _txtCustomHead.copyWith(
-                                    fontSize: 17.0,
-                                    fontWeight: FontWeight.w600))
+
                           ],
                         ),
                       ),
@@ -547,7 +555,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                         Padding(
                           padding: const EdgeInsets.only(right: 20.0),
                           child: Text(
-                            "نبذة",
+                            "تفاصيل",
                             style: _subHeaderCustomStyle,
                           ),
                         ),
@@ -562,22 +570,22 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                                 Text(product.description, style: _detailText),
                           ),
                         ),
-                        Center(
-                          child: InkWell(
-                            onTap: () {
-                              _bottomSheet();
-                            },
-                            child: Text(
-                              "تفاصيل",
-                              style: TextStyle(
-                                color: Colors.indigoAccent,
-                                fontSize: 15.0,
-                                fontFamily: "Gotik",
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        )
+//                        Center(
+//                          child: InkWell(
+//                            onTap: () {
+//                              _bottomSheet();
+//                            },
+//                            child: Text(
+//                              "تفاصيل",
+//                              style: TextStyle(
+//                                color: Colors.indigoAccent,
+//                                fontSize: 15.0,
+//                                fontFamily: "Gotik",
+//                                fontWeight: FontWeight.w700,
+//                              ),
+//                            ),
+//                          ),
+//                        )
                       ],
                     ),
                   ),

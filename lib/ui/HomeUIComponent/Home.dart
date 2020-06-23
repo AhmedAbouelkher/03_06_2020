@@ -148,7 +148,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 
     return Scaffold(
       /// Use Stack to costume a appbar
-      body:productList.length!=0? Stack(
+      body: Stack(
         children: <Widget>[
           SingleChildScrollView(
             controller: listScrollController,
@@ -195,46 +195,48 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 
           AppbarGradient(),
         ],
-      ):Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment:CrossAxisAlignment.stretch ,
-          children: <Widget>[
-            SizedBox(
-              height: 300,
-              width: 300,
-              child: Image.asset(
-                "assets/img/notfound.png",
-               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Center(child: Text('NoThing Found')),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30 ,vertical: 15),
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Color(0xFF6991C7),),
-                child: FlatButton(
-                    onPressed: (){
-                         setState(() {
-                            productList = Provider.of<ProductProvider>(context).productList;
-                         });
-                    },
-                    child: Text(
-                      'إعادة تحميل',
-                      style: TextStyle(
-                          color: const Color(0xffffffff),
-                          fontSize: 20
-                      ),
-                    )),
-              ),
-            )
-          ],
-        ),
       ),
+
+//      Container(
+//        child: Column(
+//          mainAxisAlignment: MainAxisAlignment.center,
+//          crossAxisAlignment:CrossAxisAlignment.stretch ,
+//          children: <Widget>[
+//            SizedBox(
+//              height: 300,
+//              width: 300,
+//              child: Image.asset(
+//                "assets/img/notfound.png",
+//               ),
+//            ),
+//            Padding(
+//              padding: const EdgeInsets.only(top: 10),
+//              child: Center(child: Text('NoThing Found')),
+//            ),
+//            Padding(
+//              padding: const EdgeInsets.symmetric(horizontal: 30 ,vertical: 15),
+//              child: Container(
+//                decoration: BoxDecoration(
+//                    borderRadius: BorderRadius.circular(30),
+//                    color: Color(0xFF6991C7),),
+//                child: FlatButton(
+//                    onPressed: (){
+//                         setState(() {
+//                            productList = Provider.of<ProductProvider>(context).productList;
+//                         });
+//                    },
+//                    child: Text(
+//                      'إعادة تحميل',
+//                      style: TextStyle(
+//                          color: const Color(0xffffffff),
+//                          fontSize: 20
+//                      ),
+//                    )),
+//              ),
+//            )
+//          ],
+//        ),
+//      ),
     );
 
     /// Declare device Size
