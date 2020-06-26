@@ -154,7 +154,7 @@ class PhoneAuthDataProvider with ChangeNotifier {
     }).catchError((error) {
       if (onError != null) onError();
       _addStatus(PhoneAuthState.Error);
-      _addStatusMessage(error.toString());
+      _addStatusMessage('انتهت صلاحية كود الدخول . من فضلك احصل على كود جديد');
     });
   }
 
