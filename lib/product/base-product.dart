@@ -6,6 +6,7 @@ import 'package:haftaa/Enums/enums.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:haftaa/governorate/governorate.dart';
 import 'package:haftaa/governorate/governorateController.dart';
+import 'package:haftaa/product/product-provider.dart';
 import 'package:haftaa/region/region-controller.dart';
 import 'package:haftaa/region/region.dart';
 import 'package:haftaa/user/user-controller.dart';
@@ -389,5 +390,8 @@ class BaseProduct {
       'showMobileNumber': showMobileNumber,
 
     };
+  }
+  Future<DataSnapshot>  getProductComments(String id) {
+    return new ProductProvider().getProductComments(id);
   }
 }
