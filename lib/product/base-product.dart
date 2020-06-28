@@ -391,7 +391,7 @@ class BaseProduct {
 
     };
   }
-  Future<DataSnapshot>  getProductComments(String id) {
+  Future<DataSnapshot>  getProductComments() {
     return new ProductProvider().getProductComments(id);
   }
 }

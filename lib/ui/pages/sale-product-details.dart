@@ -11,6 +11,7 @@ import 'package:haftaa/ui/widgets/product/product-properties/product-category-wi
 import 'package:haftaa/ui/widgets/product/product-properties/product-governorate-widget.dart';
 import 'package:haftaa/ui/widgets/product/product-properties/product-region-widget.dart';
 import 'package:haftaa/ui/widgets/product/product-properties/product-user-widget.dart';
+import 'package:haftaa/ui/widgets/product/product-reviews.dart';
 import 'package:haftaa/ui/widgets/product/product-speedial.dart';
 import 'package:haftaa/ui/widgets/share/share-buttons.dart';
 import 'package:haftaa/product/sale-product.dart';
@@ -61,7 +62,6 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
   User _user;
   String commentText;
   final TextController = TextEditingController();
-
 
   @override
   void initState() {
@@ -261,13 +261,14 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                       // ],
                       images:
                           List.generate(widget.product.images.length, (index) {
-                            return new   CachedNetworkImage(
-                              fit: BoxFit.cover,
-                              imageUrl: widget.product.images[index],
-                              placeholder: (context, url) =>
-                                  Center(child: CircularProgressIndicator()),
-                              errorWidget: (context, url, error) => new Icon(Icons.error),
-                            );
+                        return new CachedNetworkImage(
+                          fit: BoxFit.cover,
+                          imageUrl: widget.product.images[index],
+                          placeholder: (context, url) =>
+                              Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) =>
+                              new Icon(Icons.error),
+                        );
 
                         //return new NetworkImage(widget.product.images[index]);
                       })
@@ -395,7 +396,6 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                 ),
               ),
 
-
               /// Background white for other product properties
               Padding(
                 padding: const EdgeInsets.only(top: 10.0),
@@ -516,7 +516,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                     scrollDirection: Axis.vertical,
                     children: <Widget>[
                       Column(
-                         children: <Widget>[
+                        children: <Widget>[
                           Text(
                             "تفاصيل",
                             style: _subHeaderCustomStyle,
@@ -540,6 +540,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
 //                        )
                         ],
                       ),
+                      ProductReviews(widget.product),
                     ],
                   ),
                 ),
@@ -548,66 +549,67 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-              Container(
-                width: 200,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15), color: Colors.white),
-                child: TextField(
-                  controller:TextController,
-                  onChanged: (value) {
-                    commentText = value;
-                  },
-                  decoration: InputDecoration(
-                    hintText: 'إضافه تعليق',
-                    hintStyle: TextStyle(
-                      color: Colors.black,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white, width: 2.0),
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white, width: 2.0),
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
+                  Container(
+                    width: 200,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.white),
+                    child: TextField(
+                      controller: TextController,
+                      onChanged: (value) {
+                        commentText = value;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'إضافه تعليق',
+                        hintStyle: TextStyle(
+                          color: Colors.black,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 2.0),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 2.0),
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 15),
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
                           color: Color(0xff19d7e7)),
                       child: FlatButton(
-                          onPressed: (){
+                          onPressed: () {
                             FirebaseDatabase.instance
                                 .reference()
                                 .child('menuItems')
-                               .child('${widget.product.id}')
-                               .child('comments')
+                                .child('${widget.product.id}')
+                                .child('comments')
                                 .update({
-                              "text":commentText,
-                              "time": '${DateTime.now().millisecondsSinceEpoch}',
+                              "text": commentText,
+                              "time":
+                                  '${DateTime.now().millisecondsSinceEpoch}',
                             });
                             TextController.clear();
                           },
                           child: Text(
                             'تعليق',
                             style: TextStyle(
-                                color: const Color(0xffffffff),
-                                fontSize: 20
-                            ),
+                                color: const Color(0xffffffff), fontSize: 20),
                           )),
                     ),
                   )
                 ],
               ),
-
 
               /// Background white for chose Size and Color
               // Padding(
@@ -699,57 +701,58 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     /// Chat Icon
-                   InkWell(
-                            onTap: () {
-                              if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true) {
-                              if (widget.product.type == ItemType.sale) {
-                                var myId = Provider.of<PhoneAuthDataProvider>(
-                                        context,
-                                        listen: false)
-                                    .user
-                                    .uid;
-                                var peerId = _user.id;
+                    InkWell(
+                      onTap: () {
+                        if (Provider.of<PhoneAuthDataProvider>(context,
+                                    listen: false)
+                                .isLoggedIn ==
+                            true) {
+                          if (widget.product.type == ItemType.sale) {
+                            var myId = Provider.of<PhoneAuthDataProvider>(
+                                    context,
+                                    listen: false)
+                                .user
+                                .uid;
+                            var peerId = _user.id;
 
-                                var title = ' بيع | ${widget.product.title}';
-                                var Phone = _user?.mobile;
+                            var title = ' بيع | ${widget.product.title}';
+                            var Phone = _user?.mobile;
 
-                                var ChatId = '';
+                            var ChatId = '';
 
-                                if (myId.hashCode <= peerId.hashCode) {
-                                  ChatId = '$myId-$peerId';
-                                } else {
-                                  ChatId = '$peerId-$myId';
-                                }
+                            if (myId.hashCode <= peerId.hashCode) {
+                              ChatId = '$myId-$peerId';
+                            } else {
+                              ChatId = '$peerId-$myId';
+                            }
 
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              PrivateChatscreen(
-                                                product: widget.product,
-                                                chatId: ChatId,
-                                                title: title,
-                                                peerId: peerId,
-                                                Phone: Phone,
-                                              )));
-                                } else {}
-                              }  else {
-                                Navigator.pushNamed(context, 'login');
-                              }
-                            },
-                            child: Container(
-                              height: 40.0,
-                              width: 60.0,
-                              decoration: BoxDecoration(
-                                  color: Colors.white12.withOpacity(0.1),
-                                  border: Border.all(color: Colors.black12)),
-                              child: Center(
-                                child: Image.asset("assets/icon/message.png",
-                                    height: 20.0),
-                              ),
-                            ),
-                          )
-                       ,
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PrivateChatscreen(
+                                          product: widget.product,
+                                          chatId: ChatId,
+                                          title: title,
+                                          peerId: peerId,
+                                          Phone: Phone,
+                                        )));
+                          } else {}
+                        } else {
+                          Navigator.pushNamed(context, 'login');
+                        }
+                      },
+                      child: Container(
+                        height: 40.0,
+                        width: 60.0,
+                        decoration: BoxDecoration(
+                            color: Colors.white12.withOpacity(0.1),
+                            border: Border.all(color: Colors.black12)),
+                        child: Center(
+                          child: Image.asset("assets/icon/message.png",
+                              height: 20.0),
+                        ),
+                      ),
+                    ),
 
                     /// Button Pay
                     InkWell(
