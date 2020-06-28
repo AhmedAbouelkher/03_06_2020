@@ -6,7 +6,9 @@ import 'package:intl/intl.dart';
 
 class ProductReviews extends StatefulWidget {
   final BaseProduct product;
+
   ProductReviews(this.product);
+
   @override
   _ProductReviewsState createState() => _ProductReviewsState();
 }
@@ -38,7 +40,7 @@ class _ProductReviewsState extends State<ProductReviews> {
         .child('menuItems')
         .child('${widget.product.id}')
         .child('comments');
-
+    var commentsFuture = widget.product.getProductComments();
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: Container(
@@ -59,42 +61,71 @@ class _ProductReviewsState extends State<ProductReviews> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(
-                    'Reviews',
-                    style: _subHeaderCustomStyle,
-                  ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                        left: 20.0, top: 15.0, bottom: 15.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        InkWell(
-                          child: Padding(
-                              padding: EdgeInsets.only(top: 2.0, right: 3.0),
-                              child: Text(
-                                'View All',
-                                style: _subHeaderCustomStyle.copyWith(
-                                    color: Colors.indigoAccent, fontSize: 14.0),
-                              )),
-                          onTap: () {
-//                            Navigator.of(context).push(PageRouteBuilder(pageBuilder: (_,__,___)=>ReviewsAll()));
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 15.0, top: 2.0),
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            size: 18.0,
-                            color: Colors.black54,
-                          ),
-                        )
-                      ],
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: Text(
+                      'التعليقات',
+                      style: _subHeaderCustomStyle,
                     ),
-                  )
+                  ),
+//                  Padding(
+//                    padding: const EdgeInsets.only(
+//                        left: 20.0, top: 15.0, bottom: 15.0),
+//                    child: Row(
+//                      crossAxisAlignment: CrossAxisAlignment.start,
+//                      mainAxisAlignment: MainAxisAlignment.start,
+//                      children: <Widget>[
+//                        InkWell(
+//                          child: Padding(
+//                              padding: EdgeInsets.only(top: 2.0, right: 3.0),
+//                              child: Text(
+//                                'View All',
+//                                style: _subHeaderCustomStyle.copyWith(
+//                                    color: Colors.indigoAccent, fontSize: 14.0),
+//                              )),
+//                          onTap: () {
+////                            Navigator.of(context).push(PageRouteBuilder(pageBuilder: (_,__,___)=>ReviewsAll()));
+//                          },
+//                        ),
+//                        Padding(
+//                          padding: const EdgeInsets.only(right: 15.0, top: 2.0),
+//                          child: Icon(
+//                            Icons.arrow_forward_ios,
+//                            size: 18.0,
+//                            color: Colors.black54,
+//                          ),
+//                        )
+//                      ],
+//                    ),
+//                  )
                 ],
               ),
+//              FutureBuilder(
+//                future: commentsFuture,
+//                builder: (context, AsyncSnapshot snapshot) {
+//                  if (snapshot.hasData) {
+//                    List<CommentModel> commentList = [];
+//                    for (var i in snapshot.data.value) {
+//                      commentList.add(CommentModel.fromJson(i));
+//                    }
+//
+//                    return Expanded(
+//                      child: ListView.builder(
+//                        itemCount: commentList.length,
+//                        itemBuilder: (BuildContext context, int index) {
+//                          return buildRating(
+//                              DateFormat('yyyy-M-dd a HH:mm')
+//                                  .format(commentList[index].time),
+//                              commentList[index].text,
+//                              "assets/avatars/avatar-1.jpg");
+//                        },
+//                      ),
+//                    );
+//                  } else {
+//                    return CircularProgressIndicator();
+//                  }
+//                },
+//              ),
               StreamBuilder(
                 stream: dbRef.onValue,
                 builder: (context, snap) {
@@ -110,9 +141,9 @@ class _ProductReviewsState extends State<ProductReviews> {
                         itemCount: CommentItems.length,
                         itemBuilder: (BuildContext context, int index) {
                           return buildRating(
-                              DateFormat('yyyy-M-dd a HH:mm').format(CommentItems[index].time),
+                              CommentItems[index].formatedDate,
                               CommentItems[index].text,
-                              "assets/avatars/avatar-1.jpg");
+                              "assets/launcher/rsz_icon_hourse.png");
                         },
                       ),
                     );
@@ -120,6 +151,69 @@ class _ProductReviewsState extends State<ProductReviews> {
                     return CircularProgressIndicator();
                   }
                 },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Container(
+                    width: 200,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.white),
+                    child: TextField(
+                     // controller: TextController,
+                      onChanged: (value) {
+                        //commentText = value;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'إضافه تعليق',
+                        hintStyle: TextStyle(
+                          color: Colors.black,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                          BorderSide(color: Colors.white, width: 2.0),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                          BorderSide(color: Colors.white, width: 2.0),
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 15),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Color(0xff19d7e7)),
+                      child: FlatButton(
+                          onPressed: () {
+                            FirebaseDatabase.instance
+                                .reference()
+                                .child('menuItems')
+                                .child('${widget.product.id}')
+                                .child('comments').push()
+                                .set({
+                              //"text": commentText,
+                              "time": DateTime.now().millisecondsSinceEpoch,
+                            });
+                           // TextController.clear();
+                          },
+                          child: Text(
+                            'تعليق',
+                            style: TextStyle(
+                                color: const Color(0xffffffff), fontSize: 20),
+                          )),
+                    ),
+                  )
+                ],
               ),
             ],
           ),
@@ -133,6 +227,7 @@ class buildRating extends StatelessWidget {
   String date;
   var details;
   var image;
+
   buildRating(this.date, this.details, this.image);
 
   @override
@@ -169,13 +264,25 @@ class buildRating extends StatelessWidget {
 class CommentModel {
   var text;
   var time;
+  var datetime;
+  var formatedDate;
 
-  CommentModel(this.text, this.time);
+  CommentModel(this.text, this.time) {
+    this.datetime = new DateTime.fromMillisecondsSinceEpoch(time * 1000);
+    this.formatedDate = _formatdate(this.datetime);
+  }
 
   factory CommentModel.fromJson(Map<dynamic, dynamic> json) {
-    return CommentModel(
-        json['text'].toString(),
-        json['time']
-    );
+    return CommentModel(json['text'].toString(), json['time']);
+  }
+
+  String _formatdate(DateTime date) {
+    var now = date;
+    var formatter = new DateFormat('dd-MM-yyyy');
+    String formattedTime = DateFormat('kk:mm:a').format(now);
+    String formattedDate = formatter.format(now);
+    return '$formattedDate  $formattedTime';
+    print(formattedDate);
+    print(formattedDate);
   }
 }

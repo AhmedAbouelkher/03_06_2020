@@ -512,16 +512,13 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                 ]),
                 child: Padding(
                   padding: EdgeInsets.only(top: 20.0),
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
+                  child: Column(
                     children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          Text(
-                            "تفاصيل",
-                            style: _subHeaderCustomStyle,
-                          ),
-                          Text(widget.product.description, style: _detailText),
+                      Text(
+                        "تفاصيل",
+                        style: _subHeaderCustomStyle,
+                      ),
+                      Text(widget.product.description, style: _detailText),
 //                        Center(
 //                          child: InkWell(
 //                            onTap: () {
@@ -538,78 +535,76 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
 //                            ),
 //                          ),
 //                        )
-                          ProductReviews(widget.product),
 
-                        ],
-                      ),
+
                     ],
                   ),
                 ),
               ),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                    width: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white),
-                    child: TextField(
-                      controller: TextController,
-                      onChanged: (value) {
-                        commentText = value;
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'إضافه تعليق',
-                        hintStyle: TextStyle(
-                          color: Colors.black,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 2.0),
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 2.0),
-                          borderRadius: BorderRadius.circular(25.0),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 15),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Color(0xff19d7e7)),
-                      child: FlatButton(
-                          onPressed: () {
-                            FirebaseDatabase.instance
-                                .reference()
-                                .child('menuItems')
-                                .child('${widget.product.id}')
-                                .child('comments').push()
-                                .set({
-                              "text": commentText,
-                              "time": DateTime.now().millisecondsSinceEpoch,
-                            });
-                            TextController.clear();
-                          },
-                          child: Text(
-                            'تعليق',
-                            style: TextStyle(
-                                color: const Color(0xffffffff), fontSize: 20),
-                          )),
-                    ),
-                  )
-                ],
-              ),
+//              Row(
+//                mainAxisAlignment: MainAxisAlignment.end,
+//                children: <Widget>[
+//                  Container(
+//                    width: 200,
+//                    decoration: BoxDecoration(
+//                        borderRadius: BorderRadius.circular(15),
+//                        color: Colors.white),
+//                    child: TextField(
+//                      controller: TextController,
+//                      onChanged: (value) {
+//                        commentText = value;
+//                      },
+//                      decoration: InputDecoration(
+//                        hintText: 'إضافه تعليق',
+//                        hintStyle: TextStyle(
+//                          color: Colors.black,
+//                        ),
+//                        enabledBorder: OutlineInputBorder(
+//                          borderSide:
+//                              BorderSide(color: Colors.white, width: 2.0),
+//                          borderRadius: BorderRadius.circular(15.0),
+//                        ),
+//                        focusedBorder: OutlineInputBorder(
+//                          borderSide:
+//                              BorderSide(color: Colors.white, width: 2.0),
+//                          borderRadius: BorderRadius.circular(25.0),
+//                        ),
+//                        border: OutlineInputBorder(
+//                          borderRadius: BorderRadius.circular(25.0),
+//                        ),
+//                      ),
+//                    ),
+//                  ),
+//                  Padding(
+//                    padding: const EdgeInsets.symmetric(
+//                        horizontal: 10, vertical: 15),
+//                    child: Container(
+//                      decoration: BoxDecoration(
+//                          borderRadius: BorderRadius.circular(30),
+//                          color: Color(0xff19d7e7)),
+//                      child: FlatButton(
+//                          onPressed: () {
+//                            FirebaseDatabase.instance
+//                                .reference()
+//                                .child('menuItems')
+//                                .child('${widget.product.id}')
+//                                .child('comments').push()
+//                                .set({
+//                              "text": commentText,
+//                              "time": DateTime.now().millisecondsSinceEpoch,
+//                            });
+//                            TextController.clear();
+//                          },
+//                          child: Text(
+//                            'تعليق',
+//                            style: TextStyle(
+//                                color: const Color(0xffffffff), fontSize: 20),
+//                          )),
+//                    ),
+//                  )
+//                ],
+//              ),
 
               /// Background white for chose Size and Color
               // Padding(
@@ -675,7 +670,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
               //   ),
               // ),
               //new ProductComments(),
-
+              ProductReviews(widget.product),
               _suggestedItem
             ],
           ),
