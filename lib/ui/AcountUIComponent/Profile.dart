@@ -490,7 +490,7 @@ class _ProfileState extends State<Profile> {
               height: 240.0,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/img/headerProfile.png"),
+                      image: AssetImage("assets/img/headerProfile2.png"),
                       fit: BoxFit.cover)),
             ),
 

@@ -248,7 +248,9 @@ class ProductProvider extends ChangeNotifier {
 
     //productList.add(product);
   }
-
+  Future<DataSnapshot>  getProductComments(String id) {
+    return _productRepositoy.getProductComments(id);
+  }
   Future<BaseProduct> getProductById(String id) async {
     Completer<BaseProduct> completer = Completer<BaseProduct>();
 

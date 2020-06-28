@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:haftaa/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:haftaa/providers/phone_auth.dart';
@@ -217,7 +218,16 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
                             // ],
                             images:
                                 List.generate(product.images.length, (index) {
-                              return new NetworkImage(product.images[index]);
+
+                                  return new   CachedNetworkImage(
+                                    fit: BoxFit.cover,
+                                    imageUrl: product.images[index],
+                                    placeholder: (context, url) =>
+                                        Center(child: CircularProgressIndicator()),
+                                    errorWidget: (context, url, error) => new Icon(Icons.error),
+                                  );
+
+                              //return new NetworkImage(product.images[index]);
                             })
                                   ..add(new NetworkImage(product.mainImage)),
                           ),
@@ -539,46 +549,37 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
                       ]),
                       child: Padding(
                         padding: EdgeInsets.only(top: 20.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: ListView(
+                          scrollDirection: Axis.vertical,
                           children: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.only(right: 20.0),
-                              child: Text(
-                                "نبذة",
-                                style: _subHeaderCustomStyle,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 15.0,
-                                  right: 20.0,
-                                  bottom: 10.0,
-                                  left: 20.0),
-                              child: Text(
-                                  product.description.substring(
-                                      0,
-                                      (product.description.length > 100
-                                          ? 100
-                                          : product.description.length)),
-                                  style: _detailText),
-                            ),
-                            Center(
-                              child: InkWell(
-                                onTap: () {
-                                  _bottomSheet();
-                                },
-                                child: Text(
-                                  "تفاصيل أكثر",
-                                  style: TextStyle(
-                                    color: Colors.indigoAccent,
-                                    fontSize: 15.0,
-                                    fontFamily: "Gotik",
-                                    fontWeight: FontWeight.w700,
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    "تفاصيل",
+                                    style: _subHeaderCustomStyle,
                                   ),
-                                ),
+                                  Text(product.description, style: _detailText),
+//                        Center(
+//                          child: InkWell(
+//                            onTap: () {
+//                              _bottomSheet();
+//                            },
+//                            child: Text(
+//                              "قراءة المزيد",
+//                              style: TextStyle(
+//                                color: Colors.indigoAccent,
+//                                fontSize: 15.0,
+//                                fontFamily: "Gotik",
+//                                fontWeight: FontWeight.w700,
+//                              ),
+//                            ),
+//                          ),
+//                        )
+                                ],
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),

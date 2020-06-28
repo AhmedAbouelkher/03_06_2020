@@ -271,7 +271,7 @@ class BaseProduct {
         mapedData['description'] == null ? '' : mapedData['description'];
 
     try {
-      _creationDate = mapedData['creationDate'];
+      _creationDate = DateTime.parse(mapedData['creationDate']);
     } catch (e) {
       _creationDate = null;
     }

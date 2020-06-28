@@ -131,25 +131,34 @@ class SaleProductItemRow extends StatelessWidget {
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),
-                            Padding(padding: EdgeInsets.only(top: 10.0)),
-                            Expanded(
-                              child: Text(
-                                '${product.descriptionSubString(35)}..',
-                                style: TextStyle(
-                                  color: Colors.black54,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12.0,
-                                ),
-                              ),
-                            ),
                             Text(
-                              'f${product.formatedCreateDate}',
+                              product.formatedCreateDate,
                               style: TextStyle(
-                                color: Colors.black54,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12.0,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "Sans",
+                                color: Colors.black87,
                               ),
+                              overflow: TextOverflow.ellipsis,
                             ),
+                            Padding(padding: EdgeInsets.only(top: 10.0)),
+//                            Expanded(
+//                              child: Text(
+//                                '${product.descriptionSubString(35)}..',
+//                                style: TextStyle(
+//                                  color: Colors.black54,
+//                                  fontWeight: FontWeight.w500,
+//                                  fontSize: 12.0,
+//                                ),
+//                              ),
+//                            ),
+//                            Text(
+//                              product.formatedCreateDate,
+//                              style: TextStyle(
+//                                color: Colors.black54,
+//                                fontWeight: FontWeight.w500,
+//                                fontSize: 12.0,
+//                              ),
+//                            ),
 
 
                             Padding(padding: EdgeInsets.only(top: 0.0)),

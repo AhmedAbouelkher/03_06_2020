@@ -41,6 +41,18 @@ class UploadImageProvider {
 
     return (await uploadTask.onComplete).ref.getDownloadURL();
   }
+  static Future<dynamic> uploadImageByteData(
+      ByteData byteData, String directoryPath, String uploadedImageFileName,{int quality =100}) async {
+    //ByteData byteData = await asset.requestOriginal(quality: quality);
+    List<int> imageData = byteData.buffer.asUint8List();
+    StorageReference ref = FirebaseStorage.instance
+        .ref()
+        .child(directoryPath)
+        .child(uploadedImageFileName);
+    StorageUploadTask uploadTask = ref.putData(imageData);
+
+    return (await uploadTask.onComplete).ref.getDownloadURL();
+  }
 
   static Future<File> pickImage() async {
     return await ImagePicker.pickImage(source: ImageSource.gallery);

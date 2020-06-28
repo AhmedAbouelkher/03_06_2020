@@ -134,6 +134,7 @@ class _EditProfileState extends State<EditProfile> {
           key: _formKey,
           child: Column(
             children: <Widget>[
+              Text('الاسم أو الاسم المستعار'),
               inputName,
               // inputNickName,
               // inputWork,

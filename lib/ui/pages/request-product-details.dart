@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:haftaa/Enums/enums.dart';
 import 'package:haftaa/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
@@ -219,7 +220,15 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                         //   AssetImage(requestProduct.mainImage),
                         // ],
                         images: List.generate(product.images.length, (index) {
-                          return new NetworkImage(product.images[index]);
+                          return new CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl: product.images[index],
+                            placeholder: (context, url) =>
+                                Center(child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) =>
+                                new Icon(Icons.error),
+                          );
+                          // return new NetworkImage(product.images[index]);
                         })
                           ..add(new NetworkImage(product.mainImage)),
                       ),
@@ -558,7 +567,8 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(product.description, style: _detailText),
+                            child:
+                                Text(product.description, style: _detailText),
                           ),
 //                        Center(
 //                          child: InkWell(
@@ -611,67 +621,66 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     /// Icon Message in bottom layout with Flexible
-                     Padding(
-                       padding: const EdgeInsets.only(left: 10),
-                       child: InkWell(
-                              onTap: () {
-                                if (Provider.of<PhoneAuthDataProvider>(context,
-                                    listen: false)
-                                    .isLoggedIn ==
-                                    true) {
-                                if (product.type == ItemType.request) {
-                                  var myId = Provider.of<PhoneAuthDataProvider>(
-                                          context,
-                                          listen: false)
-                                      .user
-                                      .uid;
-                                  var peerId = product.userId;
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: InkWell(
+                        onTap: () {
+                          if (Provider.of<PhoneAuthDataProvider>(context,
+                                      listen: false)
+                                  .isLoggedIn ==
+                              true) {
+                            if (product.type == ItemType.request) {
+                              var myId = Provider.of<PhoneAuthDataProvider>(
+                                      context,
+                                      listen: false)
+                                  .user
+                                  .uid;
+                              var peerId = product.userId;
 
-                                  var title = ' شراء | ${product.title}';
-                                  var Phone = Provider.of<PhoneAuthDataProvider>(
-                                          context,
-                                          listen: false)
-                                      .user
-                                      ?.phoneNumber;
+                              var title = ' شراء | ${product.title}';
+                              var Phone = Provider.of<PhoneAuthDataProvider>(
+                                      context,
+                                      listen: false)
+                                  .user
+                                  ?.phoneNumber;
 
-                                  var ChatId = '';
+                              var ChatId = '';
 
-                                  if (myId.hashCode <= peerId.hashCode) {
-                                    ChatId = '$myId-$peerId';
-                                  } else {
-                                    ChatId = '$peerId-$myId';
-                                  }
+                              if (myId.hashCode <= peerId.hashCode) {
+                                ChatId = '$myId-$peerId';
+                              } else {
+                                ChatId = '$peerId-$myId';
+                              }
 
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                PrivateChatscreen(
-                                                  product: product,
-                                                  chatId: ChatId,
-                                                  title: title,
-                                                  peerId: peerId,
-                                                )));
-                                  } else {}
-                                } else {
-                                  Navigator.pushNamed(context, 'login');
-
-                                }
-                              },
-                              child: Container(
-                                height: 40.0,
-                                width: 60.0,
-                                decoration: BoxDecoration(
-                                    color: Colors.white12.withOpacity(0.1),
-                                    border: Border.all(color: Colors.black12)),
-                                child: Center(
-                                 child: Icon(Icons.chat,color: Colors.green,),
-
-                              ),
-                              ),
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PrivateChatscreen(
+                                            product: product,
+                                            chatId: ChatId,
+                                            title: title,
+                                            peerId: peerId,
+                                          )));
+                            } else {}
+                          } else {
+                            Navigator.pushNamed(context, 'login');
+                          }
+                        },
+                        child: Container(
+                          height: 40.0,
+                          width: 60.0,
+                          decoration: BoxDecoration(
+                              color: Colors.white12.withOpacity(0.1),
+                              border: Border.all(color: Colors.black12)),
+                          child: Center(
+                            child: Icon(
+                              Icons.chat,
+                              color: Colors.green,
                             ),
-                     )
-                        ,
+                          ),
+                        ),
+                      ),
+                    ),
 
                     /// Button Pay
                     Padding(
@@ -688,7 +697,8 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                                   pageBuilder: (_, __, ___) => new ProductList
                                           .Search(_searchModel,
                                       'المستخدم (${product.showMobileNumber ? user.name ?? user?.mobile ?? user.email : 'الحالى'})'),
-                                  transitionDuration: Duration(milliseconds: 600),
+                                  transitionDuration:
+                                      Duration(milliseconds: 600),
                                   transitionsBuilder: (_,
                                       Animation<double> animation,
                                       __,

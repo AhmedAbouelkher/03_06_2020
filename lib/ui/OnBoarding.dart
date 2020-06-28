@@ -44,7 +44,7 @@ final pages = [
             style: _fontDescriptionStyle),
       ),
       mainImage: Image.asset(
-        'assets/imgIllustration/IlustrasiOnBoarding1.png',
+        'assets/imgIllustration/IlustrasiOnBoarding4.png',
         height: 285.0,
         width: 285.0,
         alignment: Alignment.center,

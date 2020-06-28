@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:haftaa/Enums/enums.dart';
 import 'package:haftaa/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
@@ -256,7 +257,15 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                       // ],
                       images:
                           List.generate(widget.product.images.length, (index) {
-                        return new NetworkImage(widget.product.images[index]);
+                            return new   CachedNetworkImage(
+                              fit: BoxFit.cover,
+                              imageUrl: widget.product.images[index],
+                              placeholder: (context, url) =>
+                                  Center(child: CircularProgressIndicator()),
+                              errorWidget: (context, url, error) => new Icon(Icons.error),
+                            );
+
+                        //return new NetworkImage(widget.product.images[index]);
                       })
                             ..add(new NetworkImage(widget.product.mainImage)),
                     ),
@@ -507,10 +516,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                             "تفاصيل",
                             style: _subHeaderCustomStyle,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(widget.product.description, style: _detailText),
-                          ),
+                          Text(widget.product.description, style: _detailText),
 //                        Center(
 //                          child: InkWell(
 //                            onTap: () {
@@ -621,123 +627,118 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
               child: Container(
                 color: Colors.white,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     /// Chat Icon
-                   Padding(
-                     padding: const EdgeInsets.only(left: 10),
-                     child: InkWell(
-                              onTap: () {
-                                if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true) {
-                                if (widget.product.type == ItemType.sale) {
-                                  var myId = Provider.of<PhoneAuthDataProvider>(
-                                          context,
-                                          listen: false)
-                                      .user
-                                      .uid;
-                                  var peerId = _user.id;
-
-                                  var title = ' بيع | ${widget.product.title}';
-                                  var Phone = _user?.mobile;
-
-                                  var ChatId = '';
-
-                                  if (myId.hashCode <= peerId.hashCode) {
-                                    ChatId = '$myId-$peerId';
-                                  } else {
-                                    ChatId = '$peerId-$myId';
-                                  }
-
-                                    Navigator.push(
+                   InkWell(
+                            onTap: () {
+                              if (Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn == true) {
+                              if (widget.product.type == ItemType.sale) {
+                                var myId = Provider.of<PhoneAuthDataProvider>(
                                         context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                PrivateChatscreen(
-                                                  product: widget.product,
-                                                  chatId: ChatId,
-                                                  title: title,
-                                                  peerId: peerId,
-                                                  Phone: Phone,
-                                                )));
-                                  } else {}
-                                }  else {
-                                  Navigator.pushNamed(context, 'login');
+                                        listen: false)
+                                    .user
+                                    .uid;
+                                var peerId = _user.id;
+
+                                var title = ' بيع | ${widget.product.title}';
+                                var Phone = _user?.mobile;
+
+                                var ChatId = '';
+
+                                if (myId.hashCode <= peerId.hashCode) {
+                                  ChatId = '$myId-$peerId';
+                                } else {
+                                  ChatId = '$peerId-$myId';
                                 }
-                              },
-                              child: Container(
-                                height: 40.0,
-                                width: 60.0,
-                                decoration: BoxDecoration(
-                                    color: Colors.white12.withOpacity(0.1),
-                                    border: Border.all(color: Colors.black12)),
-                                child: Center(
-                                  child: Icon(Icons.chat,color: Colors.green,),
-                                ),
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              PrivateChatscreen(
+                                                product: widget.product,
+                                                chatId: ChatId,
+                                                title: title,
+                                                peerId: peerId,
+                                                Phone: Phone,
+                                              )));
+                                } else {}
+                              }  else {
+                                Navigator.pushNamed(context, 'login');
+                              }
+                            },
+                            child: Container(
+                              height: 40.0,
+                              width: 60.0,
+                              decoration: BoxDecoration(
+                                  color: Colors.white12.withOpacity(0.1),
+                                  border: Border.all(color: Colors.black12)),
+                              child: Center(
+                                child: Image.asset("assets/icon/message.png",
+                                    height: 20.0),
                               ),
                             ),
-                   )
+                          )
                        ,
 
                     /// Button Pay
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: InkWell(
-                        onTap: () {
-                          widget.product.user.then((user) {
-                            ProductSearchModel _searchModel =
-                                ProductSearchModel.FromSearchParams(
-                                    userID: user.id);
+                    InkWell(
+                      onTap: () {
+                        widget.product.user.then((user) {
+                          ProductSearchModel _searchModel =
+                              ProductSearchModel.FromSearchParams(
+                                  userID: user.id);
 
-                            Navigator.of(context).push(
-                              PageRouteBuilder(
-                                  pageBuilder: (_, __, ___) => new ProductList
-                                          .Search(_searchModel,
-                                      'المستخدم (${widget.product.showMobileNumber ? user.name ?? user?.mobile ?? user.email : 'الحالى'})'),
-                                  transitionDuration: Duration(milliseconds: 600),
-                                  transitionsBuilder: (_,
-                                      Animation<double> animation,
-                                      __,
-                                      Widget child) {
-                                    return Opacity(
-                                      opacity: animation.value,
-                                      child: child,
-                                    );
-                                  }),
-                            );
-                          });
-                        },
-                        child: Container(
-                          height: 45.0,
-                          width: 200.0,
-                          decoration: BoxDecoration(
-                            color: Colors.indigoAccent,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                Icons.person,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Center(
-                                  child: ProductUserWidget(
-                                      widget.product.user,
-                                      TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w700),
-                                      widget.product.showMobileNumber)
-                                  // Text(
-                                  //   "Pay",
-                                  //   style: TextStyle(
-                                  //       color: Colors.white,
-                                  //       fontWeight: FontWeight.w700),
-                                  // ),
-                                  ),
-                            ],
-                          ),
+                          Navigator.of(context).push(
+                            PageRouteBuilder(
+                                pageBuilder: (_, __, ___) => new ProductList
+                                        .Search(_searchModel,
+                                    'المستخدم (${widget.product.showMobileNumber ? user.name ?? user?.mobile ?? user.email : 'الحالى'})'),
+                                transitionDuration: Duration(milliseconds: 600),
+                                transitionsBuilder: (_,
+                                    Animation<double> animation,
+                                    __,
+                                    Widget child) {
+                                  return Opacity(
+                                    opacity: animation.value,
+                                    child: child,
+                                  );
+                                }),
+                          );
+                        });
+                      },
+                      child: Container(
+                        height: 45.0,
+                        width: 200.0,
+                        decoration: BoxDecoration(
+                          color: Colors.indigoAccent,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              Icons.person,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Center(
+                                child: ProductUserWidget(
+                                    widget.product.user,
+                                    TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700),
+                                    widget.product.showMobileNumber)
+                                // Text(
+                                //   "Pay",
+                                //   style: TextStyle(
+                                //       color: Colors.white,
+                                //       fontWeight: FontWeight.w700),
+                                // ),
+                                ),
+                          ],
                         ),
                       ),
                     ),

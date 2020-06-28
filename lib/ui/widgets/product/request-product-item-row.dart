@@ -131,16 +131,25 @@ class RequestProductItemRow extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                             Padding(padding: EdgeInsets.only(top: 10.0)),
-                            Expanded(
-                              child: Text(
-                                '${product.descriptionSubString(35)}..',
-                                style: TextStyle(
-                                  color: Colors.black54,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12.0,
-                                ),
+                            Text(
+                              product.formatedCreateDate,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "Sans",
+                                color: Colors.black87,
                               ),
+                              overflow: TextOverflow.ellipsis,
                             ),
+//                            Expanded(
+//                              child: Text(
+//                                '${product.descriptionSubString(35)}..',
+//                                style: TextStyle(
+//                                  color: Colors.black54,
+//                                  fontWeight: FontWeight.w500,
+//                                  fontSize: 12.0,
+//                                ),
+//                              ),
+//                            ),
                             Padding(padding: EdgeInsets.only(top: 0.0)),
                             Text(product.arabicTypeName),
                             // Padding(

@@ -8,7 +8,7 @@ class ProductSearchModel {
   String _productUsingStatusInArabic;
   String _productTypeInArabic;
   BaseCategory _category;
-  String _categoryId="2321312323";
+  String _categoryId;
   Governorate _governorate;
   String _userID;
   String _userIDWhoMakesFavorite;

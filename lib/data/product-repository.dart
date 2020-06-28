@@ -30,4 +30,7 @@ class ProductRepository {
   Future<DataSnapshot>  getProduct(String id) {
     return _firebaseProvider.getItem('menuItems/$id');
   }
+  Future<DataSnapshot>  getProductComments(String id) {
+    return _firebaseProvider.getItem('menuItems/$id/comments');
+  }
 }

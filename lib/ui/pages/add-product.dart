@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:haftaa/Category/BaseCategory.dart';
@@ -114,9 +115,21 @@ class _AddProductState extends State<AddProduct> {
       var imagedata = imagefile.pathType == ImagePathType.fileAsset
           ? imagefile.FileAsset
           : null;
-      await UploadImageProvider.uploadImageAsset(imagedata,
+      ByteData byteData;
+      if (imagedata.originalWidth > 700) {
+        byteData = await imagedata.getThumbByteData(
+            (imagedata.originalWidth * 0.5).round(),
+            (imagedata.originalHeight * 0.5).round(),
+            quality: imagefile.isMainImage ? 30 : 50);
+      } else {
+        byteData = await imagedata.getThumbByteData(
+            imagedata.originalWidth, imagedata.originalHeight,
+            quality: imagefile.isMainImage ? 30 : 50);
+      }
+
+      await UploadImageProvider.uploadImageByteData(byteData,
               'products/${productid}', '${DateTime.now().toString()}.png',
-              quality: imagefile.isMainImage ? 50 : 90)
+              quality: imagefile.isMainImage ? 30 : 30)
           .then((onValue) {
         imagefile.imageURL = onValue.toString();
         if (selectedImages
@@ -766,7 +779,7 @@ class _AddProductState extends State<AddProduct> {
       case ItemType.sale:
         productMap['options'] = {
           'price': 0
-         //'price': double.parse(priceEditingController.text)
+          //'price': double.parse(priceEditingController.text)
         };
         productMap['type'] = 'sale';
         completer.complete(productMap);
