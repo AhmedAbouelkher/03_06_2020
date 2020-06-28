@@ -613,7 +613,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
 
               /// Description
               Container(
-                height: 300.0,
+                //height: 300.0,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(color: Colors.white, boxShadow: [
                   BoxShadow(
@@ -634,9 +634,9 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                             style: _subHeaderCustomStyle,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child:
-                                Text(product.description, style: _detailText),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Expanded(
+                                child: new Text(product.description)),
                           ),
 //                        Center(
 //                          child: InkWell(

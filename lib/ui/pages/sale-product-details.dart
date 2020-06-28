@@ -501,7 +501,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
 
               /// Background white for description
               Container(
-                height: 300.0,
+                //height: 300.0,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(color: Colors.white, boxShadow: [
                   BoxShadow(
@@ -518,7 +518,12 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                         "تفاصيل",
                         style: _subHeaderCustomStyle,
                       ),
-                      Text(widget.product.description, style: _detailText),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Expanded(
+                            child: new Text(widget.product.description)),
+                      ),
+                      //Text(widget.product.description, style: _detailText),
 //                        Center(
 //                          child: InkWell(
 //                            onTap: () {
