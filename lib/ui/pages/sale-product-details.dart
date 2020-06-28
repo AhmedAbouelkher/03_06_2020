@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:haftaa/Enums/enums.dart';
 import 'package:haftaa/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
@@ -58,6 +59,9 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
   int starCount = 5;
 
   User _user;
+  String commentText;
+  final TextController = TextEditingController();
+
 
   @override
   void initState() {
@@ -391,6 +395,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                 ),
               ),
 
+
               /// Background white for other product properties
               Padding(
                 padding: const EdgeInsets.only(top: 10.0),
@@ -539,6 +544,70 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                   ),
                 ),
               ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+              Container(
+                width: 200,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15), color: Colors.white),
+                child: TextField(
+                  controller:TextController,
+                  onChanged: (value) {
+                    commentText = value;
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'إضافه تعليق',
+                    hintStyle: TextStyle(
+                      color: Colors.black,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 2.0),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 2.0),
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                  ),
+                ),
+              ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Color(0xff19d7e7)),
+                      child: FlatButton(
+                          onPressed: (){
+                            FirebaseDatabase.instance
+                                .reference()
+                                .child('menuItems')
+                               .child('${widget.product.id}')
+                               .child('comments')
+                                .update({
+                              "text":commentText,
+                              "time": '${DateTime.now().millisecondsSinceEpoch}',
+                            });
+                            TextController.clear();
+                          },
+                          child: Text(
+                            'تعليق',
+                            style: TextStyle(
+                                color: const Color(0xffffffff),
+                                fontSize: 20
+                            ),
+                          )),
+                    ),
+                  )
+                ],
+              ),
+
 
               /// Background white for chose Size and Color
               // Padding(
