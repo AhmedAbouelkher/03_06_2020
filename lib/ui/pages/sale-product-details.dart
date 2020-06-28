@@ -538,9 +538,10 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
 //                            ),
 //                          ),
 //                        )
+                          ProductReviews(widget.product),
+
                         ],
                       ),
-                      ProductReviews(widget.product),
                     ],
                   ),
                 ),
@@ -593,11 +594,10 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                 .reference()
                                 .child('menuItems')
                                 .child('${widget.product.id}')
-                                .child('comments')
-                                .update({
+                                .child('comments').push()
+                                .set({
                               "text": commentText,
-                              "time":
-                                  '${DateTime.now().millisecondsSinceEpoch}',
+                              "time": DateTime.now().millisecondsSinceEpoch,
                             });
                             TextController.clear();
                           },

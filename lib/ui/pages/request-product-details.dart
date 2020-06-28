@@ -14,6 +14,7 @@ import 'package:haftaa/ui/widgets/product/product-properties/product-category-wi
 import 'package:haftaa/ui/widgets/product/product-properties/product-governorate-widget.dart';
 import 'package:haftaa/ui/widgets/product/product-properties/product-region-widget.dart';
 import 'package:haftaa/ui/widgets/product/product-properties/product-user-widget.dart';
+import 'package:haftaa/ui/widgets/product/product-reviews.dart';
 import 'package:haftaa/ui/widgets/product/product-speedial.dart';
 import 'package:haftaa/ui/widgets/share/share-buttons.dart';
 import 'package:haftaa/product/request-product.dart';
@@ -395,7 +396,9 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                             // )
                           ],
                         ),
-                      )
+                      ),
+                      ProductReviews(product),
+
                     ],
                   ),
                 ),
