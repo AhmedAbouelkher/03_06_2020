@@ -161,12 +161,14 @@ class _ProductReviewsState extends State<ProductReviews> {
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.white),
                     child: TextField(
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
                      // controller: TextController,
                       onChanged: (value) {
                         //commentText = value;
                       },
                       decoration: InputDecoration(
-                        hintText: 'إضافه تعليق',
+                        hintText: 'كتابة تعليق',
                         hintStyle: TextStyle(
                           color: Colors.black,
                         ),
@@ -192,7 +194,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          color: Color(0xff19d7e7)),
+                          color: Colors.lightBlueAccent),
                       child: FlatButton(
                           onPressed: () {
                             FirebaseDatabase.instance
