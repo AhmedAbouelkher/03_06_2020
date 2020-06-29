@@ -2,7 +2,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:haftaa/product/base-product.dart';
+import 'package:haftaa/providers/phone_auth.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class ProductReviews extends StatefulWidget {
   final BaseProduct product;
@@ -32,6 +34,8 @@ class _ProductReviewsState extends State<ProductReviews> {
       color: Colors.black12,
     );
   }
+  String commentText;
+  final TextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +152,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                       ),
                     );
                   } else {
-                    return CircularProgressIndicator();
+                    return Center(child: Text('لا يوجد تعليقات'));
                   }
                 },
               ),
@@ -163,9 +167,9 @@ class _ProductReviewsState extends State<ProductReviews> {
                     child: TextField(
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
-                     // controller: TextController,
+                      controller: TextController,
                       onChanged: (value) {
-                        //commentText = value;
+                        commentText = value;
                       },
                       decoration: InputDecoration(
                         hintText: 'كتابة تعليق',
@@ -197,17 +201,36 @@ class _ProductReviewsState extends State<ProductReviews> {
                           color: Colors.lightBlueAccent),
                       child: FlatButton(
                           onPressed: () {
-                            FirebaseDatabase.instance
-                                .reference()
-                                .child('menuItems')
-                                .child('${widget.product.id}')
-                                .child('comments').push()
-                                .set({
-                              //"text": commentText,
-                              "time": DateTime.now().millisecondsSinceEpoch,
-                            });
-                           // TextController.clear();
-                          },
+                           if( Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn ==true) {
+                                 if(commentText.length == 0){
+                                     // dont comment
+                                 }
+                                 else{
+                                   FirebaseDatabase.instance
+                                       .reference()
+                                       .child('menuItems')
+                                       .child('${widget.product.id}')
+                                       .child('comments').push()
+                                       .set({
+                                      "userID": Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid,
+                                      "userName":Provider.of<PhoneAuthDataProvider>(context, listen: false).user.displayName ,
+                                      "userPhone": Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber,
+                                      "userImg": Provider.of<PhoneAuthDataProvider>(context, listen: false).user.photoUrl,
+                                      "text": commentText,
+                                      "time": DateTime.now().millisecondsSinceEpoch,
+                                   });
+                                   TextController.clear();
+
+                                 }
+
+                             }
+                             else
+                               {
+                                 Navigator.pushNamed(context, 'login');
+
+                               }
+
+                            },
                           child: Text(
                             'تعليق',
                             style: TextStyle(

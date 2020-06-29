@@ -60,8 +60,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
   int starCount = 5;
 
   User _user;
-  String commentText;
-  final TextController = TextEditingController();
+
 
   @override
   void initState() {
@@ -520,8 +519,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Expanded(
-                            child: new Text(widget.product.description)),
+                        child: new Text(widget.product.description),
                       ),
                       //Text(widget.product.description, style: _detailText),
 //                        Center(
