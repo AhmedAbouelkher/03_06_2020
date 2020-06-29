@@ -228,7 +228,6 @@ class _PhoneAuthState extends State<PhoneAuth> {
 //                  borderSide: BorderSide(color: Colors.white))),
         ),
       );
-  String dropdownValue = 'الرياض';
 
   Widget _getColumnBody() => Column(
         mainAxisSize: MainAxisSize.min,
@@ -247,18 +246,10 @@ class _PhoneAuthState extends State<PhoneAuth> {
           CountryCodePicker(
             initialSelection: "sa",
             onInit: (code) {
-              setState(() {
-                countryCode = code.toString();
-
-              });
+              countryCode = code.toString();
             },
             onChanged: (val) {
-
-              setState(() {
-                countryCode = val.toString();
-
-              });
-
+              countryCode = val.toString();
             },
             favorite: [
               'KW',
@@ -281,29 +272,6 @@ class _PhoneAuthState extends State<PhoneAuth> {
             alignLeft: true,
             textStyle: TextStyle(color: Colors.white),
           ),
-          countryCode == "+966"? DropdownButton<String>(
-            value: dropdownValue,
-            icon: Icon(Icons.details,color: Colors.white),
-            iconSize: 24,
-            elevation: 16,
-            style: TextStyle(color: Colors.black),
-            underline: Container(
-              height: 2,
-              color: Colors.black,
-            ),
-            onChanged: (String newValue) {
-              setState(() {
-                dropdownValue = newValue;
-              });
-            },
-            items: <String>['الرياض', 'مكة', 'جدة', 'المدينة', 'القصيم', 'حفر الباطن', 'حائل', 'الشرقية', 'تبوك', 'الحدود الشمالية', 'الجوف', 'ينبع', 'الدوادمي', 'الطائف', 'الباحة', 'عسير', 'جيزان', 'نجران', 'وادي الدواسر']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value,style:TextStyle(color: Colors.white),),
-              );
-            }).toList(),
-          ):Container(),
           /*
            *  Select your country, this will be a custom DropDown menu, rather than just as a dropDown
            *  onTap of this, will show a Dialog asking the user to select country they reside,
@@ -684,7 +652,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
               _getColumnBody(),
               InkWell(
                 onTap: () {
-                  checkBoxValue ? startPhoneAuth(context) : null;
+                   checkBoxValue?startPhoneAuth(context):null;
 //                  Scaffold.of(context).showSnackBar(
 //                      SnackBar(content: new Text('test message')));
                 },
