@@ -51,7 +51,7 @@ class _CategoriesDropdownWidgetState extends State<CategoriesDropdownWidget> {
       List<DropdownMenuItem<BaseCategory>>();
 
   fillCategoryList() {
-    if (widget.parentcategory != null) {
+    if (widget?.parentcategory != null) {
       widget.parentcategory.childCategories.then((catlist) {
         setState(() {
           dropdownMenuItemList = catlist
