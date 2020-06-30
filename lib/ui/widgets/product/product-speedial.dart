@@ -36,82 +36,86 @@ class _ProductSpeeDialState extends State<ProductSpeeDial> {
 
   @override
   Widget build(BuildContext context) {
-    return SpeedDial(
-      // both default to 16
-      marginRight: 35,
-      marginBottom: 35,
-      animatedIcon: AnimatedIcons.menu_close,
-      animatedIconTheme: IconThemeData(size: 22.0),
-      // this is ignored if animatedIcon is non null
-      // child: Icon(Icons.add),
-      visible: true,
-      // If true user is forced to close dial manually
-      // by tapping main button and overlay is not rendered.
-      closeManually: false,
-      curve: Curves.bounceIn,
-      overlayColor: Colors.black,
-      overlayOpacity: 0.5,
-      onOpen: () => print('OPENING DIAL'),
-      onClose: () => print('DIAL CLOSED'),
-      tooltip: 'Speed Dial',
-      heroTag: 'speed-dial-hero-tag',
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.black,
-      elevation: 8.0,
-      shape: CircleBorder(),
-      children: [
-        SpeedDialChild(
-            child: Icon(Icons.call),
-            backgroundColor: Colors.green,
-            //label: (getCallText()),
-            labelWidget: Container(
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    getCallText(),
-                    textDirection: TextDirection.ltr,
-                    textAlign: TextAlign.left,
-                  ),
-                )),
-            labelBackgroundColor: Colors.red,
-            labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () => widget.Shownumber != false
-                ? _callAndMessageSerive.call(_user.mobile)
-                : () {}),
-        SpeedDialChild(
-            child: Icon(Icons.message),
-            backgroundColor: Colors.blueAccent,
-            label: (_user == null
-                ? 'تحميل ..'
-                : (_user.mobile == null ? 'للأسف لا يوجد رقم' : 'أرسل رسالة')),
-            labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () => _user.mobile == null || widget.Shownumber == false
-                ? () {}
-                : _callAndMessageSerive.sendSms(_user.mobile)),
-        // SpeedDialChild(
-        //     child: Icon(Icons.person_add),
-        //     backgroundColor: Colors.blue,
-        //     label: (_user == null ? 'تحميل ..' : 'أضف إلى أرقامي'),
-        //     labelStyle: TextStyle(fontSize: 18.0),
-        //     onTap: () {
-        //       // Permissions.checkPermissionStatus(PermissionGroup.contacts)
-        //       //     .then((permissionStatus) {
-        //       //   if (permissionStatus == PermissionStatus.granted) {
-        //       //     //trying to add contact
-        //       //     addContact();
-        //       //   } else {
-        //       //     //request permission
-        //       //     Permissions.requestPermissions([PermissionGroup.contacts])
-        //       //         .then((Map<PermissionGroup, PermissionStatus>
-        //       //             requestResult) {
-        //       //       var ss = requestResult;
-        //       //     });
-        //       //   }
-        //       // });
-        //     }),
-      ],
-    );
+    return widget.Shownumber == false
+        ? Container()
+        : SpeedDial(
+            // both default to 16
+            marginRight: 35,
+            marginBottom: 35,
+            animatedIcon: AnimatedIcons.menu_close,
+            animatedIconTheme: IconThemeData(size: 22.0),
+            // this is ignored if animatedIcon is non null
+            // child: Icon(Icons.add),
+            visible: true,
+            // If true user is forced to close dial manually
+            // by tapping main button and overlay is not rendered.
+            closeManually: false,
+            curve: Curves.bounceIn,
+            overlayColor: Colors.black,
+            overlayOpacity: 0.5,
+            onOpen: () => print('OPENING DIAL'),
+            onClose: () => print('DIAL CLOSED'),
+            tooltip: 'Speed Dial',
+            heroTag: 'speed-dial-hero-tag',
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            elevation: 8.0,
+            shape: CircleBorder(),
+            children: [
+              SpeedDialChild(
+                  child: Icon(Icons.call),
+                  backgroundColor: Colors.green,
+                  //label: (getCallText()),
+                  labelWidget: Container(
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          _user.mobile ?? '',
+                          textDirection: TextDirection.ltr,
+                          textAlign: TextAlign.left,
+                        ),
+                      )),
+                  labelBackgroundColor: Colors.red,
+                  labelStyle: TextStyle(fontSize: 18.0),
+                  onTap: () => widget.Shownumber != false
+                      ? _callAndMessageSerive.call(_user.mobile)
+                      : () {}),
+              SpeedDialChild(
+                  child: Icon(Icons.message),
+                  backgroundColor: Colors.blueAccent,
+                  label: (_user == null
+                      ? 'تحميل ..'
+                      : (_user.mobile == null
+                          ? 'للأسف لا يوجد رقم'
+                          : 'أرسل رسالة')),
+                  labelStyle: TextStyle(fontSize: 18.0),
+                  onTap: () => _user.mobile == null
+                      ? () {}
+                      : _callAndMessageSerive.sendSms(_user.mobile ?? '')),
+              // SpeedDialChild(
+              //     child: Icon(Icons.person_add),
+              //     backgroundColor: Colors.blue,
+              //     label: (_user == null ? 'تحميل ..' : 'أضف إلى أرقامي'),
+              //     labelStyle: TextStyle(fontSize: 18.0),
+              //     onTap: () {
+              //       // Permissions.checkPermissionStatus(PermissionGroup.contacts)
+              //       //     .then((permissionStatus) {
+              //       //   if (permissionStatus == PermissionStatus.granted) {
+              //       //     //trying to add contact
+              //       //     addContact();
+              //       //   } else {
+              //       //     //request permission
+              //       //     Permissions.requestPermissions([PermissionGroup.contacts])
+              //       //         .then((Map<PermissionGroup, PermissionStatus>
+              //       //             requestResult) {
+              //       //       var ss = requestResult;
+              //       //     });
+              //       //   }
+              //       // });
+              //     }),
+            ],
+          );
   }
 
   String getCallText() {
