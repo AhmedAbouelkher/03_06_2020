@@ -37,7 +37,14 @@ class BaseProduct {
   Map<dynamic, dynamic> _favUsers = Map();
   bool _displayInMobileHome = false;
   bool _showMobileNumber = true;
+  bool _canComment = true;
 
+
+  bool get canComment => _canComment;
+
+  set canComment(bool value) {
+    _canComment = value;
+  }
 
   bool get showMobileNumber => _showMobileNumber;
 
@@ -293,7 +300,7 @@ class BaseProduct {
     _available = mapedData['available'];
     _displayInMobileHome = mapedData['displayInMobileHome'];
     _showMobileNumber = mapedData['showMobileNumber'];
-
+    _canComment = mapedData['canComment'];
 
   }
 
@@ -368,6 +375,7 @@ class BaseProduct {
     _available = snapshot.value['available'];
     _displayInMobileHome = snapshot.value['displayInMobileHome'] ?? false;
     _showMobileNumber = snapshot.value['showMobileNumber'] ?? false;
+    _canComment = snapshot.value['canComment'] ?? false;
 
   }
 
@@ -388,6 +396,7 @@ class BaseProduct {
       'used': used,
       'displayInMobileHome': displayInMobileHome,
       'showMobileNumber': showMobileNumber,
+      'canComment':canComment,
 
     };
   }
