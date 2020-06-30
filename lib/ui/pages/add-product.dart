@@ -76,11 +76,19 @@ class _AddProductState extends State<AddProduct> {
   }
 
   BaseCategory selected_category;
+  BaseCategory selected_sub_category;
 
   void onCategorySelectChanged(BaseCategory cat) {
     setState(() {
       product.categoryId = cat.id;
       selected_category = cat;
+    });
+  }
+
+  void onSubCategorySelectChanged(BaseCategory cat) {
+    setState(() {
+      product.categoryId = cat.id;
+      selected_sub_category = cat;
     });
   }
 
@@ -421,8 +429,21 @@ class _AddProductState extends State<AddProduct> {
                       hintText: "اختر القسم",
                       title: "القسم",
                       displayDropDownOnly: false,
-                      onChange: (BaseCategory category) =>
-                          onCategorySelectChanged(category),
+                      onChange: (BaseCategory category) {
+                        onCategorySelectChanged(category);
+                      },
+                    ),
+                    Padding(padding: EdgeInsets.only(top: 3.0)),
+
+                    CategoriesDropdownWidget.subCategories(
+                      selectedCategory: selected_sub_category,
+                      selectionIsRequired: false,
+                      hintText: "اختر القسم الفرعي",
+                      title: "القسم الفرعي",
+                      displayDropDownOnly: false,
+                      onChange: (BaseCategory category) {
+                        onSubCategorySelectChanged(category);
+                      },
                     ),
                     Padding(padding: EdgeInsets.only(top: 20.0)),
                     GovernorateDropdownWidget.custom(

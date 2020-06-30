@@ -11,8 +11,11 @@ class CategoriesDropdownWidget extends StatefulWidget {
   BaseCategory selectedCategory;
   bool selectionIsRequired = false;
   bool displayDropDownOnly = false;
+  BaseCategory parentcategory;
+
   CategoriesDropdownWidget({Key key, this.displayDropDownOnly})
       : super(key: key) {}
+
   CategoriesDropdownWidget.Custom(
       {this.onChange,
       this.title,
@@ -20,6 +23,15 @@ class CategoriesDropdownWidget extends StatefulWidget {
       this.selectionIsRequired,
       this.selectedCategory,
       this.displayDropDownOnly});
+
+  CategoriesDropdownWidget.subCategories(
+      {this.onChange,
+      this.title,
+      this.hintText,
+      this.selectionIsRequired,
+      this.selectedCategory,
+      this.displayDropDownOnly,
+      this.parentcategory});
 
   @override
   _CategoriesDropdownWidgetState createState() {
@@ -33,25 +45,43 @@ class _CategoriesDropdownWidgetState extends State<CategoriesDropdownWidget> {
   }
 
   CategoryController categoryController = new CategoryController();
+
   //List<BaseCategory> categories = new List();
   List<DropdownMenuItem<BaseCategory>> dropdownMenuItemList =
       List<DropdownMenuItem<BaseCategory>>();
 
   fillCategoryList() {
-    categoryController.loadCategories().then((catlist) {
-      setState(() {
-        dropdownMenuItemList = catlist
-            .map<DropdownMenuItem<BaseCategory>>((BaseCategory category) {
-          return DropdownMenuItem<BaseCategory>(
-            child: Text(
-              category.title ?? '',
-              style: TextStyle(fontSize: 13),
-            ),
-            value: category,
-          );
-        }).toList();
+    if (widget.parentcategory != null) {
+      widget.parentcategory.childCategories.then((catlist) {
+        setState(() {
+          dropdownMenuItemList = catlist
+              .map<DropdownMenuItem<BaseCategory>>((BaseCategory category) {
+            return DropdownMenuItem<BaseCategory>(
+              child: Text(
+                category.title ?? '',
+                style: TextStyle(fontSize: 13),
+              ),
+              value: category,
+            );
+          }).toList();
+        });
       });
-    });
+    } else {
+      categoryController.loadCategories().then((catlist) {
+        setState(() {
+          dropdownMenuItemList = catlist
+              .map<DropdownMenuItem<BaseCategory>>((BaseCategory category) {
+            return DropdownMenuItem<BaseCategory>(
+              child: Text(
+                category.title ?? '',
+                style: TextStyle(fontSize: 13),
+              ),
+              value: category,
+            );
+          }).toList();
+        });
+      });
+    }
   }
 
   @override
@@ -87,7 +117,7 @@ class _CategoriesDropdownWidgetState extends State<CategoriesDropdownWidget> {
     return widget.displayDropDownOnly
         ? dropdownButtonFormField
         : Column(
-      textDirection: TextDirection.rtl,
+            textDirection: TextDirection.rtl,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
@@ -99,7 +129,7 @@ class _CategoriesDropdownWidgetState extends State<CategoriesDropdownWidget> {
               ),
               Padding(padding: EdgeInsets.only(top: 20.0)),
               Row(
-                textDirection:  TextDirection.rtl,
+                textDirection: TextDirection.rtl,
                 children: <Widget>[
                   Container(
                     width: mediaQueryData.size.width - 90,
