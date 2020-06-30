@@ -673,7 +673,10 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
               //   ),
               // ),
               //new ProductComments(),
-              ProductReviews(widget.product),
+              widget.product.canComment?ProductReviews(widget.product):Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(child: Text('لا يمكن التعليق على هذا المنتج')),
+              ),
               _suggestedItem
             ],
           ),

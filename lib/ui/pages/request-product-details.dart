@@ -660,8 +660,10 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
               ),
 
               ///Call a variable suggested Item(Top Rated Product Card) in bottom of description
-              ProductReviews(product),
-              _suggestedItem
+              product.canComment?ProductReviews(product):Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(child: Text('لا يمكن التعليق على هذا المنتج')),
+              ),              _suggestedItem
             ],
           ),
 

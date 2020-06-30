@@ -296,6 +296,8 @@ class _AddProductState extends State<AddProduct> {
   bool isSaving = false;
   bool gettingProductdataForEditing = false;
   bool checkBoxValue = true;
+  bool checkBoxCanComment = true;
+
   List<Map> defaultItemsList = [];
 
   loadProductDataForEdit() async {
@@ -521,6 +523,17 @@ class _AddProductState extends State<AddProduct> {
                       onChanged: (bool newValue) {
                         setState(() {
                           checkBoxValue = newValue;
+                        });
+                      },
+                      controlAffinity: ListTileControlAffinity
+                          .leading, //  <-- leading Checkbox
+                    ),
+                    CheckboxListTile(
+                      title: Text("السماح بالتعليقات على الاعلان"),
+                      value: checkBoxCanComment,
+                      onChanged: (bool newValue) {
+                        setState(() {
+                          checkBoxCanComment = newValue;
                         });
                       },
                       controlAffinity: ListTileControlAffinity
@@ -785,6 +798,8 @@ class _AddProductState extends State<AddProduct> {
     productMap['available'] = true;
     productMap['used'] = productIsUsed;
     productMap['showMobileNumber'] = checkBoxValue;
+    productMap['canComment'] = checkBoxCanComment;
+
     var nowTime = DateTime.now();
     if (newProduct) {
       productMap['userId'] =
