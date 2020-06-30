@@ -1,5 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 
+import 'CategoryController.dart';
+
 class BaseCategory {
   String _id;
   String _title;
@@ -10,13 +12,20 @@ class BaseCategory {
   BaseCategory parentCategory;
   Map defaultItems;
 
-
+  Future<List<BaseCategory>> get childCategories async {
+    return await new CategoryController().getList(id);
+  }
 
   String get id => _id;
+
   String get title => _title;
+
   String get img => _img;
+
   String get description => _description;
+
   String get icon => _icon;
+
   int get itemsCount => _itemsCount;
 
   BaseCategory();
@@ -37,6 +46,7 @@ class BaseCategory {
 
     this.defaultItems = mapedData['defaultItems'];
   }
+
   BaseCategory.fromSnapshot(DataSnapshot snapshot) {
     this._id = snapshot.key;
     this._title = snapshot.value['title'];
@@ -45,6 +55,5 @@ class BaseCategory {
     this._icon = snapshot.value['icon'];
     this._itemsCount = snapshot.value['itemsCount'];
     this.defaultItems = snapshot.value['defaultItems'];
-
   }
 }
