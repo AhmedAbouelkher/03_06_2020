@@ -25,6 +25,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
   var verificationId;
   bool codeSent = false;
 
+
   double _height, _width, _fixedPadding;
 
   FocusNode focusNode1 = FocusNode();
