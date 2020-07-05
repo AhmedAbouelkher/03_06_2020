@@ -124,34 +124,11 @@ class _EditProfileState extends State<EditProfile> {
         ),
       ],
     );
-   String dropdownValue = 'الرياض';
+    String dropdownValue = 'الرياض';
     ListView content = ListView(
       padding: EdgeInsets.all(20),
       children: <Widget>[
-        widget.user.phoneNumber.substring(0,4) == '+966'? DropdownButton<String>(
-          value: dropdownValue,
-          icon: Icon(Icons.details,color: Colors.black),
-          iconSize: 24,
-          elevation: 16,
-          style: TextStyle(color: Colors.black),
-          underline: Container(
-            height: 2,
-            color: Colors.black,
-          ),
-          onChanged: (String newValue) {
-            setState(() {
-              dropdownValue = newValue;
-            });
-          },
-          items: <String>['الرياض', 'مكة', 'جدة', 'المدينة', 'القصيم', 'حفر الباطن', 'حائل', 'الشرقية', 'تبوك', 'الحدود الشمالية', 'الجوف', 'ينبع', 'الدوادمي', 'الطائف', 'الباحة', 'عسير', 'جيزان', 'نجران', 'وادي الدواسر']
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value,style:TextStyle(color: Colors.black),),
-            );
-          }).toList(),
-        ):Container(),
-        SizedBox(height: 20),
+
         //picture,
         Form(
           key: _formKey,
@@ -159,6 +136,57 @@ class _EditProfileState extends State<EditProfile> {
             children: <Widget>[
               Text('الاسم أو الاسم المستعار'),
               inputName,
+              widget.user.phoneNumber.substring(0, 4) == '+966'
+                  ? DropdownButtonFormField<String>(
+                value: dropdownValue,
+                icon: Icon(Icons.details, color: Colors.black),
+                iconSize: 24,
+                elevation: 16,
+                style: TextStyle(color: Colors.black),
+//                underline: Container(
+//                  height: 2,
+//                  color: Colors.black,
+//                ),
+                onChanged: (String newValue) {
+                  setState(() {
+                    dropdownValue = newValue;
+                  });
+                },
+                items: <String>[
+                  'الرياض',
+                  'مكة',
+                  'جدة',
+                  'المدينة',
+                  'القصيم',
+                  'حفر الباطن',
+                  'حائل',
+                  'الشرقية',
+                  'تبوك',
+                  'الحدود الشمالية',
+                  'الجوف',
+                  'ينبع',
+                  'الدوادمي',
+                  'الطائف',
+                  'الباحة',
+                  'عسير',
+                  'جيزان',
+                  'نجران',
+                  'وادي الدواسر'
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    onTap: (){
+
+                    },
+                    child: Text(
+                      value,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  );
+                }).toList(),
+              )
+                  : Container(),
+              SizedBox(height: 20),
               // inputNickName,
               // inputWork,
               // // inputPhoneNumber,
@@ -167,7 +195,6 @@ class _EditProfileState extends State<EditProfile> {
             ],
           ),
         ),
-
       ],
     );
 

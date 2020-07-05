@@ -12,6 +12,7 @@ class UserController extends Disposable {
 
   static final userReference =
       FirebaseDatabase.instance.reference().child('users');
+
   //User user;
   UserController();
 
@@ -88,9 +89,7 @@ class UserController extends Disposable {
 
   Future<void> updateProfile(FirebaseUser user, {name}) async {
     UserUpdateInfo userUpdateInfo = UserUpdateInfo();
-
     userUpdateInfo.displayName = name ?? '';
-
     return await user.updateProfile(userUpdateInfo);
   }
 }
