@@ -21,7 +21,8 @@ class ProductListWidget extends StatefulWidget {
   ProductSearchModel searchModel;
   String pageTitle;
   String titleQuery;
-  ProductBloc _productBloc;
+
+  //ProductBloc _productBloc;
 
   ProductListWidget(
       {this.searchModel,
@@ -29,8 +30,8 @@ class ProductListWidget extends StatefulWidget {
       this.showCategoriesSlider,
       this.titleQuery,
       this.onSearchPopup}) {
-    _productBloc =
-        new ProductBloc(searchModel: searchModel, startLoadingWithCount: -1);
+//    _productBloc =
+//        new ProductBloc(searchModel: searchModel, startLoadingWithCount: -1);
   }
 
   bool showCategoriesSlider = true;
@@ -79,7 +80,7 @@ class _ProductListWidgetState extends State<ProductListWidget> {
   @override
   dispose() {
     super.dispose();
-    widget._productBloc.dispose();
+    // widget._productBloc.dispose();
   }
 
   List<BaseProduct> list;
@@ -120,7 +121,6 @@ class _ProductListWidgetState extends State<ProductListWidget> {
                   Padding(padding: EdgeInsets.only(top: 25.0)),
                   FlatButton(
                       onPressed: () {
-
                         setState(() {
                           recent = true;
                         });
@@ -134,7 +134,6 @@ class _ProductListWidgetState extends State<ProductListWidget> {
                   Padding(padding: EdgeInsets.only(top: 25.0)),
                   FlatButton(
                     onPressed: () {
-
                       setState(() {
                         recent = false;
                       });
@@ -158,23 +157,27 @@ class _ProductListWidgetState extends State<ProductListWidget> {
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     var productList;
-    if(recent){
+    if (recent) {
       setState(() {
-        List<BaseProduct> list =  Provider.of<ProductProvider>(context).productList;
-        list.sort((a,b)=> b.creationDate.compareTo(a.creationDate));
-         productList = Provider.of<ProductProvider>(context).filterList(list,widget.searchModel);
+        List<BaseProduct> list =
+            Provider.of<ProductProvider>(context).productList;
+        list.sort((a, b) {
+          return a.creationDate == null || b.creationDate == null
+              ? 1
+              : b.creationDate.compareTo(a.creationDate);
+        });
+        productList = Provider.of<ProductProvider>(context)
+            .filterList(list, widget.searchModel);
+      });
+    } else {
+      setState(() {
+        List<BaseProduct> list =
+            Provider.of<ProductProvider>(context).productList;
+        list.sort((a, b)  {return a.creationDate == null || b.creationDate == null ? 1: a.creationDate.compareTo(b.creationDate);});
+        productList = Provider.of<ProductProvider>(context)
+            .filterList(list, widget.searchModel);
       });
     }
-    else
-      {
-        setState(() {
-          List<BaseProduct> list =  Provider.of<ProductProvider>(context).productList;
-          list.sort((a,b)=> a.creationDate.compareTo(b.creationDate));
-           productList = Provider.of<ProductProvider>(context).filterList(list,widget.searchModel);
-        });
-      }
-
-
 
     var column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,

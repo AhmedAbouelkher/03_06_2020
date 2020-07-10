@@ -107,9 +107,9 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                       Padding(padding: EdgeInsets.only(top: 20.0)),
                       Center(
                           child: Text(
-                        "نبذة",
-                        style: _subHeaderCustomStyle,
-                      )),
+                            "نبذة",
+                            style: _subHeaderCustomStyle,
+                          )),
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 20.0, right: 20.0, left: 20.0, bottom: 20.0),
@@ -197,10 +197,12 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                   children: <Widget>[
                     SystemShareButton(
                         "ألق نظرة على ${widget.product.title} على سوق الهفتاء" +
-                            " https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${widget.product.id}&apn=emo.apps.haftaa"),
+                            " https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${widget
+                                .product.id}&apn=adhwa.apps.haftaa"),
                     WhatsappShareButton(
                         "ألق نظرة على ${widget.product.title} على سوق الهفتاء" +
-                            " https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${widget.product.id}&apn=emo.apps.haftaa")
+                            " https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${widget
+                                .product.id}&apn=adhwa.apps.haftaa")
                   ],
                 )
 
@@ -241,6 +243,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+
               /// Header image slider
               Container(
                 height: 300.0,
@@ -259,19 +262,19 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                       //   AssetImage('assets/img/man.png'),
                       // ],
                       images:
-                          List.generate(widget.product.images.length, (index) {
+                      List.generate(widget.product.images.length, (index) {
                         return new CachedNetworkImage(
                           fit: BoxFit.cover,
                           imageUrl: widget.product.images[index],
                           placeholder: (context, url) =>
                               Center(child: CircularProgressIndicator()),
                           errorWidget: (context, url, error) =>
-                              new Icon(Icons.error),
+                          new Icon(Icons.error),
                         );
 
                         //return new NetworkImage(widget.product.images[index]);
                       })
-                            ..add(new NetworkImage(widget.product.mainImage)),
+                        ..add(new NetworkImage(widget.product.mainImage)),
                     ),
                   ),
                 ),
@@ -341,37 +344,39 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
 //                            ),
                             Padding(
                                 padding: const EdgeInsets.only(right: 8.0),
-                                child: (Provider.of<PhoneAuthDataProvider>(
-                                                context,
-                                                listen: false)
-                                            .isLoggedIn &&
-                                        Provider.of<PhoneAuthDataProvider>(
-                                                    context,
-                                                    listen: false)
-                                                .user
-                                                .uid ==
-                                            widget.product.userId)
+                                child: (Provider
+                                    .of<PhoneAuthDataProvider>(
+                                    context,
+                                    listen: false)
+                                    .isLoggedIn &&
+                                    Provider
+                                        .of<PhoneAuthDataProvider>(
+                                        context,
+                                        listen: false)
+                                        .user
+                                        .uid ==
+                                        widget.product.userId)
                                     ? RaisedButton(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
-                                            side:
-                                                BorderSide(color: Colors.teal)),
-                                        color: Colors.blueAccent,
-                                        onPressed: () {
-                                          Navigator.of(context).push(
-                                              PageRouteBuilder(
-                                                  pageBuilder: (_, __, ___) =>
-                                                      new AddProduct.edit(
-                                                          widget.product)));
-                                        },
-                                        child: Row(
-                                          children: <Widget>[
-                                            Text('تعديل'),
-                                            Icon(Icons.edit)
-                                          ],
-                                        ),
-                                      )
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                      side:
+                                      BorderSide(color: Colors.teal)),
+                                  color: Colors.blueAccent,
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        PageRouteBuilder(
+                                            pageBuilder: (_, __, ___) =>
+                                            new AddProduct.edit(
+                                                widget.product)));
+                                  },
+                                  child: Row(
+                                    children: <Widget>[
+                                      Text('تعديل'),
+                                      Icon(Icons.edit)
+                                    ],
+                                  ),
+                                )
                                     : Container()),
                             ProductFavoriteButton(widget.product),
                             Padding(
@@ -501,7 +506,10 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
               /// Background white for description
               Container(
                 //height: 300.0,
-                width: MediaQuery.of(context).size.width,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
                 decoration: BoxDecoration(color: Colors.white, boxShadow: [
                   BoxShadow(
                     color: Color(0xFF656565).withOpacity(0.15),
@@ -673,10 +681,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
               //   ),
               // ),
               //new ProductComments(),
-              widget.product.canComment?ProductReviews(widget.product):Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(child: Text('لا يمكن التعليق على هذا المنتج')),
-              ),
+              ProductReviews(widget.product),
               _suggestedItem
             ],
           ),
@@ -701,17 +706,20 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
+
                     /// Chat Icon
                     InkWell(
                       onTap: () {
-                        if (Provider.of<PhoneAuthDataProvider>(context,
-                                    listen: false)
-                                .isLoggedIn ==
+                        if (Provider
+                            .of<PhoneAuthDataProvider>(context,
+                            listen: false)
+                            .isLoggedIn ==
                             true) {
                           if (widget.product.type == ItemType.sale) {
-                            var myId = Provider.of<PhoneAuthDataProvider>(
-                                    context,
-                                    listen: false)
+                            var myId = Provider
+                                .of<PhoneAuthDataProvider>(
+                                context,
+                                listen: false)
                                 .user
                                 .uid;
                             var peerId = _user.id;
@@ -730,7 +738,8 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => PrivateChatscreen(
+                                    builder: (context) =>
+                                        PrivateChatscreen(
                                           product: widget.product,
                                           chatId: ChatId,
                                           title: title,
@@ -760,14 +769,20 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                       onTap: () {
                         widget.product.user.then((user) {
                           ProductSearchModel _searchModel =
-                              ProductSearchModel.FromSearchParams(
-                                  userID: user.id);
+                          ProductSearchModel.FromSearchParams(
+                              userID: user.id);
 
                           Navigator.of(context).push(
                             PageRouteBuilder(
-                                pageBuilder: (_, __, ___) => new ProductList
-                                        .Search(_searchModel,
-                                    'المستخدم (${widget.product.showMobileNumber ? user.name ?? user?.mobile ?? user.email : 'الحالى'})'),
+                                pageBuilder: (_, __, ___) {
+                                  return new ProductList
+                                      .Search(_searchModel,
+                                      'المستخدم (${widget.product
+                                          .showMobileNumber
+                                          ? user.name ?? user?.mobile ??
+                                          user.email
+                                          : 'الحالى'})');
+                                },
                                 transitionDuration: Duration(milliseconds: 600),
                                 transitionsBuilder: (_,
                                     Animation<double> animation,
@@ -804,13 +819,13 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                         color: Colors.white,
                                         fontWeight: FontWeight.w700),
                                     widget.product.showMobileNumber)
-                                // Text(
-                                //   "Pay",
-                                //   style: TextStyle(
-                                //       color: Colors.white,
-                                //       fontWeight: FontWeight.w700),
-                                // ),
-                                ),
+                              // Text(
+                              //   "Pay",
+                              //   style: TextStyle(
+                              //       color: Colors.white,
+                              //       fontWeight: FontWeight.w700),
+                              // ),
+                            ),
                           ],
                         ),
                       ),
@@ -825,8 +840,8 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
     );
   }
 
-  Widget _buildRating(
-      String date, String details, Function changeRating, String image) {
+  Widget _buildRating(String date, String details, Function changeRating,
+      String image) {
     return ListTile(
       leading: Container(
         height: 45.0,
@@ -1026,7 +1041,7 @@ class FavoriteItem extends StatelessWidget {
                 ),
                 Padding(
                   padding:
-                      const EdgeInsets.only(right: 15.0, left: 15.0, top: 5.0),
+                  const EdgeInsets.only(right: 15.0, left: 15.0, top: 5.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

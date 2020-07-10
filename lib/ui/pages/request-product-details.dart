@@ -163,10 +163,10 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                   children: <Widget>[
                     SystemShareButton(
                         "ألق نظرة على ${product.title} على سوق الهفتاء" +
-                            " https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${product.id}&apn=emo.apps.haftaa"),
+                            " https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${product.id}&apn=adhwa.apps.haftaa"),
                     WhatsappShareButton(
                         "ألق نظرة على ${product.title} على سوق الهفتاء" +
-                            " https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${product.id}&apn=emo.apps.haftaa")
+                            " https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${product.id}&apn=adhwa.apps.haftaa")
                   ],
                 )
 
@@ -660,10 +660,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
               ),
 
               ///Call a variable suggested Item(Top Rated Product Card) in bottom of description
-              product.canComment?ProductReviews(product):Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(child: Text('لا يمكن التعليق على هذا المنتج')),
-              ),              _suggestedItem
+              ProductReviews(product),              _suggestedItem
             ],
           ),
 

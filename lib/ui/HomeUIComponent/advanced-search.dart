@@ -267,10 +267,10 @@ class _AdvancedSearchState extends State<AdvancedSearch> {
       child: Text('شراء'),
       value: 'شراء',
     ),
-    DropdownMenuItem(
-      child: Text('مزاد'),
-      value: 'مزاد',
-    ),
+//    DropdownMenuItem(
+//      child: Text('مزاد'),
+//      value: 'مزاد',
+//    ),
   ];
 
   var productTypeDropdownWidget;

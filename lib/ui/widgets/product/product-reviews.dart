@@ -34,6 +34,7 @@ class _ProductReviewsState extends State<ProductReviews> {
       color: Colors.black12,
     );
   }
+
   String commentText;
   final TextController = TextEditingController();
 
@@ -45,6 +46,94 @@ class _ProductReviewsState extends State<ProductReviews> {
         .child('${widget.product.id}')
         .child('comments');
     var commentsFuture = widget.product.getProductComments();
+    var addComment = Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Container(
+          width: 200,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15), color: Colors.white),
+          child: TextField(
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
+            controller: TextController,
+            onChanged: (value) {
+              commentText = value;
+            },
+            decoration: InputDecoration(
+              hintText: 'كتابة تعليق',
+              hintStyle: TextStyle(
+                color: Colors.black,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white, width: 2.0),
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white, width: 2.0),
+                borderRadius: BorderRadius.circular(25.0),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25.0),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: Colors.lightBlueAccent),
+            child: FlatButton(
+                onPressed: () {
+                  if (Provider.of<PhoneAuthDataProvider>(context, listen: false)
+                          .isLoggedIn ==
+                      true) {
+                    if (commentText.length == 0) {
+                      // dont comment
+                    } else {
+                      FirebaseDatabase.instance
+                          .reference()
+                          .child('menuItems')
+                          .child('${widget.product.id}')
+                          .child('comments')
+                          .push()
+                          .set({
+                        "userID": Provider.of<PhoneAuthDataProvider>(context,
+                                listen: false)
+                            .user
+                            .uid,
+                        "userName": Provider.of<PhoneAuthDataProvider>(context,
+                                listen: false)
+                            .user
+                            .displayName,
+                        "userPhone": Provider.of<PhoneAuthDataProvider>(context,
+                                listen: false)
+                            .user
+                            .phoneNumber,
+                        "userImg": Provider.of<PhoneAuthDataProvider>(context,
+                                listen: false)
+                            .user
+                            .photoUrl,
+                        "text": commentText,
+                        "time": DateTime.now().millisecondsSinceEpoch,
+                      });
+                      TextController.clear();
+                    }
+                  } else {
+                    Navigator.pushNamed(context, 'login');
+                  }
+                },
+                child: Text(
+                  'تعليق',
+                  style:
+                      TextStyle(color: const Color(0xffffffff), fontSize: 20),
+                )),
+          ),
+        )
+      ],
+    );
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: Container(
@@ -156,90 +245,13 @@ class _ProductReviewsState extends State<ProductReviews> {
                   }
                 },
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                    width: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white),
-                    child: TextField(
-                      keyboardType: TextInputType.multiline,
-                      maxLines: null,
-                      controller: TextController,
-                      onChanged: (value) {
-                        commentText = value;
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'كتابة تعليق',
-                        hintStyle: TextStyle(
-                          color: Colors.black,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                          BorderSide(color: Colors.white, width: 2.0),
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                          BorderSide(color: Colors.white, width: 2.0),
-                          borderRadius: BorderRadius.circular(25.0),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                        ),
-                      ),
+              widget.product.canComment
+                  ? addComment
+                  : Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child:
+                          Center(child: Text('لا يمكن التعليق على هذا المنتج حالياً')),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 15),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Colors.lightBlueAccent),
-                      child: FlatButton(
-                          onPressed: () {
-                           if( Provider.of<PhoneAuthDataProvider>(context, listen: false).isLoggedIn ==true) {
-                                 if(commentText.length == 0){
-                                     // dont comment
-                                 }
-                                 else{
-                                   FirebaseDatabase.instance
-                                       .reference()
-                                       .child('menuItems')
-                                       .child('${widget.product.id}')
-                                       .child('comments').push()
-                                       .set({
-                                      "userID": Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid,
-                                      "userName":Provider.of<PhoneAuthDataProvider>(context, listen: false).user.displayName ,
-                                      "userPhone": Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber,
-                                      "userImg": Provider.of<PhoneAuthDataProvider>(context, listen: false).user.photoUrl,
-                                      "text": commentText,
-                                      "time": DateTime.now().millisecondsSinceEpoch,
-                                   });
-                                   TextController.clear();
-
-                                 }
-
-                             }
-                             else
-                               {
-                                 Navigator.pushNamed(context, 'login');
-
-                               }
-
-                            },
-                          child: Text(
-                            'تعليق',
-                            style: TextStyle(
-                                color: const Color(0xffffffff), fontSize: 20),
-                          )),
-                    ),
-                  )
-                ],
-              ),
             ],
           ),
         ),
