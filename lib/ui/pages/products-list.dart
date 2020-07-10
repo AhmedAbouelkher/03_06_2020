@@ -32,7 +32,7 @@ class ProductList extends StatefulWidget {
   bool showCategoriesSlider = true;
   ProductList.Search(this.searchModel, this.pageTitle,
       {this.showCategoriesSlider}) {
-
+var ddd;
     // _productBloc =
     //     new ProductBloc(searchModel: searchModel, startLoadingWithCount: -1);
   }

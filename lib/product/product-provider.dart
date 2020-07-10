@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:haftaa/Contracts/Disposable.dart';
+import 'package:haftaa/Enums/enums.dart';
 import 'package:haftaa/data/product-repository.dart';
 import 'package:haftaa/product/auction-product.dart';
 import 'package:haftaa/product/base-product.dart';
@@ -188,19 +189,18 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool isTitleOrDescriptionContainsText(BaseProduct product, String text) {
+    return product.title.toLowerCase().contains(text.toLowerCase()) ||
+        product.description.toLowerCase().contains(text.toLowerCase());
+  }
+
   List<BaseProduct> filterList(
       List<BaseProduct> list, ProductSearchModel productSearchModel) {
     return list.where((product) {
       return ((productSearchModel.title?.toLowerCase() == null
               ? true
-              : product.title
-                  .toLowerCase()
-                  .contains(productSearchModel.title.toLowerCase())) &&
-          (productSearchModel.title?.toLowerCase() == null
-              ? true
-              : product.description
-                  .toLowerCase()
-                  .contains(productSearchModel.title.toLowerCase())) &&
+              : isTitleOrDescriptionContainsText(
+                  product, productSearchModel.title)) &&
           (productSearchModel.categoryID == null
               ? true
               : product.categoryId == productSearchModel.categoryID) &&
@@ -209,7 +209,8 @@ class ProductProvider extends ChangeNotifier {
               : product.governorateId == productSearchModel.governorateID) &&
           (productSearchModel.productType == null
               ? true
-              : product.type == productSearchModel.productType) &&
+              : isProductTypeEqualSearchProductType(
+                  product, productSearchModel)) &&
           (productSearchModel.usedProducts == null
               ? true
               : product.used == productSearchModel.usedProducts) &&
@@ -220,6 +221,29 @@ class ProductProvider extends ChangeNotifier {
               ? true
               : product.favUsers.containsKey(product.userId)));
     }).toList();
+  }
+
+  bool isProductTypeEqualSearchProductType(
+      BaseProduct product, ProductSearchModel productSearchModel) {
+    switch (productSearchModel.productType) {
+      case "sale":
+        if (product.type == ItemType.sale)
+          return true;
+        else
+          return false;
+        break;
+      case "request":
+        if (product.type == ItemType.request)
+          return true;
+        else
+          return false;
+
+        break;
+      default:
+        return false;
+        break;
+    }
+
   }
 
   void _onProductUpdated(Event event) {
@@ -248,9 +272,11 @@ class ProductProvider extends ChangeNotifier {
 
     //productList.add(product);
   }
-  Future<DataSnapshot>  getProductComments(String id) {
+
+  Future<DataSnapshot> getProductComments(String id) {
     return _productRepositoy.getProductComments(id);
   }
+
   Future<BaseProduct> getProductById(String id) async {
     Completer<BaseProduct> completer = Completer<BaseProduct>();
 

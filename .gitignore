@@ -43,3 +43,5 @@ app.*.map.json
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 /android/key.jks
 /android/key.properties
+/android/AdhwaHaftaaStoreKey.jks
+/android/emo.app.haftaa_key.properties

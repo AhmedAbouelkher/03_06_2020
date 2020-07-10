@@ -43,7 +43,9 @@ abstract class AdState extends Equatable {
     switch (sortingType) {
       case SortingType.latest:
         list.sort((a, b) {
-          return a.creationDate.compareTo(b.creationDate);
+          return a.creationDate == null || b.creationDate == null
+              ? 1
+              : a.creationDate.compareTo(b.creationDate);
         });
         break;
       case SortingType.lowPrice:

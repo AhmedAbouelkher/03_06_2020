@@ -8,57 +8,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:283841002378:android:a3221b3109bfa134dbe673",
-        "android_client_info": {
-          "package_name": "adhwa.apps.haftaa"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "283841002378-pltnca1t0ut0o3dtenqbsae9fbg4kouf.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDlnTm0xeygo6XoKaMtUIu-gZB2XQPqwzA"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "283841002378-pltnca1t0ut0o3dtenqbsae9fbg4kouf.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "283841002378-14ml7lgaodd3dsqrh6s1p6fur107gsun.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "emo.apps.haftaa",
-                "app_store_id": "1224489121"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:283841002378:android:5a2b1a7abb387880dbe673",
         "android_client_info": {
           "package_name": "emo.apps.haftaa"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "283841002378-ksm4vqtsukugaq0hitctt1bs2vllr97j.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "emo.apps.haftaa",
-            "certificate_hash": "205ffb90b5719885e882ffaccdf2ac04312408b7"
-          }
-        },
         {
           "client_id": "283841002378-v5tgalp47d7djffj9hfo7e2a2n75bf99.apps.googleusercontent.com",
           "client_type": 1,

@@ -1,4 +1,4 @@
-package emo.apps.haftaa
+package adhwa.apps.haftaa
 
 import io.flutter.embedding.android.FlutterActivity
 
