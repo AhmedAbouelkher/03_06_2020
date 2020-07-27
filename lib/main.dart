@@ -76,7 +76,7 @@ class myApp extends StatelessWidget {
         /// Move splash screen to ChoseLogin Layout
         /// Routes
         routes: <String, WidgetBuilder>{
-          "onBoarding": (BuildContext context) => new onBoarding(),
+//          "onBoarding": (BuildContext context) => new onBoarding(),
           "home": (BuildContext context) => new bottomNavigationBar(),
           // "root": (BuildContext context) => new BottomNavigationBar(items: <BottomNavigationBarItem>[],),
           "choose-login": (BuildContext context) => new ChoseLogin(),
@@ -202,16 +202,18 @@ class _SplashScreenState extends State<SplashScreen> {
 
   /// To navigate layout change
   void NavigatorPage() async {
-    try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      bool introDisplayed = await prefs.getBool('introDisplayed');
-      if (introDisplayed == true) {
-        Navigator.of(context).pushReplacementNamed("home");
-      } else
-        Navigator.of(context).pushReplacementNamed("onBoarding");
-    } catch (e) {
-      var ss;
-    }
+    Navigator.of(context).pushReplacementNamed("home");
+
+//    try {
+//      SharedPreferences prefs = await SharedPreferences.getInstance();
+//      bool introDisplayed = await prefs.getBool('introDisplayed');
+//      if (introDisplayed == true) {
+//        Navigator.of(context).pushReplacementNamed("home");
+//      } else
+//        Navigator.of(context).pushReplacementNamed("onBoarding");
+//    } catch (e) {
+//      var ss;
+//    }
   }
 
   /// Declare startTime to InitState

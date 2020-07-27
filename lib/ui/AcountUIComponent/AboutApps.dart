@@ -67,7 +67,7 @@ class _aboutAppsState extends State<aboutApps> {
                                 fontWeight: FontWeight.w600),
                           ),
                           Text(
-                            "عروض بيع وشراء ومزادات على كيفك",
+                            "عروض بيع وشراء",
                             style: _txtCustomSub,
                           )
                         ],
@@ -86,13 +86,20 @@ class _aboutAppsState extends State<aboutApps> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Text(
-                  "أهلا بك. تطبيقنا تطبيق الهفتاء هو سوق إلكتروني مفتوح تقدر من خلالة عرض شيء للبيع أو حتى طلب شيء للشراء "
-                  "بالإضافة إلى قسم المزادات. حيث تستطيع عرض شيء للمزاد العلني حيث تستقبل المزايدات والعروض "
-                  "يوفر التطبيق ميزة التواصل المباشر بينك وبين الطرف الآخر لتسهيل وتسريع عملية البيع بينكما "
-                  "تم بناء التطبيق بأحدث تكنلوجيا وأساليب البرمجة الحديثة التي تضمن سرعة واستقرار وسرية البيانات لأعلى درجة "
-                  // "1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with "
-                  // "desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                  "تم بناء هذا السوق الالكتروني ليخدم جميع المهتمين البائع  والمشتري/ وطالب الخدمة"
+                  " نحاول في هذا السوق الالكتروني تطويره تدريجيآ و هذه المرحله الاولى ليخدم المهتمين بالتسويق"
+                  " والهدف بالدرجه الاولى ايصال طلبك للمستهدف "
+                  "دورنا منصة تسويق الكتروني في جميع انحاء العالم"
                   ,
+                  style: _txtCustomSub,
+                  textAlign: TextAlign.justify,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Text(
+
+                      "هذا التطبيق ملك وتحت ادارة الاستاذ / سعود حبيب الهفتاء",
                   style: _txtCustomSub,
                   textAlign: TextAlign.justify,
                 ),

@@ -397,7 +397,6 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                           ],
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -517,7 +516,7 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    "المدينة",
+                                    "الدولة",
                                     style: _txtCustomSub,
                                   ),
                                 ),
@@ -531,21 +530,30 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
                           ],
                         ),
                       ),
-//                          Padding(
-//                            padding: const EdgeInsets.only(
-//                                top: 20.0, right: 20.0, left: 60.0),
-//                            child: Row(
-//                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                              children: <Widget>[
-//                                Text("المنطقة", style: _txtCustomSub),
-//                                ProductRegionWidget(
-//                                    product.region,
-//                                    _txtCustomHead.copyWith(
-//                                        fontSize: 17.0,
-//                                        fontWeight: FontWeight.w600))
-//                              ],
-//                            ),
-//                          ),
+                      Divider(),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 20.0, right: 20.0, left: 60.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Icon(Icons.location_city),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text("المنطقة", style: _txtCustomSub),
+                                ),
+                                ProductRegionWidget(
+                                    product.region,
+                                    _txtCustomHead.copyWith(
+                                        fontSize: 17.0,
+                                        fontWeight: FontWeight.w600))
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
 //                          Padding(
 //                            padding: const EdgeInsets.only(
 //                                top: 20.0, right: 20.0, left: 60.0),
@@ -660,7 +668,8 @@ class _RequestProductDetailsState extends State<RequestProductDetails> {
               ),
 
               ///Call a variable suggested Item(Top Rated Product Card) in bottom of description
-              ProductReviews(product),              _suggestedItem
+              ProductReviews(product),
+              _suggestedItem
             ],
           ),
 

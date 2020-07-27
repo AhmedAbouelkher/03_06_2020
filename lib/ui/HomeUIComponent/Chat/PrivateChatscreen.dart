@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:haftaa/constants.dart';
 import 'package:haftaa/product/base-product.dart';
 import 'package:haftaa/product/sale-product.dart';
 import 'package:haftaa/providers/phone_auth.dart';
+import 'package:haftaa/services/calls-and-messages-service.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:haftaa/ui/HomeUIComponent/Chat/PrivateChatModel.dart';
@@ -18,7 +20,8 @@ class PrivateChatscreen extends StatefulWidget {
   BaseProduct product;
   var peerId;
 
-  PrivateChatscreen({this.product, this.title, this.chatId, this.peerId, this.Phone});
+  PrivateChatscreen(
+      {this.product, this.title, this.chatId, this.peerId, this.Phone});
 
   String TitleFromNotification;
   String productIdFromNotification;
@@ -28,18 +31,16 @@ class PrivateChatscreen extends StatefulWidget {
   bool showNumberFromNotification;
   String phoneFromNotification;
 
-  PrivateChatscreen.FromNotification(
-      {
-        this.TitleFromNotification,
-      this.chatId,
-      this.productIdFromNotification,
-      this.userpProductIDFromNotification,
-      this.peerIdFromNotification,
-      this.myIDFromNotification,
-        this.showNumberFromNotification,
-        this.phoneFromNotification,
-
-      });
+  PrivateChatscreen.FromNotification({
+    this.TitleFromNotification,
+    this.chatId,
+    this.productIdFromNotification,
+    this.userpProductIDFromNotification,
+    this.peerIdFromNotification,
+    this.myIDFromNotification,
+    this.showNumberFromNotification,
+    this.phoneFromNotification,
+  });
 
   @override
   _PrivateChatscreen createState() => _PrivateChatscreen();
@@ -56,45 +57,64 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title:widget.product == null?
-              widget.showNumberFromNotification == true?
-                  Column(
-                    children: <Widget>[
-                    Text('${widget.TitleFromNotification}',style: TextStyle(fontSize: 18,color: Colors.black54),),
-                    Text('مع ${widget.phoneFromNotification}',style: TextStyle(fontSize: 18,),)
-                  ],)
-          :
-          Text('${widget.TitleFromNotification}',style: TextStyle(fontSize: 18,),)
-              :
-          widget.product.showMobileNumber == true?
-          Column(
-            children: <Widget>[
-              Text('${widget.title}',style: TextStyle(fontSize: 18,color: Colors.black54),),
-              Text('مع ${widget.Phone}',style: TextStyle(fontSize: 18,),)
-            ],)
-              :
-          Text('${widget.title}',style: TextStyle(fontSize: 18,),),
+          title: widget.product == null
+              ? widget.showNumberFromNotification == true
+                  ? Column(
+                      children: <Widget>[
+                        Text(
+                          '${widget.TitleFromNotification}',
+                          style: TextStyle(fontSize: 18, color: Colors.black54),
+                        ),
+                        Text(
+                          'مع ${widget.phoneFromNotification}',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        )
+                      ],
+                    )
+                  : Text(
+                      '${widget.TitleFromNotification}',
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    )
+              : widget.product.showMobileNumber == true
+                  ? Column(
+                      children: <Widget>[
+                        Text(
+                          '${widget.title}',
+                          style: TextStyle(fontSize: 18, color: Colors.black54),
+                        ),
+                        Text(
+                          '${widget.Phone == null ? '' : 'مع '+widget.Phone}',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        )
+                      ],
+                    )
+                  : Text(
+                      '${widget.title}',
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
           backgroundColor: Colors.white,
           actions: <Widget>[
             IconButton(
                 icon: Icon(Icons.report),
-                onPressed: (){
-                  if(widget.product == null){
-                     // action come from notification screen
+                onPressed: () {
+                  if (widget.product == null) {
+                    // action come from notification screen
 
                     var IdProduct = widget.productIdFromNotification;
-
-
-                  }
-                  else{
+                  } else {
                     // action come from details screen
 
                     var IdProduct = widget.product.id;
-
-
                   }
-                }
-            )
+                })
           ],
         ),
         body: SafeArea(
@@ -102,10 +122,10 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              widget.product == null?
-              MessagesStreamFireStore(widget.productIdFromNotification,widget.chatId)
-              :
-              MessagesStreamFireStore(widget.product.id,widget.chatId),
+              widget.product == null
+                  ? MessagesStreamFireStore(
+                      widget.productIdFromNotification, widget.chatId)
+                  : MessagesStreamFireStore(widget.product.id, widget.chatId),
               Container(
                 decoration: BoxDecoration(
                   border: Border(
@@ -128,25 +148,43 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                             if (widget.product == null) {
                               _firestore = Firestore.instance
                                   .collection('PrivateChat')
-                                  .document('${widget.productIdFromNotification}')
-                                  .collection('${widget.chatId}').add({'message': messageText, 'sender': Provider
-                                  .of<PhoneAuthDataProvider>(context, listen: false)
-                                  .user
-                                  .phoneNumber,'time': FieldValue.serverTimestamp()});
-
-                            }else
-                            {
+                                  .document(
+                                      '${widget.productIdFromNotification}')
+                                  .collection('${widget.chatId}')
+                                  .add({
+                                'message': messageText,
+                                'sender': Provider.of<PhoneAuthDataProvider>(
+                                        context,
+                                        listen: false)
+                                    .user
+                                    .phoneNumber,
+                                'time': FieldValue.serverTimestamp(),
+                                'senderName':
+                                    Provider.of<PhoneAuthDataProvider>(context,
+                                            listen: false)
+                                        .user
+                                        .displayName
+                              });
+                            } else {
                               _firestore = Firestore.instance
                                   .collection('PrivateChat')
                                   .document('${widget.product.id}')
-                                  .collection('${widget.chatId}').add({'message': messageText, 'sender': Provider
-                                  .of<PhoneAuthDataProvider>(context, listen: false)
-                                  .user
-                                  .phoneNumber,'time': FieldValue.serverTimestamp()});
-
-
+                                  .collection('${widget.chatId}')
+                                  .add({
+                                'message': messageText,
+                                'sender': Provider.of<PhoneAuthDataProvider>(
+                                        context,
+                                        listen: false)
+                                    .user
+                                    .phoneNumber,
+                                'time': FieldValue.serverTimestamp(),
+                                'senderName':
+                                    Provider.of<PhoneAuthDataProvider>(context,
+                                            listen: false)
+                                        .user
+                                        .displayName
+                              });
                             }
-
 
 //                            dbRef.push().set({
 //                              "sender":
@@ -160,7 +198,6 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
 
                           // notification
 
-
                           if (widget.product == null) {
                             FirebaseDatabase.instance
                                 .reference()
@@ -169,27 +206,37 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                                     '${widget.userpProductIDFromNotification == Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid ? widget.myIDFromNotification : widget.userpProductIDFromNotification}')
                                 .child('${widget.productIdFromNotification}')
                                 .update({
-                              "senderPhone":
-                              Provider.of<PhoneAuthDataProvider>(context, listen: false).user.displayName == null
-                                  ?
-                              Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber
-                                  :
-                              Provider.of<PhoneAuthDataProvider>(context, listen: false).user.displayName
-                              ,
+                              "senderPhone": Provider.of<PhoneAuthDataProvider>(
+                                              context,
+                                              listen: false)
+                                          .user
+                                          .displayName ==
+                                      null
+                                  ? Provider.of<PhoneAuthDataProvider>(context,
+                                          listen: false)
+                                      .user
+                                      .phoneNumber
+                                  : Provider.of<PhoneAuthDataProvider>(context,
+                                          listen: false)
+                                      .user
+                                      .displayName,
                               "myID":
                                   '${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid}',
                               "text": messageText,
                               "time": DateTime.now().millisecondsSinceEpoch,
                               "chatID": widget.chatId,
                               "productID": widget.productIdFromNotification,
-                              "productTitle":
-                                  widget.TitleFromNotification,
+                              "productTitle": widget.TitleFromNotification,
                               "userpProductID":
                                   widget.userpProductIDFromNotification,
-                              "title": widget.title ,
+                              "title": widget.title,
                               "peerId": widget.peerIdFromNotification,
-                              "showNumber":widget.showNumberFromNotification,
-                              "phone":Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber,
+                              "showNumber": widget.showNumberFromNotification,
+                              "phone": Provider.of<PhoneAuthDataProvider>(
+                                      context,
+                                      listen: false)
+                                  .user
+                                  .phoneNumber,
                             });
                           } else {
                             FirebaseDatabase.instance
@@ -199,13 +246,20 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                                     '${widget.product.userId == Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid ? widget.peerId : widget.product.userId}')
                                 .child('${widget.product.id}')
                                 .update({
-                              "senderPhone":
-                              Provider.of<PhoneAuthDataProvider>(context, listen: false).user.displayName == null
-                                  ?
-                              Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber
-                                  :
-                              Provider.of<PhoneAuthDataProvider>(context, listen: false).user.displayName
-                                 ,
+                              "senderPhone": Provider.of<PhoneAuthDataProvider>(
+                                              context,
+                                              listen: false)
+                                          .user
+                                          .displayName ==
+                                      null
+                                  ? Provider.of<PhoneAuthDataProvider>(context,
+                                          listen: false)
+                                      .user
+                                      .phoneNumber
+                                  : Provider.of<PhoneAuthDataProvider>(context,
+                                          listen: false)
+                                      .user
+                                      .displayName,
                               "myID":
                                   '${Provider.of<PhoneAuthDataProvider>(context, listen: false).user.uid}',
                               "text": messageText,
@@ -216,8 +270,12 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
                               "productTitle": widget.product.title,
                               "title": widget.title,
                               "peerId": widget.peerId,
-                              "showNumber":widget.product.showMobileNumber,
-                              "phone":Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber,
+                              "showNumber": widget.product.showMobileNumber,
+                              "phone": Provider.of<PhoneAuthDataProvider>(
+                                      context,
+                                      listen: false)
+                                  .user
+                                  .phoneNumber,
                             });
                           }
                         },
@@ -260,51 +318,48 @@ class _PrivateChatscreen extends State<PrivateChatscreen> {
 }
 
 class MessagesStreamFireStore extends StatelessWidget {
+  String chatId;
 
-  String chatId ;
-  String productId ;
+  String productId;
 
   MessagesStreamFireStore(this.productId, this.chatId);
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream:
-                Firestore.instance
-                .collection('PrivateChat')
-                .document('$productId')
-                .collection('$chatId')
-                    .orderBy('time')
-                    .snapshots(),
-      builder: (context,   snapshot) {
-        if (!snapshot.hasData||snapshot.data.documents.isEmpty) {
+      stream: Firestore.instance
+          .collection('PrivateChat')
+          .document('$productId')
+          .collection('$chatId')
+          .orderBy('time')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData || snapshot.data.documents.isEmpty) {
           return NoMessage();
         }
         final messages = snapshot.data.documents.reversed;
         List<MessageBubbleFireStore> messageBubbles = [];
         for (var message in messages) {
-
           final messageText = message.data['message'];
           final messageSender = message.data['sender'];
           var messgaeTime = message.data['time'];
-
+          final messageSenderName = message.data['senderName'];
 
           final messageBubble = MessageBubbleFireStore(
-              text: messageText,
-              isMe: messageSender == Provider.of<PhoneAuthDataProvider>(context, listen: false).user.phoneNumber,
-            sender:messgaeTime ,
-
-
+            text: messageText,
+            isMe: messageSender ==
+                Provider.of<PhoneAuthDataProvider>(context, listen: false)
+                    .user
+                    .phoneNumber,
+            messageTitle: messgaeTime,
+            senderName: messageSenderName,
+            senderPhone: messageSender,
           );
 
           messageBubbles.add(messageBubble);
-         // messageBubbles..sort((a, b) => a.time.compareTo(b.time));
+          // messageBubbles..sort((a, b) => a.time.compareTo(b.time));
 
-         }
+        }
         return Expanded(
           child: ListView(
             reverse: true,
@@ -318,42 +373,47 @@ class MessagesStreamFireStore extends StatelessWidget {
 }
 
 class MessageBubbleFireStore extends StatelessWidget {
-  MessageBubbleFireStore({this.text, this.isMe, this.sender});
+  MessageBubbleFireStore(
+      {this.text,
+      this.isMe,
+      this.messageTitle,
+      this.senderName,
+      this.senderPhone});
 
   final String text;
-  final Timestamp sender;
+  final String senderName;
+  final String senderPhone;
+
+  final Timestamp messageTitle;
   final bool isMe;
-
-
 
   @override
   Widget build(BuildContext context) {
-
-
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column(
         crossAxisAlignment:
-        isMe ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+            isMe ? CrossAxisAlignment.start : CrossAxisAlignment.end,
         children: <Widget>[
           Text(
-            '${sender?.toDate()?.day}-${sender?.toDate()?.month}-${sender?.toDate()?.year} ${sender?.toDate()?.hour}:${sender?.toDate()?.minute}',
+            '${messageTitle?.toDate()?.day}-${messageTitle?.toDate()?.month}-${messageTitle?.toDate()?.year} ${messageTitle?.toDate()?.hour}:${messageTitle?.toDate()?.minute}',
             style: TextStyle(
               fontSize: 12.0,
               color: Colors.black54,
             ),
           ),
+          buildInkSenderNameOrPhoneWidget(),
           Material(
             borderRadius: isMe
                 ? BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                bottomLeft: Radius.circular(30.0),
-                bottomRight: Radius.circular(30.0))
+                    topLeft: Radius.circular(30.0),
+                    bottomLeft: Radius.circular(30.0),
+                    bottomRight: Radius.circular(30.0))
                 : BorderRadius.only(
-              bottomLeft: Radius.circular(30.0),
-              bottomRight: Radius.circular(30.0),
-              topRight: Radius.circular(30.0),
-            ),
+                    bottomLeft: Radius.circular(30.0),
+                    bottomRight: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0),
+                  ),
             elevation: 5.0,
             color: isMe ? Colors.grey : Colors.white70,
             child: Padding(
@@ -362,10 +422,7 @@ class MessageBubbleFireStore extends StatelessWidget {
                 text,
                 style: TextStyle(
                   color: isMe ? Colors.white : Colors.black,
-                  fontSize: MediaQuery
-                      .of(context)
-                      .size
-                      .width * .05,
+                  fontSize: MediaQuery.of(context).size.width * .05,
                 ),
               ),
             ),
@@ -374,8 +431,26 @@ class MessageBubbleFireStore extends StatelessWidget {
       ),
     );
   }
-}
 
+  InkWell buildInkSenderNameOrPhoneWidget() {
+    TextStyle style;
+    style = senderPhone == null
+        ? new TextStyle(color: Colors.black, fontSize: 16)
+        : new TextStyle(color: Colors.blue, fontSize: 16);
+
+    return InkWell(
+      onTap: () {
+        if (senderPhone != null) {
+          GetIt.instance<CallsAndMessagesService>().call(senderPhone);
+        }
+      },
+      child: Text(
+        senderName ?? senderPhone ?? '',
+        style: style,
+      ),
+    );
+  }
+}
 
 //class MessagesStream extends StatelessWidget {
 //  @override

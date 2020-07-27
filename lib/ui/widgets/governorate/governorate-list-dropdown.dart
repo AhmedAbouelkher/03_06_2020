@@ -11,14 +11,16 @@ class GovernorateDropdownWidget extends StatefulWidget {
   String hintText;
   Governorate selectedGovernorate;
   bool selectionIsRequired = false;
+
   GovernorateDropdownWidget({Key key}) : super(key: key) {}
+
   GovernorateDropdownWidget.custom(
       {this.onChange,
-        this.title,
-        this.hintText,
-        this.onDeleteSeelction,
-        this.selectionIsRequired,
-        this.selectedGovernorate});
+      this.title,
+      this.hintText,
+      this.onDeleteSeelction,
+      this.selectionIsRequired,
+      this.selectedGovernorate});
 
   @override
   _GovernorateDropdownWidgetState createState() {
@@ -32,19 +34,20 @@ class _GovernorateDropdownWidgetState extends State<GovernorateDropdownWidget> {
   }
 
   GovernorateController governorateController = new GovernorateController();
+
   //List<BaseCategory> categories = new List();
-  List<DropdownMenuItem<Governorate>> DropdownMenuItemList;
+  List<DropdownMenuItem<Governorate>> DropdownMenuItemList = new   List<DropdownMenuItem<Governorate>>();
 
   fillCategoryList() async {
     governorateController.loadCategories().then((catlist) {
       setState(() {
         DropdownMenuItemList =
             catlist.map<DropdownMenuItem<Governorate>>((Governorate category) {
-              return DropdownMenuItem(
-                child: Text(category.title),
-                value: category,
-              );
-            }).toList();
+          return DropdownMenuItem(
+            child: Text(category.title),
+            value: category,
+          );
+        }).toList();
       });
     });
   }
@@ -80,15 +83,7 @@ class _GovernorateDropdownWidgetState extends State<GovernorateDropdownWidget> {
                   });
                 },
                 hint: Text(widget.hintText),
-                value: (widget.selectedGovernorate != null &&
-                    widget.selectedGovernorate.id != null)
-                    ? DropdownMenuItemList
-                    .where((dropdownMenuItem) =>
-                dropdownMenuItem.value.id ==
-                    widget.selectedGovernorate.id)
-                    .first
-                    .value
-                    : widget.selectedGovernorate,
+                value: getSelected(),
                 items: DropdownMenuItemList,
               ),
             ),
@@ -109,5 +104,29 @@ class _GovernorateDropdownWidgetState extends State<GovernorateDropdownWidget> {
         ),
       ],
     );
+  }
+
+  Governorate getSelected() {
+    if (widget.selectedGovernorate != null &&
+        widget.selectedGovernorate.id != null) {
+      return DropdownMenuItemList.where((dropdownMenuItem) =>
+              dropdownMenuItem.value.id == widget.selectedGovernorate.id)
+          .first
+          .value;
+    } else {
+      if (DropdownMenuItemList != null && DropdownMenuItemList.length > 0) {
+        widget.selectedGovernorate = DropdownMenuItemList.first.value;
+        widget.onChange(widget.selectedGovernorate);
+
+      }
+      return widget.selectedGovernorate;
+    }
+//    return (widget.selectedGovernorate != null &&
+//            widget.selectedGovernorate.id != null)
+//        ? DropdownMenuItemList.where((dropdownMenuItem) =>
+//                dropdownMenuItem.value.id == widget.selectedGovernorate.id)
+//            .first
+//            .value
+//        : widget.selectedGovernorate;
   }
 }

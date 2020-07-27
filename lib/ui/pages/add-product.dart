@@ -411,59 +411,59 @@ class _AddProductState extends State<AddProduct> {
       title: "القسم",
       displayDropDownOnly: false,
       onChange: (BaseCategory category) {
+
         onCategorySelectChanged(category);
       },
     );
-    var streamBuilderSubCategories = StreamBuilder<BaseCategory>(
-                        stream: categoriesDropdownWidget.categorySelecting,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<BaseCategory> snapshot) {
-                          if (snapshot.data != null) {
-                            return CategoriesDropdownWidget.subCategories(
-                              selectedCategory: selected_sub_category,
-                              selectionIsRequired: false,
-                              hintText: "اختر القسم الفرعي",
-                              title: "القسم الفرعي",
-                              displayDropDownOnly: false,
-                              parentcategory: snapshot.data,
-                              onChange: (BaseCategory category) {
-                                onSubCategorySelectChanged(category);
-                              },
-                            );
-                          }
-
-                          if (snapshot.hasError)
-                            return Center(
-                              child: Text('خطأ في تحميل الأقسام الفرعية'),
-                            );
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.none:
-                              return Center(
-                                child: Text('تحميل ..'),
-                              );
-                              break;
-                            case ConnectionState.waiting:
-                              return Center(
-                                child: Text('تحميل ..'),
-                              );
-                              break;
-                            case ConnectionState.active:
-                              return Center(
-                                child: Text('تحميل ..'),
-                              );
-                              break;
-                            case ConnectionState.done:
-                              return Center(
-                                child: Text(snapshot.data.title),
-                              );
-                              break;
-                            default:
-                              return Center(
-                                child: Text('تحميل .dd.'),
-                              );
-                              break;
-                          }
-                        });
+//    var streamBuilderSubCategories = StreamBuilder<BaseCategory>(
+//        stream: categoriesDropdownWidget.categorySelecting,
+//        builder: (BuildContext context, AsyncSnapshot<BaseCategory> snapshot) {
+//          if (snapshot.data != null) {
+//            return CategoriesDropdownWidget.subCategories(
+//              selectedCategory: selected_sub_category,
+//              selectionIsRequired: false,
+//              hintText: "اختر القسم الفرعي",
+//              title: "القسم الفرعي",
+//              displayDropDownOnly: false,
+//              parentcategory: snapshot.data,
+//              onChange: (BaseCategory category) {
+//                onSubCategorySelectChanged(category);
+//              },
+//            );
+//          }
+//
+//          if (snapshot.hasError)
+//            return Center(
+//              child: Text('خطأ في تحميل الأقسام الفرعية'),
+//            );
+//          switch (snapshot.connectionState) {
+//            case ConnectionState.none:
+//              return Center(
+//                child: Text('تحميل ..'),
+//              );
+//              break;
+//            case ConnectionState.waiting:
+//              return Center(
+//                child: Text('تحميل ..'),
+//              );
+//              break;
+//            case ConnectionState.active:
+//              return Center(
+//                child: Text('تحميل ..'),
+//              );
+//              break;
+//            case ConnectionState.done:
+//              return Center(
+//                child: Text(snapshot.data.title),
+//              );
+//              break;
+//            default:
+//              return Center(
+//                child: Text('تحميل .dd.'),
+//              );
+//              break;
+//          }
+//        });
     var formContent = SingleChildScrollView(
       child: gettingProductdataForEditing
           ? Container()
@@ -495,26 +495,6 @@ class _AddProductState extends State<AddProduct> {
                       onSelectImages: (images) => onSelectImages(images),
                       selectedSliderImages: this.selectedImages,
                     ),
-                    Padding(padding: EdgeInsets.only(top: 3.0)),
-
-                    categoriesDropdownWidget,
-//                    Padding(padding: EdgeInsets.only(top: 3.0)),
-//                    streamBuilderSubCategories,
-                    // unreachable}, ),
-                    //subCategoriesDropdownWidget ?? Container(),
-                    Padding(padding: EdgeInsets.only(top: 20.0)),
-                    GovernorateDropdownWidget.custom(
-                      selectedGovernorate: selected_Governorate,
-                      selectionIsRequired: true,
-                      hintText: "اختر المحافظة",
-                      title: "المدينة",
-                      onChange: (Governorate governorate) {
-                        onGovernorateSelectChanged(governorate);
-                      },
-                      onDeleteSeelction: () => onGovernorateDeleteSelectedItem,
-                    ),
-
-                    regionDropdownWidget,
                     CustomDropdownWidget.Custom(
                       items: productTypes,
                       selectedValue: product.type,
@@ -529,6 +509,30 @@ class _AddProductState extends State<AddProduct> {
                         });
                       },
                     ),
+                    Padding(padding: EdgeInsets.only(top: 3.0)),
+
+                    categoriesDropdownWidget,
+//                    Padding(padding: EdgeInsets.only(top: 3.0)),
+//                    streamBuilderSubCategories,
+                    // unreachable}, ),
+                    //subCategoriesDropdownWidget ?? Container(),
+                    Padding(padding: EdgeInsets.only(top: 0.0)),
+
+                       GovernorateDropdownWidget.custom(
+                        selectedGovernorate: selected_Governorate,
+                        selectionIsRequired: true,
+                        hintText: "اختر المحافظة",
+                        title: "الدولة",
+                        onChange: (Governorate governorate) {
+                          onGovernorateSelectChanged(governorate);
+                        },
+                        onDeleteSeelction: () =>
+                            onGovernorateDeleteSelectedItem,
+                      ),
+
+
+                    regionDropdownWidget,
+
 //                    selected_category?.defaultItems != null &&
 //                            (product.type == ItemType.sale ||
 //                                product.type == ItemType.request) &&
@@ -665,7 +669,7 @@ class _AddProductState extends State<AddProduct> {
             child: Icon(Icons.arrow_back)),
         elevation: 0.0,
         title: Text(
-          "إضافة إعلان",
+          "بيانات الإعلان",
           style: TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 18.0,

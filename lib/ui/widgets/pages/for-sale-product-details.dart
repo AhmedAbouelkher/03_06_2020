@@ -416,7 +416,7 @@ class _forSaleProductDetailsState extends State<forSaleProductDetails> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
-                                  "المدينة",
+                                  "الدولة",
                                   style: _txtCustomSub,
                                 ),
                                 Text(

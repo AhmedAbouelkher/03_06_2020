@@ -63,7 +63,7 @@ class _ProductUserWidgetState extends State<ProductUserWidget> {
     }
 
     if (widget.showMobile != false) {
-      return snapshot.data.mobile;
+      return snapshot.data.mobile ?? 'إعلانات المستخدم';
     } else {
       return 'إعلانات المستخدم';
     }

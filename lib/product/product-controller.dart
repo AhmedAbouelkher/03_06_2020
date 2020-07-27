@@ -50,7 +50,9 @@ class ProductController implements Disposable {
     // firedb.addItem('1', {'title': title, 'desc': ''});
   }
 
-  delete() {}
+  Future<void> delete(String id) {
+    FirebaseDatabase.instance.reference().child('menuItems').child(id).remove();
+  }
   create() {}
   Future<void> update(BaseProduct product) {
     Completer<String> completer = Completer<String>();

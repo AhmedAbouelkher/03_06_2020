@@ -15,72 +15,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "283841002378-pltnca1t0ut0o3dtenqbsae9fbg4kouf.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDlnTm0xeygo6XoKaMtUIu-gZB2XQPqwzA"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "283841002378-pltnca1t0ut0o3dtenqbsae9fbg4kouf.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "283841002378-14ml7lgaodd3dsqrh6s1p6fur107gsun.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "emo.apps.haftaa",
-                "app_store_id": "1224489121"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:283841002378:android:5a2b1a7abb387880dbe673",
-        "android_client_info": {
-          "package_name": "emo.apps.haftaa"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "283841002378-ksm4vqtsukugaq0hitctt1bs2vllr97j.apps.googleusercontent.com",
+          "client_id": "283841002378-0crbt5d2vs6ucpkmrgulgoennsvnap8u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "emo.apps.haftaa",
+            "package_name": "adhwa.apps.haftaa",
             "certificate_hash": "205ffb90b5719885e882ffaccdf2ac04312408b7"
           }
         },
         {
-          "client_id": "283841002378-v5tgalp47d7djffj9hfo7e2a2n75bf99.apps.googleusercontent.com",
+          "client_id": "283841002378-fuu7pd8b82qtd771qvnm840i98kc3q6s.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "emo.apps.haftaa",
-            "certificate_hash": "443ffcc7d742b474f5350a9de861e18fce4b53f2"
-          }
-        },
-        {
-          "client_id": "283841002378-3m08629bgdabghn76s7pnpa597fk7qjs.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "emo.apps.haftaa",
-            "certificate_hash": "2924591c28750efe7d6268923b0695def2fc8346"
-          }
-        },
-        {
-          "client_id": "283841002378-vslfsdemupqsd7nn83mjjdn37nmrtmqd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "emo.apps.haftaa",
-            "certificate_hash": "9c65e334e1a811d7c1dd89b5c14477b25dd283e4"
+            "package_name": "adhwa.apps.haftaa",
+            "certificate_hash": "27197c86cfaa8cfdb907f22e5aefd62b58b45069"
           }
         },
         {

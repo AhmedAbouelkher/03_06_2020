@@ -3,9 +3,11 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:haftaa/Enums/enums.dart';
 import 'package:haftaa/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
+import 'package:haftaa/product/product-controller.dart';
 import 'package:haftaa/provider/provider.dart';
 import 'package:haftaa/providers/phone_auth.dart';
 import 'package:haftaa/ui/pages/add-product.dart';
+import 'package:haftaa/ui/pages/edit-profile.dart';
 import 'package:haftaa/ui/widgets/product/favorite-button.dart';
 import 'package:haftaa/ui/widgets/product/product-properties/product-category-widget.dart';
 import 'package:haftaa/ui/widgets/product/product-properties/product-governorate-widget.dart';
@@ -61,7 +63,6 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
 
   User _user;
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -107,9 +108,9 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                       Padding(padding: EdgeInsets.only(top: 20.0)),
                       Center(
                           child: Text(
-                            "نبذة",
-                            style: _subHeaderCustomStyle,
-                          )),
+                        "نبذة",
+                        style: _subHeaderCustomStyle,
+                      )),
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 20.0, right: 20.0, left: 20.0, bottom: 20.0),
@@ -197,12 +198,10 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                   children: <Widget>[
                     SystemShareButton(
                         "ألق نظرة على ${widget.product.title} على سوق الهفتاء" +
-                            " https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${widget
-                                .product.id}&apn=adhwa.apps.haftaa"),
+                            " https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${widget.product.id}&apn=adhwa.apps.haftaa"),
                     WhatsappShareButton(
                         "ألق نظرة على ${widget.product.title} على سوق الهفتاء" +
-                            " https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${widget
-                                .product.id}&apn=adhwa.apps.haftaa")
+                            " https://haftaa.page.link/?link=https://www.haftastore.com/KPo2?title%3D${widget.product.id}&apn=adhwa.apps.haftaa")
                   ],
                 )
 
@@ -243,7 +242,6 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-
               /// Header image slider
               Container(
                 height: 300.0,
@@ -262,19 +260,19 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                       //   AssetImage('assets/img/man.png'),
                       // ],
                       images:
-                      List.generate(widget.product.images.length, (index) {
+                          List.generate(widget.product.images.length, (index) {
                         return new CachedNetworkImage(
                           fit: BoxFit.cover,
                           imageUrl: widget.product.images[index],
                           placeholder: (context, url) =>
                               Center(child: CircularProgressIndicator()),
                           errorWidget: (context, url, error) =>
-                          new Icon(Icons.error),
+                              new Icon(Icons.error),
                         );
 
                         //return new NetworkImage(widget.product.images[index]);
                       })
-                        ..add(new NetworkImage(widget.product.mainImage)),
+                            ..add(new NetworkImage(widget.product.mainImage)),
                     ),
                   ),
                 ),
@@ -344,39 +342,91 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
 //                            ),
                             Padding(
                                 padding: const EdgeInsets.only(right: 8.0),
-                                child: (Provider
-                                    .of<PhoneAuthDataProvider>(
-                                    context,
-                                    listen: false)
-                                    .isLoggedIn &&
-                                    Provider
-                                        .of<PhoneAuthDataProvider>(
-                                        context,
-                                        listen: false)
-                                        .user
-                                        .uid ==
-                                        widget.product.userId)
+                                child: (Provider.of<PhoneAuthDataProvider>(
+                                                context,
+                                                listen: false)
+                                            .isLoggedIn &&
+                                        Provider.of<PhoneAuthDataProvider>(
+                                                    context,
+                                                    listen: false)
+                                                .user
+                                                .uid ==
+                                            widget.product.userId)
                                     ? RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10)),
-                                      side:
-                                      BorderSide(color: Colors.teal)),
-                                  color: Colors.blueAccent,
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                        PageRouteBuilder(
-                                            pageBuilder: (_, __, ___) =>
-                                            new AddProduct.edit(
-                                                widget.product)));
-                                  },
-                                  child: Row(
-                                    children: <Widget>[
-                                      Text('تعديل'),
-                                      Icon(Icons.edit)
-                                    ],
-                                  ),
-                                )
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                            side:
+                                                BorderSide(color: Colors.teal)),
+                                        color: Colors.blueAccent,
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                              PageRouteBuilder(
+                                                  pageBuilder: (_, __, ___) =>
+                                                      new AddProduct.edit(
+                                                          widget.product)));
+                                        },
+                                        child: Row(
+                                          children: <Widget>[
+                                            Text('تعديل'),
+                                            Icon(Icons.edit)
+                                          ],
+                                        ),
+                                      )
+                                    : Container()),
+                            Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: (Provider.of<PhoneAuthDataProvider>(
+                                                context,
+                                                listen: false)
+                                            .isLoggedIn &&
+                                        Provider.of<PhoneAuthDataProvider>(
+                                                    context,
+                                                    listen: false)
+                                                .user
+                                                .uid ==
+                                            widget.product.userId)
+                                    ? RaisedButton(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                            side:
+                                                BorderSide(color: Colors.teal)),
+                                        color: Colors.blueAccent,
+                                        onPressed: () async {
+                                          AlertDialog alert = AlertDialog(
+                                            title: Text("حذف إعلان"),
+                                            content: Text(
+                                                "سيتم حذف الإعلان نهائياً ولن يمكن استرجاعه. هل أنت متأكد؟"),
+                                            actions: [
+                                              FlatButton(
+                                                child: Text("إلغاء"),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                              FlatButton(
+                                                child: Text("نعم"),
+                                                onPressed: () async {
+                                                  ProductController
+                                                      productController =
+                                                      ProductController();
+                                                  await productController
+                                                      .delete(
+                                                          widget.product.id);
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                        child: Row(
+                                          children: <Widget>[
+                                            Text('حذف'),
+                                            Icon(Icons.edit)
+                                          ],
+                                        ),
+                                      )
                                     : Container()),
                             ProductFavoriteButton(widget.product),
                             Padding(
@@ -404,7 +454,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
               Padding(
                 padding: const EdgeInsets.only(top: 10.0),
                 child: Container(
-                  height: 200.0,
+                  height: 300.0,
                   width: 600.0,
                   decoration: BoxDecoration(color: Colors.white, boxShadow: [
                     BoxShadow(
@@ -454,7 +504,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    "المدينة",
+                                    "الدولة",
                                     style: _txtCustomSub,
                                   ),
                                 ),
@@ -468,21 +518,31 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                           ],
                         ),
                       ),
-//                      Padding(
-//                        padding: const EdgeInsets.only(
-//                            top: 20.0, right: 20.0, left: 60.0),
-//                        child: Row(
-//                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                          children: <Widget>[
-//                            Text("المنطقة", style: _txtCustomSub),
-//                            ProductRegionWidget(
-//                                widget.product.region,
-//                                _txtCustomHead.copyWith(
-//                                    fontSize: 17.0,
-//                                    fontWeight: FontWeight.w600))
-//                          ],
-//                        ),
-//                      ),
+                      Divider(),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 20.0, right: 20.0, left: 60.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Icon(Icons.location_city),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text("المنطقة", style: _txtCustomSub),
+                                ),
+                                ProductRegionWidget(
+                                    widget.product.region,
+                                    _txtCustomHead.copyWith(
+                                        fontSize: 17.0,
+                                        fontWeight: FontWeight.w600))
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+
 //                      Padding(
 //                        padding: const EdgeInsets.only(
 //                            top: 20.0, right: 20.0, left: 60.0),
@@ -506,10 +566,7 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
               /// Background white for description
               Container(
                 //height: 300.0,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
+                width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(color: Colors.white, boxShadow: [
                   BoxShadow(
                     color: Color(0xFF656565).withOpacity(0.15),
@@ -546,8 +603,6 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
 //                            ),
 //                          ),
 //                        )
-
-
                     ],
                   ),
                 ),
@@ -706,50 +761,10 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-
                     /// Chat Icon
                     InkWell(
                       onTap: () {
-                        if (Provider
-                            .of<PhoneAuthDataProvider>(context,
-                            listen: false)
-                            .isLoggedIn ==
-                            true) {
-                          if (widget.product.type == ItemType.sale) {
-                            var myId = Provider
-                                .of<PhoneAuthDataProvider>(
-                                context,
-                                listen: false)
-                                .user
-                                .uid;
-                            var peerId = _user.id;
-
-                            var title = ' بيع | ${widget.product.title}';
-                            var Phone = _user?.mobile;
-
-                            var ChatId = '';
-
-                            if (myId.hashCode <= peerId.hashCode) {
-                              ChatId = '$myId-$peerId';
-                            } else {
-                              ChatId = '$peerId-$myId';
-                            }
-
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        PrivateChatscreen(
-                                          product: widget.product,
-                                          chatId: ChatId,
-                                          title: title,
-                                          peerId: peerId,
-                                          Phone: Phone,
-                                        )));
-                          } else {}
-                        } else {
-                          Navigator.pushNamed(context, 'login');
-                        }
+                        OpenChat(context);
                       },
                       child: Container(
                         height: 40.0,
@@ -769,19 +784,14 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                       onTap: () {
                         widget.product.user.then((user) {
                           ProductSearchModel _searchModel =
-                          ProductSearchModel.FromSearchParams(
-                              userID: user.id);
+                              ProductSearchModel.FromSearchParams(
+                                  userID: user.id);
 
                           Navigator.of(context).push(
                             PageRouteBuilder(
                                 pageBuilder: (_, __, ___) {
-                                  return new ProductList
-                                      .Search(_searchModel,
-                                      'المستخدم (${widget.product
-                                          .showMobileNumber
-                                          ? user.name ?? user?.mobile ??
-                                          user.email
-                                          : 'الحالى'})');
+                                  return new ProductList.Search(
+                                      _searchModel, ProductListpageTitle(user));
                                 },
                                 transitionDuration: Duration(milliseconds: 600),
                                 transitionsBuilder: (_,
@@ -819,13 +829,13 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
                                         color: Colors.white,
                                         fontWeight: FontWeight.w700),
                                     widget.product.showMobileNumber)
-                              // Text(
-                              //   "Pay",
-                              //   style: TextStyle(
-                              //       color: Colors.white,
-                              //       fontWeight: FontWeight.w700),
-                              // ),
-                            ),
+                                // Text(
+                                //   "Pay",
+                                //   style: TextStyle(
+                                //       color: Colors.white,
+                                //       fontWeight: FontWeight.w700),
+                                // ),
+                                ),
                           ],
                         ),
                       ),
@@ -840,8 +850,87 @@ class _SaleProductDetailsState extends State<SaleProductDetails> {
     );
   }
 
-  Widget _buildRating(String date, String details, Function changeRating,
-      String image) {
+  void OpenChat(BuildContext context) {
+    var authProvider =
+        Provider.of<PhoneAuthDataProvider>(context, listen: false);
+    if (authProvider.isLoggedIn == false) {
+      Navigator.pushNamed(context, 'login');
+    } else if (authProvider.isLoggedIn == true &&
+        (authProvider.user?.displayName == null ||
+            authProvider.user?.displayName == '')) {
+      Navigator.of(context).push(
+        PageRouteBuilder(
+            pageBuilder: (_, __, ___) => new EditProfile(
+                  user: authProvider.user,
+                ),
+            transitionDuration: Duration(milliseconds: 600),
+            transitionsBuilder:
+                (_, Animation<double> animation, __, Widget child) {
+              return Opacity(
+                opacity: animation.value,
+                child: child,
+              );
+            }),
+      );
+    } else if (authProvider.isLoggedIn == true &&
+        authProvider.user?.displayName != null &&
+        authProvider.user?.displayName != '') {
+      OpenChatPage(context);
+    }
+  }
+
+  void OpenChatPage(BuildContext context) {
+    var authProvider =
+        Provider.of<PhoneAuthDataProvider>(context, listen: false);
+    if (authProvider.isLoggedIn == true) {
+      if (widget.product.type == ItemType.sale) {
+        var myId = authProvider.user.uid;
+        var peerId = _user.id;
+
+        var title = ' بيع | ${widget.product.title}';
+        var Phone = _user?.mobile;
+
+        var ChatId = '';
+
+        if (myId.hashCode <= peerId.hashCode) {
+          ChatId = '$myId-$peerId';
+        } else {
+          ChatId = '$peerId-$myId';
+        }
+
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PrivateChatscreen(
+                      product: widget.product,
+                      chatId: ChatId,
+                      title: title,
+                      peerId: peerId,
+                      Phone: Phone,
+                    )));
+      } else {}
+    } else {
+      Navigator.pushNamed(context, 'login');
+    }
+  }
+
+  String ProductListpageTitle(User user) {
+    var canShowMobile = widget.product.showMobileNumber;
+    var mobileNUmber = user?.mobile;
+    var pageTitle = 'إعلانات المستخدم ';
+    if (user?.name != null && user?.name != '') {
+      return pageTitle += user?.name == null ? '' : '(${user?.name})';
+    } else {
+      if (canShowMobile == false) {
+        return pageTitle += user?.name == null ? '' : '(${user?.name})';
+      } else {
+        return pageTitle += user?.mobile == null ? '' : '(${user?.mobile})';
+      }
+    }
+  }
+
+  Widget _buildRating(
+      String date, String details, Function changeRating, String image) {
     return ListTile(
       leading: Container(
         height: 45.0,
@@ -1041,7 +1130,7 @@ class FavoriteItem extends StatelessWidget {
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.only(right: 15.0, left: 15.0, top: 5.0),
+                      const EdgeInsets.only(right: 15.0, left: 15.0, top: 5.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

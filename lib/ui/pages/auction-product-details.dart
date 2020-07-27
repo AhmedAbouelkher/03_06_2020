@@ -443,7 +443,7 @@ class _AuctionProductDetailsState extends State<AuctionProductDetails> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
-                                  "المدينة",
+                                  "الدولة",
                                   style: _txtCustomSub,
                                 ),
                                 ProductGovernorateWidget(

@@ -25,7 +25,6 @@ class _PhoneAuthState extends State<PhoneAuth> {
   var verificationId;
   bool codeSent = false;
 
-
   double _height, _width, _fixedPadding;
 
   FocusNode focusNode1 = FocusNode();
@@ -35,7 +34,9 @@ class _PhoneAuthState extends State<PhoneAuth> {
   FocusNode focusNode5 = FocusNode();
   FocusNode focusNode6 = FocusNode();
   String code = "";
-  bool checkBoxValue = false;
+  bool acceptPolicies = false;
+  bool acceptPrecentage = false;
+
 
   final scaffoldKey =
       GlobalKey<ScaffoldState>(debugLabel: "scaffold-get-phone");
@@ -345,11 +346,11 @@ class _PhoneAuthState extends State<PhoneAuth> {
             children: <Widget>[
               SizedBox(width: _fixedPadding),
               Checkbox(
-                  value: checkBoxValue,
+                  value: acceptPolicies,
                   activeColor: Colors.green,
                   onChanged: (bool newValue) {
                     setState(() {
-                      checkBoxValue = newValue;
+                      acceptPolicies = newValue;
                     });
                   }),
               Expanded(
@@ -361,7 +362,9 @@ class _PhoneAuthState extends State<PhoneAuth> {
                         // return object of type Dialog
                         return Scaffold(
                           appBar: AppBar(
-                            title: Center(child: Text('شروط الاستخدام'),),
+                            title: Center(
+                              child: Text('شروط الاستخدام'),
+                            ),
                           ),
                           body: Padding(
                             padding: const EdgeInsets.all(10.0),
@@ -371,42 +374,47 @@ class _PhoneAuthState extends State<PhoneAuth> {
                                 scrollDirection: Axis.vertical,
                                 children: <Widget>[
                                   Padding(
-                                    padding: const EdgeInsets.only(bottom: 10.0),
+                                    padding:
+                                        const EdgeInsets.only(bottom: 10.0),
                                     child: Text(
-                                      "•	الإعلان في (سوق الهفتاء ) مخصص ويجب الالتزام بأقسام الموقع وعدم طرح أي إعلان لا يتعلق بالمواشي وما يتعلق بها "
-                                    ),
+                                        "•	الإعلان في (سوق الهفتاء ) مخصص ويجب الالتزام بأقسام الموقع وعدم طرح أي إعلان لا يتعلق بالمواشي وما يتعلق بها "),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(bottom: 10.0),
-                                    child: Text("•	الإعلان في (سوق الهفتاء ) يجب أن يكون لصاحب الإعلان وما يتعلق بالإعلان كالصور ووسيلة التواصل "),
-                                  )
-                                  ,
+                                    padding:
+                                        const EdgeInsets.only(bottom: 10.0),
+                                    child: Text(
+                                        "•	الإعلان في (سوق الهفتاء ) يجب أن يكون لصاحب الإعلان وما يتعلق بالإعلان كالصور ووسيلة التواصل "),
+                                  ),
                                   Padding(
-                                    padding: const EdgeInsets.only(bottom: 10.0),
-                                    child: Text("•	الإعلان في سوق الهفتاء يجب أن يكون خاضع لسياسة المؤسسات العليا في الدولة وعدم طرح أي إعلان مخالف للأنظمة والقوانين "),
-                                  )
-                                  ,
+                                    padding:
+                                        const EdgeInsets.only(bottom: 10.0),
+                                    child: Text(
+                                        "•	الإعلان في سوق الهفتاء يجب أن يكون خاضع لسياسة المؤسسات العليا في الدولة وعدم طرح أي إعلان مخالف للأنظمة والقوانين "),
+                                  ),
                                   Padding(
-                                    padding: const EdgeInsets.only(bottom: 10.0),
-                                    child: Text("•	عدم التلاعب بأسعار السلع سواء في البيع او الشراء أو بخس السلع أو وما يسبب الضرر للأعضاء الآخرين"),
-                                  )
-                                  ,
+                                    padding:
+                                        const EdgeInsets.only(bottom: 10.0),
+                                    child: Text(
+                                        "•	عدم التلاعب بأسعار السلع سواء في البيع او الشراء أو بخس السلع أو وما يسبب الضرر للأعضاء الآخرين"),
+                                  ),
                                   Padding(
-                                    padding: const EdgeInsets.only(bottom: 10.0),
-                                    child: Text("•	عدم نشر إعلانات أو تعليقات كاذبة أو غير دقيقة أو مضللة أو خادعة أو قذف ، أو تشهير."),
-                                  )
-                                  ,
+                                    padding:
+                                        const EdgeInsets.only(bottom: 10.0),
+                                    child: Text(
+                                        "•	عدم نشر إعلانات أو تعليقات كاذبة أو غير دقيقة أو مضللة أو خادعة أو قذف ، أو تشهير."),
+                                  ),
                                   Padding(
-                                    padding: const EdgeInsets.only(bottom: 10.0),
-                                    child: Text("•	يُمنع إستخدام هذه الخدمة من قِبل أي مستخدم غير بشري أو طرف ثالث"),
-                                  )
-                                  ,
+                                    padding:
+                                        const EdgeInsets.only(bottom: 10.0),
+                                    child: Text(
+                                        "•	يُمنع إستخدام هذه الخدمة من قِبل أي مستخدم غير بشري أو طرف ثالث"),
+                                  ),
                                   Padding(
-                                    padding: const EdgeInsets.only(bottom: 10.0),
-                                    child: Text("•	التعاون مع إدارة سوق الهفتاء في توضيح أي مخالفات داخل التطبيق"),
+                                    padding:
+                                        const EdgeInsets.only(bottom: 10.0),
+                                    child: Text(
+                                        "•	التعاون مع إدارة سوق الهفتاء في توضيح أي مخالفات داخل التطبيق"),
                                   )
-
-
                                 ],
                               ),
                             ),
@@ -416,18 +424,53 @@ class _PhoneAuthState extends State<PhoneAuth> {
                     );
                   },
                   child: RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                        text: 'موافق على ',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.w400)),
-                    TextSpan(
-                        text: 'شروط استخدام التطبيق',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w700)),
-                  ])),
+                      text: TextSpan(
+                    children: [
+                      TextSpan(
+                          text: 'موافق على ',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400)),
+                      TextSpan(
+                          text: 'شروط استخدام التطبيق',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w700)),
+                    ],
+                  )),
+                ),
+              ),
+              SizedBox(width: _fixedPadding),
+            ],
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SizedBox(width: _fixedPadding),
+              Checkbox(
+                  value: acceptPrecentage,
+                  activeColor: Colors.green,
+                  onChanged: (bool newValue) {
+                    setState(() {
+                      acceptPrecentage = newValue;
+                    });
+                  }),
+              Expanded(
+                child: GestureDetector(
+
+                  child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                              text: '** اي بضاعة اعلن عنها و تم بيعها بالسوق أوافق والتزم بعمولة الموقع 1%  في ذمتي',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w700)),
+
+                        ],
+                      )),
                 ),
               ),
               SizedBox(width: _fixedPadding),
@@ -687,7 +730,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
               _getColumnBody(),
               InkWell(
                 onTap: () {
-                   checkBoxValue?startPhoneAuth(context):null;
+                  acceptPolicies && acceptPrecentage? startPhoneAuth(context) : null;
 //                  Scaffold.of(context).showSnackBar(
 //                      SnackBar(content: new Text('test message')));
                 },
@@ -700,7 +743,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                     child: Text(
                       'إرسال الكود',
                       style: TextStyle(
-                          color: !checkBoxValue ? Colors.white30 : Colors.white,
+                          color: !acceptPolicies || !acceptPrecentage? Colors.white30 : Colors.white,
                           letterSpacing: 0.2,
                           fontFamily: "Sans",
                           fontSize: 18.0,
@@ -713,7 +756,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                         ],
                         borderRadius: BorderRadius.circular(30.0),
                         gradient: LinearGradient(
-                            colors: !checkBoxValue
+                            colors: !acceptPolicies || !acceptPrecentage
                                 ? <Color>[Color(0xFF5d5c7b), Color(0xFF5d5c7b)]
                                 : <Color>[
                                     Color(0xFF121940),

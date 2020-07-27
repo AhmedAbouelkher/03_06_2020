@@ -18,19 +18,21 @@ class CategoriesDropdownWidget extends StatefulWidget {
   List<DropdownMenuItem<BaseCategory>> dropdownMenuItemList = [];
   Future<List<BaseCategory>> categoriesFuture;
 
-  StreamController<BaseCategory> streamController = StreamController<BaseCategory>();
+  StreamController<BaseCategory> streamController =
+      StreamController<BaseCategory>();
 
   Stream<BaseCategory> get categorySelecting => streamController.stream;
 
   CategoriesDropdownWidget({Key key, this.displayDropDownOnly})
-      : super(key: key) ;
+      : super(key: key);
 
-  CategoriesDropdownWidget.Custom({this.onChange,
-    this.title,
-    this.hintText,
-    this.selectionIsRequired,
-    this.selectedCategory,
-    this.displayDropDownOnly}) {
+  CategoriesDropdownWidget.Custom(
+      {this.onChange,
+      this.title,
+      this.hintText,
+      this.selectionIsRequired,
+      this.selectedCategory,
+      this.displayDropDownOnly}) {
     categoriesFuture = categoryController.loadCategories();
 //    .then((catlist) {
 //      dropdownMenuItemList =
@@ -46,13 +48,14 @@ class CategoriesDropdownWidget extends StatefulWidget {
 //    });
   }
 
-  CategoriesDropdownWidget.subCategories({this.onChange,
-    this.title,
-    this.hintText,
-    this.selectionIsRequired,
-    this.selectedCategory,
-    this.displayDropDownOnly,
-    this.parentcategory}) {
+  CategoriesDropdownWidget.subCategories(
+      {this.onChange,
+      this.title,
+      this.hintText,
+      this.selectionIsRequired,
+      this.selectedCategory,
+      this.displayDropDownOnly,
+      this.parentcategory}) {
     if (parentcategory != null) {
       categoriesFuture = parentcategory.childCategories;
 
@@ -114,8 +117,7 @@ class _CategoriesDropdownWidgetState extends State<CategoriesDropdownWidget> {
             decoration: InputDecoration(
               icon: Icon(Icons.category),
             ),
-            validator: (value) =>
-            widget.selectionIsRequired
+            validator: (value) => widget.selectionIsRequired
                 ? Validators.notEmptyItemSelection(value)
                 : null,
             onChanged: (selected_category) {
@@ -169,40 +171,40 @@ class _CategoriesDropdownWidgetState extends State<CategoriesDropdownWidget> {
     return widget.displayDropDownOnly
         ? dropdownButtonFormField
         : Column(
-      textDirection: TextDirection.rtl,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(left: 20.0, top: 20.0),
-          child: Text(
-            widget.title,
-            style: TextStyle(fontFamily: "Gotik", color: Colors.black26),
-          ),
-        ),
-        Padding(padding: EdgeInsets.only(top: 20.0)),
-        Row(
-          textDirection: TextDirection.rtl,
-          children: <Widget>[
-            Container(
-              width: mediaQueryData.size.width - 90,
-              child: dropdownButtonFormField,
-            ),
-            IconButton(
-              alignment: Alignment.topLeft,
-              icon: Icon(
-                Icons.cancel,
-                color: Colors.blueAccent.shade200,
+            textDirection: TextDirection.rtl,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 20.0),
+                child: Text(
+                  widget.title,
+                  style: TextStyle(fontFamily: "Gotik", color: Colors.black26),
+                ),
               ),
-              onPressed: () {
-                setState(() {
-                  widget.selectedCategory = null;
-                });
-              },
-            )
-          ],
-        ),
-      ],
-    );
+              Padding(padding: EdgeInsets.only(top: 20.0)),
+              Row(
+                textDirection: TextDirection.rtl,
+                children: <Widget>[
+                  Container(
+                    width: mediaQueryData.size.width - 90,
+                    child: dropdownButtonFormField,
+                  ),
+                  IconButton(
+                    alignment: Alignment.topLeft,
+                    icon: Icon(
+                      Icons.cancel,
+                      color: Colors.blueAccent.shade200,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        widget.selectedCategory = null;
+                      });
+                    },
+                  )
+                ],
+              ),
+            ],
+          );
   }
 
   BaseCategory _getSelectedCategory() {
@@ -215,12 +217,11 @@ class _CategoriesDropdownWidgetState extends State<CategoriesDropdownWidget> {
 //        : widget.selectedCategory;
 
     if (widget.selectedCategory != null && widget.selectedCategory.id != null) {
-      var item =
-          widget.dropdownMenuItemList
-              .where((dropdownMenuItem) =>
-          dropdownMenuItem.value.id == widget.selectedCategory.id)
-              .first
-              .value;
+      var item = widget.dropdownMenuItemList
+          .where((dropdownMenuItem) =>
+              dropdownMenuItem.value.id == widget.selectedCategory.id)
+          .first
+          .value;
       return item;
     } else {
       return widget.selectedCategory;

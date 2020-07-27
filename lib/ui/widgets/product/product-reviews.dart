@@ -119,6 +119,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                         "text": commentText,
                         "time": DateTime.now().millisecondsSinceEpoch,
                       });
+                      commentText = '';
                       TextController.clear();
                     }
                   } else {
@@ -228,15 +229,14 @@ class _ProductReviewsState extends State<ProductReviews> {
                     for (var i in data.values) {
                       CommentItems.add(CommentModel.fromJson(i));
                     }
-
+                    CommentItems.sort((a,b){
+                      return a.time.compareTo(b.time);
+                    });
                     return Expanded(
                       child: ListView.builder(
                         itemCount: CommentItems.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return buildRating(
-                              CommentItems[index].formatedDate,
-                              CommentItems[index].text,
-                              "assets/launcher/rsz_icon_hourse.png");
+                          return buildRating(CommentItems[index]);
                         },
                       ),
                     );
@@ -249,8 +249,8 @@ class _ProductReviewsState extends State<ProductReviews> {
                   ? addComment
                   : Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child:
-                          Center(child: Text('لا يمكن التعليق على هذا المنتج حالياً')),
+                      child: Center(
+                          child: Text('لا يمكن التعليق على هذا المنتج حالياً')),
                     ),
             ],
           ),
@@ -261,33 +261,37 @@ class _ProductReviewsState extends State<ProductReviews> {
 }
 
 class buildRating extends StatelessWidget {
-  String date;
-  var details;
-  var image;
+//  String date;
+//  var details;
+//  var image;
+  CommentModel comment;
 
-  buildRating(this.date, this.details, this.image);
+  buildRating(this.comment);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      trailing: Text(comment.formatedDate),
       leading: Container(
         height: 45.0,
         width: 45.0,
         decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
+            image: DecorationImage(
+                image: AssetImage("assets/launcher/rsz_icon_hourse.png"),
+                fit: BoxFit.cover),
             borderRadius: BorderRadius.all(Radius.circular(50.0))),
       ),
       title: Row(
         children: <Widget>[
           SizedBox(width: 8.0),
           Text(
-            '$date',
+            '${comment.userName ?? ''}',
             style: TextStyle(fontSize: 12.0),
           )
         ],
       ),
       subtitle: Text(
-        details,
+        comment.text,
         style: TextStyle(
             fontFamily: "Gotik",
             color: Colors.black54,
@@ -300,17 +304,23 @@ class buildRating extends StatelessWidget {
 
 class CommentModel {
   var text;
-  var time;
+  int time;
   var datetime;
   var formatedDate;
+  var userID;
+  var userImg;
+  var userName;
+  var userPhone;
 
-  CommentModel(this.text, this.time) {
-    this.datetime = new DateTime.fromMillisecondsSinceEpoch(time * 1000);
+  CommentModel(this.text, this.time, this.userID, this.userImg, this.userName,
+      this.userPhone) {
+    this.datetime = new DateTime.fromMillisecondsSinceEpoch(time);
     this.formatedDate = _formatdate(this.datetime);
   }
 
   factory CommentModel.fromJson(Map<dynamic, dynamic> json) {
-    return CommentModel(json['text'].toString(), json['time']);
+    return CommentModel(json['text'].toString(), json['time'], json['userID'],
+        json['userImg'], json['userName'], json['userPhone']);
   }
 
   String _formatdate(DateTime date) {

@@ -43,6 +43,7 @@ class _EditProfileState extends State<EditProfile> {
         .displayName;
 
     TextFormField inputName = TextFormField(
+
       controller: _name,
       autofocus: true,
       keyboardType: TextInputType.text,
@@ -50,6 +51,7 @@ class _EditProfileState extends State<EditProfile> {
         //LengthLimitingTextInputFormatter(45),
       ],
       decoration: InputDecoration(
+        hintText: 'أدخل اسمك المستعار',
         labelText: 'الاسم',
         icon: Icon(Icons.person),
       ),
@@ -136,56 +138,9 @@ class _EditProfileState extends State<EditProfile> {
             children: <Widget>[
               Text('الاسم أو الاسم المستعار'),
               inputName,
-              widget.user.phoneNumber.substring(0, 4) == '+966'
-                  ? DropdownButtonFormField<String>(
-                value: dropdownValue,
-                icon: Icon(Icons.details, color: Colors.black),
-                iconSize: 24,
-                elevation: 16,
-                style: TextStyle(color: Colors.black),
-//                underline: Container(
-//                  height: 2,
-//                  color: Colors.black,
-//                ),
-                onChanged: (String newValue) {
-                  setState(() {
-                    dropdownValue = newValue;
-                  });
-                },
-                items: <String>[
-                  'الرياض',
-                  'مكة',
-                  'جدة',
-                  'المدينة',
-                  'القصيم',
-                  'حفر الباطن',
-                  'حائل',
-                  'الشرقية',
-                  'تبوك',
-                  'الحدود الشمالية',
-                  'الجوف',
-                  'ينبع',
-                  'الدوادمي',
-                  'الطائف',
-                  'الباحة',
-                  'عسير',
-                  'جيزان',
-                  'نجران',
-                  'وادي الدواسر'
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    onTap: (){
-
-                    },
-                    child: Text(
-                      value,
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  );
-                }).toList(),
-              )
-                  : Container(),
+//              widget.user.phoneNumber.substring(0, 4) == '+966'
+//                  ? buildRegionsDropdownButtonFormField(dropdownValue)
+//                  : Container(),
               SizedBox(height: 20),
               // inputNickName,
               // inputWork,
@@ -216,6 +171,12 @@ class _EditProfileState extends State<EditProfile> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               onPressed: () async {
+                if(_name.text == null || _name.text.trim() == ''){
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Center(child: Text('أدخل الاسم المستعار من فضلك'),),
+                    duration: Duration(seconds: 2),));
+                  return;
+                }
                 if (_formKey.currentState.validate()) {
                   UserController()
                       .updateProfile(
@@ -229,6 +190,8 @@ class _EditProfileState extends State<EditProfile> {
                         .then((onValue) {
                       Navigator.pop(context);
                     });
+                  }).catchError((onError){
+                    var dd;
                   });
                 }
               },
@@ -238,5 +201,56 @@ class _EditProfileState extends State<EditProfile> {
       ),
       body: content,
     );
+  }
+
+  DropdownButtonFormField<String> buildRegionsDropdownButtonFormField(String dropdownValue) {
+    return DropdownButtonFormField<String>(
+              value: dropdownValue,
+              icon: Icon(Icons.details, color: Colors.black),
+              iconSize: 24,
+              elevation: 16,
+              style: TextStyle(color: Colors.black),
+//                underline: Container(
+//                  height: 2,
+//                  color: Colors.black,
+//                ),
+              onChanged: (String newValue) {
+                setState(() {
+                  dropdownValue = newValue;
+                });
+              },
+              items: <String>[
+                'الرياض',
+                'مكة',
+                'جدة',
+                'المدينة',
+                'القصيم',
+                'حفر الباطن',
+                'حائل',
+                'الشرقية',
+                'تبوك',
+                'الحدود الشمالية',
+                'الجوف',
+                'ينبع',
+                'الدوادمي',
+                'الطائف',
+                'الباحة',
+                'عسير',
+                'جيزان',
+                'نجران',
+                'وادي الدواسر'
+              ].map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  onTap: (){
+
+                  },
+                  child: Text(
+                    value,
+                    style: TextStyle(color: Colors.black),
+                  ),
+                );
+              }).toList(),
+            );
   }
 }

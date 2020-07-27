@@ -340,7 +340,7 @@ class _AdvancedSearchState extends State<AdvancedSearch> {
       selectedGovernorate: selected_Governorate,
       selectionIsRequired: true,
       hintText: "اختر المحافظة",
-      title: "المدينة",
+      title: "الدولة",
       onChange: (Governorate governorate) {
         onGovernorateSelectChanged(governorate);
       },

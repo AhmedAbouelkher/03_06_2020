@@ -4,11 +4,13 @@ import 'package:haftaa/Category/CategoryController.dart';
 import 'package:haftaa/region/region-controller.dart';
 import 'package:haftaa/region/region.dart';
 import 'package:haftaa/validation/validators.dart';
+
 // import 'package:haftaa/governorate/governorate.dart';
 // import 'package:haftaa/governorate/governorateController.dart';
 
 class RegionDropdownWidget extends StatefulWidget {
   RegionController _regionController = RegionController();
+
   //List _menuItemlist;
   Function(Region) onChange;
   String title;
@@ -19,6 +21,7 @@ class RegionDropdownWidget extends StatefulWidget {
   List<DropdownMenuItem<Region>> menuitems = List<DropdownMenuItem<Region>>();
 
   RegionDropdownWidget({Key key}) : super(key: key) {}
+
   RegionDropdownWidget.custom(
       {this.onChange,
       this.title,
@@ -36,6 +39,7 @@ class RegionDropdownWidget extends StatefulWidget {
   }
 
   String _defaultSelectedRegionID;
+
   loadRegions(governorateID, {defaultSelectedRegionID}) {
     menuitems.clear();
     _defaultSelectedRegionID = defaultSelectedRegionID;
@@ -79,6 +83,13 @@ class _RegionDropdownWidgetState extends State<RegionDropdownWidget> {
                 builder: (context, AsyncSnapshot<List<Region>> snapshot) {
                   widget.menuitems.clear();
                   if (snapshot.hasData) {
+                    snapshot.data.sort((a, b) {
+                      if (a.orderNumber == null || b.orderNumber == null) {
+                        return 0;
+                      } else
+                      return  a.orderNumber.compareTo(b.orderNumber);
+                    });
+
                     snapshot.data.forEach((region) {
                       widget.menuitems.add(DropdownMenuItem<Region>(
                         child: Text(
@@ -117,6 +128,7 @@ class _RegionDropdownWidgetState extends State<RegionDropdownWidget> {
                       items: widget.menuitems,
                     );
                   }
+                  return Container();
                 },
               ),
             ),
